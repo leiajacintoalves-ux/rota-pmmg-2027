@@ -573,7 +573,89 @@ input:focus, select:focus, textarea:focus { border-color:var(--accent); }
     font-weight: 700;
 }
 
+/* Polimento visual da versão 1.0 */
 
+.page.active {
+  animation: pageEnter .28s ease both;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.panel,
+.stat-card,
+.highlight-card,
+.day-card,
+.subject-card {
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease;
+}
+
+.panel:active,
+.stat-card:active,
+.highlight-card:active,
+.day-card:active,
+.subject-card:active {
+  transform: scale(.985);
+}
+
+.primary-btn,
+.ghost-btn,
+.text-btn,
+.danger-btn,
+.mobile-nav-item {
+  transition:
+    transform .16s ease,
+    opacity .16s ease,
+    background .16s ease;
+}
+
+.primary-btn:active,
+.ghost-btn:active,
+.text-btn:active,
+.danger-btn:active,
+.mobile-nav-item:active {
+  transform: scale(.95);
+}
+
+.hero,
+.dashboard-welcome,
+.highlight-card {
+  background-image:
+    radial-gradient(
+      circle at top right,
+      rgba(255, 91, 91, .10),
+      transparent 38%
+    );
+}
+
+.timer-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.timer-panel::before {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  top: -100px;
+  right: -90px;
+  border-radius: 50%;
+  background: rgba(255, 91, 91, .08);
+  pointer-events: none;
+}
 
 
 
