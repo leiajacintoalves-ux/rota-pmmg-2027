@@ -316,7 +316,7 @@ document.getElementById("questionForm").onsubmit = e => {
   save(); e.target.reset();
 };
 
-let selectedMinutes = 25, remaining = 25*60, timerId = null;
+let selectedMinutes = 1, remaining = 10, timerId = null;
 function formatTime(date) {
   return date.toLocaleTimeString("pt-BR", {
     hour: "2-digit",
