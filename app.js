@@ -357,8 +357,18 @@ document.getElementById("startTimer").onclick = () => {
   },1000);
 };
 document.getElementById("resetTimer").onclick = () => {
-  clearInterval(timerId); timerId=null; remaining=selectedMinutes*60; updateTimer();
-  document.getElementById("startTimer").textContent="Iniciar";
+  clearInterval(timerId);
+  timerId = null;
+  remaining = selectedMinutes * 60;
+  updateTimer();
+
+  document.getElementById("startTimer").textContent = "Iniciar";
+
+  const startEl = document.getElementById("timerStartTime");
+  const endEl = document.getElementById("timerEndTime");
+
+  if (startEl) startEl.textContent = "--:--";
+  if (endEl) endEl.textContent = "--:--";
 };
 
 document.getElementById("studyForm").onsubmit = e => {
