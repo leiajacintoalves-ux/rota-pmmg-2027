@@ -126,14 +126,51 @@ function renderSubjects() {
 }
 
 function renderSubjectProgress() {
-  const top = SUBJECTS.slice(0,5);
-  document.getElementById("subjectProgress").innerHTML = top.map(s => {
-    const st = subjectStats(s.name);
-    return `<div class="progress-line">
-      <div class="progress-meta"><span>${s.name}</span><strong>${st.accuracy}%</strong></div>
-      <div class="bar"><i style="width:${st.accuracy}%"></i></div>
-    </div>`;
-  }).join("");
+  const studiedSubjects = SUBJECTS.map(subject => {
+    const minutes = state.sessions
+      .filter(session => session.subject === subject.name)
+      .reduce((total, session) => total + session.minutes, 0);
+
+    return {
+      name: subject.name,
+      minutes
+    };
+  });
+
+  const highestMinutes = Math.max(
+    60,
+    ...studiedSubjects.map(subject => subject.minutes)
+  );
+
+  document.getElementById("subjectProgress").innerHTML =
+    studiedSubjects
+      .sort((a, b) => b.minutes - a.minutes)
+      .slice(0, 5)
+      .map(subject => {
+        const percentage = Math.round(
+          (subject.minutes / highestMinutes) * 100
+        );
+
+        const timeText =
+          subject.minutes >= 60
+            ? `${(subject.minutes / 60).toFixed(1)}h`
+            : `${subject.minutes} min`;
+
+        return `
+          <div class="progress-line">
+            <div class="progress-meta">
+              <span>${subject.name}</span>
+              <strong>${timeText}</strong>
+            </div>
+
+            <div class="bar">
+              <i style="width:${percentage}%"></i>
+            </div>
+          </div>
+        `;
+      })
+      .join("");
+
 }
 
 function renderQuestions() {
