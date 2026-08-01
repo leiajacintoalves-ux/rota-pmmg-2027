@@ -555,7 +555,23 @@ input:focus, select:focus, textarea:focus { border-color:var(--accent); }
   border-radius: inherit;
   transition: width .25s linear;
 }
+.timer-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px 0 22px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 12px;
+    color: var(--muted);
+    font-size: .9rem;
+}
 
+.timer-meta strong {
+    color: var(--text);
+    font-weight: 700;
+}
 
 
 
