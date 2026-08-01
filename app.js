@@ -317,6 +317,25 @@ document.getElementById("questionForm").onsubmit = e => {
 };
 
 let selectedMinutes = 25, remaining = 25*60, timerId = null;
+function formatTime(date) {
+  return date.toLocaleTimeString("pt-BR", {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
+function updateTimerTimes() {
+  const startEl = document.getElementById("timerStartTime");
+  const endEl = document.getElementById("timerEndTime");
+
+  if (!startEl || !endEl) return;
+
+  const now = new Date();
+  const end = new Date(now.getTime() + remaining * 1000);
+
+  startEl.textContent = formatTime(now);
+  endEl.textContent = formatTime(end);
+}
 function updateTimer() {
   const m = String(Math.floor(remaining/60)).padStart(2,"0");
   const s = String(remaining%60).padStart(2,"0");
@@ -329,6 +348,7 @@ document.querySelectorAll(".preset").forEach(btn => btn.onclick = () => {
   selectedMinutes = +btn.dataset.minutes; remaining = selectedMinutes*60; updateTimer();
 });
 document.getElementById("startTimer").onclick = () => {
+  if (!timerId) updateTimerTimes();
   if (timerId) { clearInterval(timerId); timerId=null; document.getElementById("startTimer").textContent="Continuar"; return; }
   document.getElementById("startTimer").textContent="Pausar";
   timerId=setInterval(()=> {
