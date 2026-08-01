@@ -46,7 +46,7 @@
 
     <main class="main">
       <header class="topbar">
-        <button class="menu-btn" id="menuBtn" aria-label="Abrir menu">☰</button>
+        <button class="menu-btn" id="menuBtn" aria-label="Abrir menu lateral">☰</button>
         <div>
           <p class="eyebrow">PREPARAÇÃO CONSISTENTE</p>
           <h1 id="pageTitle">Visão geral</h1>
@@ -322,5 +322,48 @@
   </div>
 
   <script src="app.js"></script>
+
+  <nav class="mobile-nav" id="mobileNav" aria-label="Navegação principal">
+    <button class="mobile-nav-item active" data-mobile-page="dashboard">
+      <span class="mobile-nav-icon">⌂</span>
+      <span>Início</span>
+    </button>
+    <button class="mobile-nav-item" data-mobile-page="plano">
+      <span class="mobile-nav-icon">▦</span>
+      <span>Plano</span>
+    </button>
+    <button class="mobile-nav-item mobile-nav-main" data-mobile-page="sessao">
+      <span class="mobile-nav-icon">▶</span>
+      <span>Estudar</span>
+    </button>
+    <button class="mobile-nav-item" data-mobile-page="taf">
+      <span class="mobile-nav-icon">⚡</span>
+      <span>TAF</span>
+    </button>
+    <button class="mobile-nav-item" id="moreMenuBtn">
+      <span class="mobile-nav-icon">•••</span>
+      <span>Mais</span>
+    </button>
+  </nav>
+
+  <div class="mobile-sheet-backdrop" id="mobileSheet">
+    <section class="mobile-sheet" role="dialog" aria-modal="true" aria-label="Mais opções">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head">
+        <div>
+          <span class="eyebrow">NAVEGAÇÃO</span>
+          <h3>Mais opções</h3>
+        </div>
+        <button class="sheet-close" id="closeMobileSheet" aria-label="Fechar">×</button>
+      </div>
+      <div class="sheet-grid">
+        <button class="sheet-link" data-sheet-page="disciplinas"><span>▤</span><strong>Disciplinas</strong><small>Conteúdos e módulos</small></button>
+        <button class="sheet-link" data-sheet-page="questoes"><span>✓</span><strong>Questões</strong><small>Acertos e desempenho</small></button>
+        <button class="sheet-link" data-sheet-page="revisoes"><span>↻</span><strong>Revisões</strong><small>24h, 7d e 30d</small></button>
+        <button class="sheet-link" data-sheet-page="metas"><span>◎</span><strong>Metas</strong><small>Objetivos e data-alvo</small></button>
+      </div>
+    </section>
+  </div>
+
 </body>
 </html>

@@ -347,3 +347,65 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
+
+
+// ===== Versão 1.1: navegação mobile =====
+const mobileSheet = document.getElementById("mobileSheet");
+const moreMenuBtn = document.getElementById("moreMenuBtn");
+const closeMobileSheet = document.getElementById("closeMobileSheet");
+
+function syncMobileNav(page) {
+  document.querySelectorAll("[data-mobile-page]").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.mobilePage === page);
+  });
+  if (["disciplinas", "questoes", "revisoes", "metas"].includes(page)) {
+    moreMenuBtn?.classList.add("active");
+  } else {
+    moreMenuBtn?.classList.remove("active");
+  }
+}
+
+document.querySelectorAll("[data-mobile-page]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const page = btn.dataset.mobilePage;
+    navigate(page);
+    syncMobileNav(page);
+  });
+});
+
+moreMenuBtn?.addEventListener("click", () => {
+  mobileSheet?.classList.add("open");
+  document.body.style.overflow = "hidden";
+});
+
+closeMobileSheet?.addEventListener("click", () => {
+  mobileSheet?.classList.remove("open");
+  document.body.style.overflow = "";
+});
+
+mobileSheet?.addEventListener("click", (event) => {
+  if (event.target === mobileSheet) {
+    mobileSheet.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+});
+
+document.querySelectorAll("[data-sheet-page]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const page = btn.dataset.sheetPage;
+    navigate(page);
+    syncMobileNav(page);
+    mobileSheet?.classList.remove("open");
+    document.body.style.overflow = "";
+  });
+});
+
+// Mantém a barra inferior sincronizada também ao usar o menu lateral.
+document.querySelectorAll("[data-page], [data-go]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const page = btn.dataset.page || btn.dataset.go;
+    if (page) syncMobileNav(page);
+  });
+});
+
+syncMobileNav("dashboard");
