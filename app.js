@@ -561,7 +561,57 @@ const exportBackupBtn = document.getElementById("exportBackupBtn");
 const importBackupBtn = document.getElementById("importBackupBtn");
 const importBackupFile = document.getElementById("importBackupFile");
 
-exportBackupBtn.onclick = () => {
+}exportBackupBtn.onclick = async () => {
+  const backup = {
+    app: "Rota PMMG 2027",
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    data: state
+  };
+
+  const date = new Date().toISOString().slice(0, 10);
+  const fileName = `rota-pmmg-backup-${date}.json`;
+
+  const file = new File(
+    [JSON.stringify(backup, null, 2)],
+    fileName,
+    { type: "application/json" }
+  );
+
+  try {
+    if (
+      navigator.share &&
+      navigator.canShare &&
+      navigator.canShare({ files: [file] })
+    ) {
+      await navigator.share({
+        title: "Backup Rota PMMG 2027",
+        text: "Backup dos meus dados de estudo.",
+        files: [file]
+      });
+
+      return;
+    }
+
+    const url = URL.createObjectURL(file);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = fileName;
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+    alert("Backup criado. Confira a pasta Downloads do navegador.");
+  } catch (error) {
+    if (error.name !== "AbortError") {
+      alert("Não foi possível exportar o backup.");
+    }
+  }
+};
   const backup = {
     app: "Rota PMMG 2027",
     version: 1,
