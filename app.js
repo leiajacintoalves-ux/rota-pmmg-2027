@@ -708,7 +708,15 @@ closeMobileSheet?.addEventListener("click", () => {
   mobileSheet?.classList.remove("open");
   document.body.style.overflow = "";
 });
+document.getElementById("exportBackupMenu").onclick = () => {
+  document.getElementById("exportBackupBtn").click();
+  document.getElementById("mobileSheet").classList.remove("active");
+};
 
+document.getElementById("importBackupMenu").onclick = () => {
+  document.getElementById("importBackupBtn").click();
+  document.getElementById("mobileSheet").classList.remove("active");
+};
 mobileSheet?.addEventListener("click", (event) => {
   if (event.target === mobileSheet) {
     mobileSheet.classList.remove("open");
