@@ -488,3 +488,30 @@ document.querySelectorAll("[data-page], [data-go]").forEach(btn => {
 });
 
 syncMobileNav("dashboard");
+
+
+// Progresso visual do cronômetro
+function updateTimerProgress() {
+  const progress = document.getElementById("timerProgress");
+  if (!progress) return;
+
+  const totalSeconds = selectedMinutes * 60;
+  const elapsedSeconds = totalSeconds - remaining;
+  const percentage = totalSeconds > 0
+    ? Math.min(100, Math.max(0, (elapsedSeconds / totalSeconds) * 100))
+    : 0;
+
+  progress.style.width = `${percentage}%`;
+}
+
+// Atualiza a barra sempre que o cronômetro muda
+const originalUpdateTimer = updateTimer;
+
+updateTimer = function () {
+  originalUpdateTimer();
+  updateTimerProgress();
+};
+
+updateTimerProgress();
+
+
