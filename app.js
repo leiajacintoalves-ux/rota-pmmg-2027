@@ -21,6 +21,7 @@ const WEEK = {
   "Domingo": [["Descanso ou revisão leve","Livre"]]
 };
 
+
 const defaults = {
   theme: "dark",
   completedTasks: {},
