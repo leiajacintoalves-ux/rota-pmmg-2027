@@ -406,6 +406,56 @@
       </div>
     </section>
   </div>
+<script>
+  document.querySelectorAll("[data-mobile-page]").forEach(function (botao) {
+    botao.onclick = function () {
+      var pagina = botao.getAttribute("data-mobile-page");
 
+      document.querySelectorAll(".page").forEach(function (tela) {
+        tela.classList.remove("active");
+      });
+
+      var destino = document.getElementById(pagina);
+
+      if (destino) {
+        destino.classList.add("active");
+        window.scrollTo(0, 0);
+      }
+
+      document.querySelectorAll("[data-mobile-page]").forEach(function (item) {
+        item.classList.remove("active");
+      });
+
+      botao.classList.add("active");
+    };
+  });
+
+  document.getElementById("moreMenuBtn").onclick = function () {
+    document.getElementById("mobileSheet").classList.add("open");
+  };
+
+  document.getElementById("closeMobileSheet").onclick = function () {
+    document.getElementById("mobileSheet").classList.remove("open");
+  };
+
+  document.querySelectorAll("[data-sheet-page]").forEach(function (botao) {
+    botao.onclick = function () {
+      var pagina = botao.getAttribute("data-sheet-page");
+
+      document.querySelectorAll(".page").forEach(function (tela) {
+        tela.classList.remove("active");
+      });
+
+      var destino = document.getElementById(pagina);
+
+      if (destino) {
+        destino.classList.add("active");
+        window.scrollTo(0, 0);
+      }
+
+      document.getElementById("mobileSheet").classList.remove("open");
+    };
+  });
+</script>
 </body>
 </html>
