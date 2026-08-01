@@ -388,6 +388,7 @@ document.getElementById("startTimer").onclick = () => {
   remaining = 0;
   updateTimer();
 
+
   registerCompletedSession();
 
   document.getElementById("startTimer").textContent = "Iniciar";
