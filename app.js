@@ -415,37 +415,51 @@ document.querySelectorAll(".preset").forEach(btn => btn.onclick = () => {
   selectedMinutes = +btn.dataset.minutes; remaining = selectedMinutes*60; updateTimer();
 });
 document.getElementById("startTimer").onclick = () => {
-  if (!timerId) updateTimerTimes();
-  if (timerId) { clearInterval(timerId); timerId=null; document.getElementById("startTimer").textContent="Continuar"; return; }
-  document.getElementById("startTimer").textContent="Pausar";
+  const startButton = document.getElementById("startTimer");
+
+  // Se estiver rodando, pausa
+  if (timerId) {
+    clearInterval(timerId);
+    timerId = null;
+    startButton.textContent = "Continuar";
+    return;
+  }
+
   const subject = document.getElementById("studySubject").value;
-const topic = document.getElementById("studyTopic").value.trim();
+  const topic = document.getElementById("studyTopic").value.trim();
 
-if (!subject) {
-  alert("Selecione uma disciplina antes de iniciar.");
-  return;
-}
+  if (!subject) {
+    alert("Selecione uma disciplina antes de iniciar.");
+    return;
+  }
 
-if (!topic) {
-  alert("Informe o tópico que será estudado.");
-  return;
-}
-  timerId=setInterval(()=> {
-    remaining--; updateTimer();
+  if (!topic) {
+    alert("Informe o tópico que será estudado.");
+    return;
+  }
+
+  updateTimerTimes();
+  startButton.textContent = "Pausar";
+
+  timerId = setInterval(() => {
+    remaining--;
+    updateTimer();
+
     if (remaining <= 0) {
-  clearInterval(timerId);
-  timerId = null;
-  remaining = 0;
-  updateTimer();
+      clearInterval(timerId);
+      timerId = null;
+      remaining = 0;
+      updateTimer();
 
+      registerCompletedSession();
 
-  registerCompletedSession();
+      startButton.textContent = "Iniciar";
 
-  document.getElementById("startTimer").textContent = "Iniciar";
-
-  alert("Sessão concluída e registrada automaticamente!");
-}
+      alert("Sessão concluída e registrada automaticamente!");
+    }
+  }, 1000);
 };
+
 document.getElementById("resetTimer").onclick = () => {
   clearInterval(timerId);
   timerId = null;
