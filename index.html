@@ -342,6 +342,31 @@
             </form>
           </article>
 
+          <article class="panel backup-panel">
+  <span class="eyebrow">BACKUP DOS DADOS</span>
+  <h2>Proteja seu progresso</h2>
+
+  <p class="muted">
+    Exporte seus estudos para um arquivo e restaure quando precisar.
+  </p>
+
+  <div class="backup-actions">
+    <button class="primary-btn" id="exportBackupBtn">
+      Exportar backup
+    </button>
+
+    <button class="ghost-btn" id="importBackupBtn">
+      Importar backup
+    </button>
+
+    <input
+      type="file"
+      id="importBackupFile"
+      accept=".json,application/json"
+      hidden
+    />
+  </div>
+</article>
           <article class="panel danger-panel">
             <span class="eyebrow">DADOS LOCAIS</span>
             <h2>Recomeçar o projeto</h2>
