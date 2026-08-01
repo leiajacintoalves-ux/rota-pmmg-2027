@@ -340,6 +340,35 @@ function updateTimer() {
   const m = String(Math.floor(remaining/60)).padStart(2,"0");
   const s = String(remaining%60).padStart(2,"0");
   document.getElementById("timerDisplay").textContent = `${m}:${s}`;
+}function registerCompletedSession() {
+  const subjectEl = document.getElementById("studySubject");
+  const topicEl = document.getElementById("studyTopic");
+  const notesEl = document.getElementById("studyNotes");
+
+  state.sessions.push({
+    subject: subjectEl ? subjectEl.value : "Estudo geral",
+    topic: topicEl?.value || "Sessão focada",
+    notes: notesEl?.value || "",
+    minutes: selectedMinutes,
+    date: new Date().toLocaleDateString("pt-BR")
+  });
+
+  const today = new Date().toISOString().slice(0, 10);
+
+  if (state.lastStudyDate !== today) {
+    const yesterday = new Date(Date.now() - 86400000)
+      .toISOString()
+      .slice(0, 10);
+
+    state.streak =
+      state.lastStudyDate === yesterday
+        ? (state.streak || 0) + 1
+        : 1;
+
+    state.lastStudyDate = today;
+  }
+
+  save();
 }
 document.querySelectorAll(".preset").forEach(btn => btn.onclick = () => {
   if (timerId) return;
@@ -353,8 +382,18 @@ document.getElementById("startTimer").onclick = () => {
   document.getElementById("startTimer").textContent="Pausar";
   timerId=setInterval(()=> {
     remaining--; updateTimer();
-    if (remaining<=0) { clearInterval(timerId); timerId=null; alert("Sessão concluída! Salve seu registro."); remaining=0; updateTimer(); }
-  },1000);
+    if (remaining <= 0) {
+  clearInterval(timerId);
+  timerId = null;
+  remaining = 0;
+  updateTimer();
+
+  registerCompletedSession();
+
+  document.getElementById("startTimer").textContent = "Iniciar";
+
+  alert("Sessão concluída e registrada automaticamente!");
+}
 };
 document.getElementById("resetTimer").onclick = () => {
   clearInterval(timerId);
