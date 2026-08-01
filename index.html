@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f1115" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Rota PMMG" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <title>Rota PMMG 2027</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">R</div>
+        <div>
+          <strong>ROTA PMMG</strong>
+          <span>Projeto 2027</span>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-item active" data-page="dashboard">◫ <span>Visão geral</span></button>
+        <button class="nav-item" data-page="plano">▦ <span>Plano semanal</span></button>
+        <button class="nav-item" data-page="disciplinas">▤ <span>Disciplinas</span></button>
+        <button class="nav-item" data-page="sessao">◷ <span>Sessão de estudo</span></button>
+        <button class="nav-item" data-page="questoes">✓ <span>Questões</span></button>
+        <button class="nav-item" data-page="revisoes">↻ <span>Revisões</span></button>
+        <button class="nav-item" data-page="taf">⚡ <span>TAF</span></button>
+        <button class="nav-item" data-page="metas">◎ <span>Metas</span></button>
+      </nav>
+
+      <div class="sidebar-card">
+        <span class="eyebrow">CONTAGEM REGRESSIVA</span>
+        <strong id="countdownDays">— dias</strong>
+        <small>Data-alvo configurável em Metas</small>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" aria-label="Abrir menu">☰</button>
+        <div>
+          <p class="eyebrow">PREPARAÇÃO CONSISTENTE</p>
+          <h1 id="pageTitle">Visão geral</h1>
+        </div>
+        <div class="top-actions">
+          <button class="ghost-btn" id="themeToggle">☾</button>
+          <div class="avatar">C</div>
+        </div>
+      </header>
+
+      <section class="page active" id="dashboard">
+        <div class="hero">
+          <div>
+            <span class="status-pill">PLANO ATIVO</span>
+            <h2>Seu caminho até a aprovação começa no próximo bloco de estudo.</h2>
+            <p>Organize a rotina, acompanhe o progresso e chegue em 2027 com conteúdo, resistência e constância.</p>
+            <button class="primary-btn" data-go="sessao">Iniciar sessão de estudo</button>
+          </div>
+          <div class="hero-score">
+            <div class="ring" id="progressRing"><span id="overallProgress">0%</span></div>
+            <small>Progresso geral</small>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <span>Horas estudadas</span>
+            <strong id="hoursStat">0h</strong>
+            <small>meta semanal: 18h</small>
+          </article>
+          <article class="stat-card">
+            <span>Questões resolvidas</span>
+            <strong id="questionsStat">0</strong>
+            <small>meta semanal: 250</small>
+          </article>
+          <article class="stat-card">
+            <span>Taxa de acertos</span>
+            <strong id="accuracyStat">0%</strong>
+            <small>baseada nas questões lançadas</small>
+          </article>
+          <article class="stat-card">
+            <span>Sequência atual</span>
+            <strong id="streakStat">0 dias</strong>
+            <small>constância vence intensidade</small>
+          </article>
+        </div>
+
+        <div class="content-grid">
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <span class="eyebrow">HOJE</span>
+                <h3>Plano do dia</h3>
+              </div>
+              <button class="text-btn" data-go="plano">Ver semana</button>
+            </div>
+            <div id="todayPlan" class="task-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <span class="eyebrow">DESEMPENHO</span>
+                <h3>Disciplinas</h3>
+              </div>
+            </div>
+            <div id="subjectProgress" class="subject-progress"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="page" id="plano">
+        <div class="section-intro">
+          <div>
+            <span class="eyebrow">ROTINA SEMANAL</span>
+            <h2>Plano de segunda a domingo</h2>
+          </div>
+          <button class="primary-btn" id="resetWeekBtn">Reiniciar marcações</button>
+        </div>
+        <div id="weekGrid" class="week-grid"></div>
+      </section>
+
+      <section class="page" id="disciplinas">
+        <div class="section-intro">
+          <div>
+            <span class="eyebrow">CONTEÚDO PROGRAMÁTICO</span>
+            <h2>Disciplinas e módulos</h2>
+          </div>
+        </div>
+        <div id="subjectsGrid" class="subjects-grid"></div>
+      </section>
+
+      <section class="page" id="sessao">
+        <div class="session-layout">
+          <article class="panel timer-panel">
+            <span class="eyebrow">CRONÔMETRO</span>
+            <h2>Sessão focada</h2>
+            <div class="timer" id="timerDisplay">25:00</div>
+            <div class="timer-presets">
+              <button data-minutes="25" class="preset active">25 min</button>
+              <button data-minutes="50" class="preset">50 min</button>
+              <button data-minutes="90" class="preset">90 min</button>
+            </div>
+            <div class="timer-actions">
+              <button class="primary-btn" id="startTimer">Iniciar</button>
+              <button class="ghost-btn" id="resetTimer">Zerar</button>
+            </div>
+          </article>
+
+          <article class="panel">
+            <span class="eyebrow">REGISTRO</span>
+            <h3>O que você vai estudar?</h3>
+            <form id="studyForm" class="form-stack">
+              <label>Disciplina
+                <select id="studySubject"></select>
+              </label>
+              <label>Tópico
+                <input id="studyTopic" placeholder="Ex.: Direitos e garantias fundamentais" />
+              </label>
+              <label>Observações
+                <textarea id="studyNotes" rows="5" placeholder="Anote dificuldades, pontos-chave e próximos passos."></textarea>
+              </label>
+              <button class="primary-btn" type="submit">Salvar sessão</button>
+            </form>
+          </article>
+        </div>
+
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <span class="eyebrow">HISTÓRICO</span>
+              <h3>Últimas sessões</h3>
+            </div>
+          </div>
+          <div id="sessionHistory" class="history-list"></div>
+        </article>
+      </section>
+
+      <section class="page" id="questoes">
+        <div class="content-grid">
+          <article class="panel">
+            <span class="eyebrow">LANÇAMENTO</span>
+            <h2>Registrar questões</h2>
+            <form id="questionForm" class="form-stack">
+              <label>Disciplina
+                <select id="questionSubject"></select>
+              </label>
+              <label>Quantidade resolvida
+                <input id="questionTotal" type="number" min="1" value="20" />
+              </label>
+              <label>Quantidade correta
+                <input id="questionCorrect" type="number" min="0" value="15" />
+              </label>
+              <button class="primary-btn" type="submit">Adicionar resultado</button>
+            </form>
+          </article>
+          <article class="panel">
+            <span class="eyebrow">RESUMO</span>
+            <h2>Seu desempenho</h2>
+            <div class="big-number" id="questionSummary">0%</div>
+            <p class="muted">Taxa geral de acertos nas questões registradas.</p>
+            <div id="questionBars" class="subject-progress"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="page" id="revisoes">
+        <div class="section-intro">
+          <div>
+            <span class="eyebrow">MEMÓRIA DE LONGO PRAZO</span>
+            <h2>Revisões 24h, 7d e 30d</h2>
+          </div>
+          <button class="primary-btn" id="addReviewBtn">Adicionar revisão</button>
+        </div>
+        <div id="reviewList" class="review-list"></div>
+      </section>
+
+      <section class="page" id="taf">
+        <div class="section-intro">
+          <div>
+            <span class="eyebrow">PREPARAÇÃO FÍSICA</span>
+            <h2>Controle de TAF</h2>
+          </div>
+        </div>
+        <div class="taf-grid">
+          <article class="panel">
+            <h3>Registrar treino</h3>
+            <form id="tafForm" class="form-stack">
+              <label>Exercício
+                <select id="tafExercise">
+                  <option>Corrida</option>
+                  <option>Flexão</option>
+                  <option>Abdominal</option>
+                  <option>Barra fixa</option>
+                  <option>Tiros curtos</option>
+                </select>
+              </label>
+              <label>Resultado
+                <input id="tafResult" placeholder="Ex.: 3 km em 16 min" />
+              </label>
+              <label>Esforço percebido
+                <select id="tafEffort">
+                  <option>Leve</option>
+                  <option>Moderado</option>
+                  <option>Intenso</option>
+                </select>
+              </label>
+              <button class="primary-btn" type="submit">Salvar treino</button>
+            </form>
+          </article>
+          <article class="panel">
+            <h3>Histórico recente</h3>
+            <div id="tafHistory" class="history-list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="page" id="metas">
+        <div class="content-grid">
+          <article class="panel">
+            <span class="eyebrow">CONFIGURAÇÃO</span>
+            <h2>Metas semanais</h2>
+            <form id="goalsForm" class="form-stack">
+              <label>Horas de estudo
+                <input id="goalHours" type="number" min="1" />
+              </label>
+              <label>Questões
+                <input id="goalQuestions" type="number" min="1" />
+              </label>
+              <label>Treinos físicos
+                <input id="goalTaf" type="number" min="1" />
+              </label>
+              <label>Data-alvo
+                <input id="goalDate" type="date" />
+              </label>
+              <button class="primary-btn" type="submit">Salvar metas</button>
+            </form>
+          </article>
+
+          <article class="panel danger-panel">
+            <span class="eyebrow">DADOS LOCAIS</span>
+            <h2>Recomeçar o projeto</h2>
+            <p class="muted">Os dados ficam salvos somente neste navegador.</p>
+            <button class="danger-btn" id="clearDataBtn">Apagar todos os dados</button>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="reviewModal">
+    <div class="modal">
+      <button class="modal-close" id="closeReviewModal">×</button>
+      <span class="eyebrow">NOVA REVISÃO</span>
+      <h2>Adicionar conteúdo</h2>
+      <form id="reviewForm" class="form-stack">
+        <label>Disciplina
+          <select id="reviewSubject"></select>
+        </label>
+        <label>Tópico
+          <input id="reviewTopic" required placeholder="Ex.: Princípios fundamentais" />
+        </label>
+        <label>Prazo
+          <select id="reviewCycle">
+            <option value="1">24 horas</option>
+            <option value="7">7 dias</option>
+            <option value="30">30 dias</option>
+          </select>
+        </label>
+        <button class="primary-btn" type="submit">Criar revisão</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
