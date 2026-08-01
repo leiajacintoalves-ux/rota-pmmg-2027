@@ -1,4 +1,4 @@
-const CACHE = 'rota-pmmg-v3';
+const CACHE = 'rota-pmmg-v4';
 const ASSETS = [
   './',
   './index.html',
