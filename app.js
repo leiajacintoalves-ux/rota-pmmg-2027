@@ -418,6 +418,18 @@ document.getElementById("startTimer").onclick = () => {
   if (!timerId) updateTimerTimes();
   if (timerId) { clearInterval(timerId); timerId=null; document.getElementById("startTimer").textContent="Continuar"; return; }
   document.getElementById("startTimer").textContent="Pausar";
+  const subject = document.getElementById("studySubject").value;
+const topic = document.getElementById("studyTopic").value.trim();
+
+if (!subject) {
+  alert("Selecione uma disciplina antes de iniciar.");
+  return;
+}
+
+if (!topic) {
+  alert("Informe o tópico que será estudado.");
+  return;
+}
   timerId=setInterval(()=> {
     remaining--; updateTimer();
     if (remaining <= 0) {
