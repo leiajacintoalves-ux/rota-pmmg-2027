@@ -657,7 +657,32 @@ input:focus, select:focus, textarea:focus { border-color:var(--accent); }
   pointer-events: none;
 }
 
+.welcome-metrics{
+  display:flex;
+  gap:16px;
+  margin-top:20px;
+  flex-wrap:wrap;
+}
 
+.welcome-metric{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;
+  padding:12px 16px;
+  min-width:130px;
+}
+
+.welcome-metric span{
+  display:block;
+  font-size:.75rem;
+  color:var(--muted);
+  margin-bottom:4px;
+}
+
+.welcome-metric strong{
+  font-size:1.15rem;
+  font-weight:700;
+}
 
 
 
