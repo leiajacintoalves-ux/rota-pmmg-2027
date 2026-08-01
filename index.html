@@ -71,6 +71,45 @@
           </div>
         </div>
 
+        <section class="dashboard-welcome">
+          <div>
+            <span class="eyebrow" id="dashboardDate">HOJE</span>
+            <h3 id="dashboardGreeting">Bom dia! Vamos avançar mais um pouco?</h3>
+            <p id="dashboardMessage">Seu progresso é construído em blocos pequenos e consistentes.</p>
+          </div>
+          <button class="ghost-btn" data-go="metas">Ajustar metas</button>
+        </section>
+
+        <div class="dashboard-highlights">
+          <article class="highlight-card">
+            <div class="highlight-icon">◎</div>
+            <div>
+              <span>Progresso semanal</span>
+              <strong id="weeklyProgressText">0%</strong>
+              <div class="bar"><i id="weeklyProgressBar" style="width:0%"></i></div>
+              <small id="weeklyProgressDetail">0h de 18h concluídas</small>
+            </div>
+          </article>
+
+          <article class="highlight-card">
+            <div class="highlight-icon">↻</div>
+            <div>
+              <span>Próxima revisão</span>
+              <strong id="nextReviewTitle">Nenhuma revisão</strong>
+              <small id="nextReviewDate">Adicione uma revisão para começar</small>
+            </div>
+          </article>
+
+          <article class="highlight-card">
+            <div class="highlight-icon">⚡</div>
+            <div>
+              <span>Próximo treino</span>
+              <strong id="nextTafTitle">Treino pendente</strong>
+              <small id="nextTafDetail">Meta semanal: 4 treinos</small>
+            </div>
+          </article>
+        </div>
+
         <div class="stats-grid">
           <article class="stat-card">
             <span>Horas estudadas</span>

@@ -220,9 +220,88 @@ function renderGoals() {
   document.getElementById("streakStat").textContent = `${state.streak || 0} dias`;
 }
 
+
+function renderDashboardOverview() {
+  const now = new Date();
+  const hour = now.getHours();
+  const greeting = hour < 12 ? "Bom dia" : hour < 18 ? "Boa tarde" : "Boa noite";
+  const dayText = now.toLocaleDateString("pt-BR", {
+    weekday: "long",
+    day: "2-digit",
+    month: "long"
+  });
+
+  const dateEl = document.getElementById("dashboardDate");
+  const greetingEl = document.getElementById("dashboardGreeting");
+  const messageEl = document.getElementById("dashboardMessage");
+
+  if (dateEl) dateEl.textContent = dayText.toUpperCase();
+  if (greetingEl) greetingEl.textContent = `${greeting}! Vamos avançar mais um pouco?`;
+
+  const totalMinutes = state.sessions.reduce((sum, item) => sum + item.minutes, 0);
+  const totalHours = totalMinutes / 60;
+  const weeklyGoal = Number(state.goals.hours) || 18;
+  const weeklyPercent = Math.min(100, Math.round((totalHours / weeklyGoal) * 100));
+
+  const progressText = document.getElementById("weeklyProgressText");
+  const progressBar = document.getElementById("weeklyProgressBar");
+  const progressDetail = document.getElementById("weeklyProgressDetail");
+
+  if (progressText) progressText.textContent = `${weeklyPercent}%`;
+  if (progressBar) progressBar.style.width = `${weeklyPercent}%`;
+  if (progressDetail) {
+    progressDetail.textContent = `${totalHours.toFixed(1)}h de ${weeklyGoal}h concluídas`;
+  }
+
+  if (messageEl) {
+    if (weeklyPercent >= 100) {
+      messageEl.textContent = "Meta semanal concluída. Excelente — agora mantenha o ritmo.";
+    } else if (weeklyPercent >= 60) {
+      messageEl.textContent = "Você já passou da metade da meta semanal. Continue firme.";
+    } else if (state.sessions.length > 0) {
+      messageEl.textContent = "Cada sessão registrada aproxima você da meta de 2027.";
+    } else {
+      messageEl.textContent = "Comece com uma sessão curta. Constância vale mais que pressa.";
+    }
+  }
+
+  const pendingReviews = state.reviews
+    .filter(item => !item.done)
+    .sort((a, b) => new Date(a.due) - new Date(b.due));
+
+  const nextReview = pendingReviews[0];
+  const nextReviewTitle = document.getElementById("nextReviewTitle");
+  const nextReviewDate = document.getElementById("nextReviewDate");
+
+  if (nextReview) {
+    if (nextReviewTitle) nextReviewTitle.textContent = nextReview.topic;
+    if (nextReviewDate) {
+      nextReviewDate.textContent = `${nextReview.subject} • ${new Date(nextReview.due + "T00:00:00").toLocaleDateString("pt-BR")}`;
+    }
+  } else {
+    if (nextReviewTitle) nextReviewTitle.textContent = "Nenhuma revisão";
+    if (nextReviewDate) nextReviewDate.textContent = "Adicione uma revisão para começar";
+  }
+
+  const tafGoal = Number(state.goals.taf) || 4;
+  const tafDone = state.taf.length;
+  const tafRemaining = Math.max(0, tafGoal - tafDone);
+  const nextTafTitle = document.getElementById("nextTafTitle");
+  const nextTafDetail = document.getElementById("nextTafDetail");
+
+  if (tafRemaining === 0) {
+    if (nextTafTitle) nextTafTitle.textContent = "Meta física concluída";
+    if (nextTafDetail) nextTafDetail.textContent = `${tafDone} treinos registrados`;
+  } else {
+    if (nextTafTitle) nextTafTitle.textContent = `${tafRemaining} treino${tafRemaining > 1 ? "s" : ""} restante${tafRemaining > 1 ? "s" : ""}`;
+    if (nextTafDetail) nextTafDetail.textContent = `${tafDone} de ${tafGoal} treinos registrados`;
+  }
+}
+
 function renderAll() {
   renderWeek(); renderToday(); renderSubjects(); renderSubjectProgress();
   renderQuestions(); renderSessions(); renderReviews(); renderTaf(); renderGoals();
+  renderDashboardOverview();
 }
 
 document.getElementById("questionForm").onsubmit = e => {

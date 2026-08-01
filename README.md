@@ -32,3 +32,12 @@ Aplicativo web instalável (PWA) para organizar os estudos e o TAF da PMMG 2027.
 - Menu “Mais” em formato de painel deslizante
 - Melhor suporte à área segura do iPhone
 - Cabeçalho e cartões refinados para telas pequenas
+
+
+## Versão 1.2 — Dashboard
+- Saudação dinâmica conforme o horário
+- Data atual no painel
+- Progresso semanal de horas
+- Próxima revisão pendente
+- Resumo da meta semanal de TAF
+- Mensagens de incentivo baseadas no progresso
