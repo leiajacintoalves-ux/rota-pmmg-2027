@@ -10,6 +10,7 @@ const SUBJECTS = [
   { name: "Literatura", target: 120, topics: ["Escolas literárias","Leitura das obras do edital","Autores e contexto","Interpretação"] }
 ];
 
+
 const WEEK = {
   "Segunda": [["Português","1h30"],["Direito Constitucional","1h30"]],
   "Terça": [["Matemática e Raciocínio Lógico","1h30"],["Direito Administrativo","1h30"]],
