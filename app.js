@@ -551,7 +551,100 @@ document.getElementById("closeReviewModal").onclick = () => document.getElementB
 document.getElementById("reviewModal").onclick = e => { if (e.target.id==="reviewModal") e.currentTarget.classList.remove("open"); };
 
 document.getElementById("resetWeekBtn").onclick = () => {
-  if (confirm("Reiniciar todas as marcações da semana?")) { state.completedTasks={}; save(); }
+  if (confirm("Reiniciar todas as marcações da semana?")) {
+    state.completedTasks = {};
+    save();
+  }
+};
+const exportBackupBtn = document.getElementById("exportBackupBtn");
+const importBackupBtn = document.getElementById("importBackupBtn");
+const importBackupFile = document.getElementById("importBackupFile");
+
+exportBackupBtn.onclick = () => {
+  const backup = {
+    app: "Rota PMMG 2027",
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    data: state
+  };
+
+  const file = new Blob(
+    [JSON.stringify(backup, null, 2)],
+    { type: "application/json" }
+  );
+
+  const url = URL.createObjectURL(file);
+  const link = document.createElement("a");
+  const date = new Date().toISOString().slice(0, 10);
+
+  link.href = url;
+  link.download = `rota-pmmg-backup-${date}.json`;
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  URL.revokeObjectURL(url);
+};
+
+importBackupBtn.onclick = () => {
+  importBackupFile.value = "";
+  importBackupFile.click();
+};
+
+importBackupFile.onchange = event => {
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    try {
+      const backup = JSON.parse(reader.result);
+      const importedData = backup.data || backup;
+
+      if (
+        !importedData ||
+        !Array.isArray(importedData.sessions) ||
+        !Array.isArray(importedData.questions) ||
+        !Array.isArray(importedData.reviews) ||
+        !Array.isArray(importedData.taf)
+      ) {
+        throw new Error("Backup incompatível");
+      }
+
+      if (!confirm(
+        "Importar este backup substituirá os dados atuais. Continuar?"
+      )) {
+        return;
+      }
+
+      state = {
+        ...structuredClone(defaults),
+        ...importedData,
+        goals: {
+          ...defaults.goals,
+          ...(importedData.goals || {})
+        }
+      };
+
+      save();
+
+      alert("Backup importado com sucesso!");
+    } catch (error) {
+      alert("Não foi possível importar. Escolha um backup válido do Rota PMMG.");
+    }
+  };
+
+  reader.readAsText(file);
+};
+  
+ document.getElementById("resetWeekBtn").onclick = () => {
+  if (confirm("Reiniciar todas as marcações da semana?")) {
+    state.completedTasks = {};
+    save();
+  }
 };
 document.getElementById("clearDataBtn").onclick = () => {
   if (confirm("Isso apagará todo o histórico salvo neste navegador. Continuar?")) {
