@@ -278,6 +278,25 @@ function renderDashboardOverview() {
 
   const totalMinutes = state.sessions.reduce((sum, item) => sum + item.minutes, 0);
   const totalHours = totalMinutes / 60;
+  const today = new Date().toISOString().slice(0,10);
+
+const todayMinutes = state.sessions
+  .filter(s => s.date === today)
+  .reduce((sum, s) => sum + s.minutes, 0);
+
+const todayStudy = document.getElementById("todayStudyTime");
+if (todayStudy) {
+  if (todayMinutes >= 60) {
+    todayStudy.textContent = (todayMinutes / 60).toFixed(1) + "h";
+  } else {
+    todayStudy.textContent = todayMinutes + " min";
+  }
+}
+
+const welcomeStreak = document.getElementById("welcomeStreak");
+if (welcomeStreak) {
+  welcomeStreak.textContent = `${state.streak || 0} dias`;
+}
   const weeklyGoal = Number(state.goals.hours) || 18;
   const weeklyPercent = Math.min(100, Math.round((totalHours / weeklyGoal) * 100));
 
