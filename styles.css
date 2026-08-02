@@ -684,5 +684,30 @@ input:focus, select:focus, textarea:focus { border-color:var(--accent); }
   font-weight:700;
 }
 
+/* Organização dos botões da conta */
+.account-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
 
+.account-actions button {
+  width: 100%;
+  min-height: 48px;
+}
+
+.account-actions .secondary-btn {
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  padding: 12px 16px;
+  background: var(--panel-2);
+  color: var(--text);
+  font-weight: 800;
+}
+
+.account-actions button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
 
