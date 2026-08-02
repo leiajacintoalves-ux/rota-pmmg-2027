@@ -810,7 +810,14 @@ const restoreCloudButton =
   const userEmail = document.getElementById("googleUserEmail");
   const userPhoto = document.getElementById("googleUserPhoto");
   const syncStatus = document.getElementById("syncStatus");
-const lastSyncTime = document.getElementById("lastSyncTime");
+let lastSyncTime = document.getElementById("lastSyncTime");
+
+if (!lastSyncTime && syncStatus) {
+  lastSyncTime = document.createElement("small");
+  lastSyncTime.id = "lastSyncTime";
+  lastSyncTime.className = "account-note";
+  syncStatus.insertAdjacentElement("afterend", lastSyncTime);
+}
   function setAccountStatus(message) {
     if (syncStatus) {
       syncStatus.textContent = message;
