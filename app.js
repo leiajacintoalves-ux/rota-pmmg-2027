@@ -819,4 +819,130 @@ updateTimer = function () {
 
 updateTimerProgress();
 
+document.addEventListener("DOMContentLoaded", async () => {
+  const signedOutState = document.getElementById("googleSignedOutState");
+  const signedInState = document.getElementById("googleSignedInState");
 
+  const loginButton = document.getElementById("googleLoginButton");
+  const logoutButton = document.getElementById("googleLogoutButton");
+  const syncNowButton = document.getElementById("syncNowButton");
+
+  const userName = document.getElementById("googleUserName");
+  const userEmail = document.getElementById("googleUserEmail");
+  const userPhoto = document.getElementById("googleUserPhoto");
+  const syncStatus = document.getElementById("syncStatus");
+
+  function setAccountStatus(message) {
+    if (syncStatus) {
+      syncStatus.textContent = message;
+    }
+  }
+
+  function renderFirebaseUser(user) {
+    const isSignedIn = Boolean(user);
+
+    if (signedOutState) {
+      signedOutState.hidden = isSignedIn;
+    }
+
+    if (signedInState) {
+      signedInState.hidden = !isSignedIn;
+    }
+
+    if (loginButton) {
+      loginButton.disabled = isSignedIn;
+    }
+
+    if (logoutButton) {
+      logoutButton.disabled = !isSignedIn;
+    }
+
+    // A sincronização será implementada em outro commit.
+    if (syncNowButton) {
+      syncNowButton.disabled = true;
+    }
+
+    if (!user) {
+      if (userName) {
+        userName.textContent = "Usuário conectado";
+      }
+
+      if (userEmail) {
+        userEmail.textContent = "";
+      }
+
+      if (userPhoto) {
+        userPhoto.src = "";
+        userPhoto.hidden = true;
+      }
+
+      setAccountStatus("Dados locais");
+      return;
+    }
+
+    if (userName) {
+      userName.textContent = user.displayName || "Usuário conectado";
+    }
+
+    if (userEmail) {
+      userEmail.textContent = user.email || "";
+    }
+
+    if (userPhoto) {
+      if (user.photoURL) {
+        userPhoto.src = user.photoURL;
+        userPhoto.hidden = false;
+      } else {
+        userPhoto.src = "";
+        userPhoto.hidden = true;
+      }
+    }
+
+    setAccountStatus("Conta conectada — dados locais");
+  }
+
+  const firebaseSync = window.firebaseSync;
+
+  if (!firebaseSync) {
+    console.error("O módulo firebase-sync.js não está disponível.");
+    setAccountStatus(
+      "Firebase indisponível — o aplicativo continua com dados locais."
+    );
+    return;
+  }
+
+  loginButton?.addEventListener("click", async () => {
+    loginButton.disabled = true;
+    setAccountStatus("Abrindo login do Google…");
+
+    try {
+      await firebaseSync.loginWithGoogle();
+    } catch (error) {
+      console.error("Erro ao entrar com Google:", error);
+      setAccountStatus("Não foi possível entrar com Google.");
+      loginButton.disabled = false;
+    }
+  });
+
+  logoutButton?.addEventListener("click", async () => {
+    logoutButton.disabled = true;
+    setAccountStatus("Saindo da conta…");
+
+    try {
+      await firebaseSync.logoutFromGoogle();
+    } catch (error) {
+      console.error("Erro ao sair da conta Google:", error);
+      setAccountStatus("Não foi possível sair da conta.");
+      logoutButton.disabled = false;
+    }
+  });
+
+  try {
+    await firebaseSync.observeFirebaseUser(renderFirebaseUser);
+  } catch (error) {
+    console.error("Erro ao observar a conta Google:", error);
+    setAccountStatus(
+      "Não foi possível verificar a conta — usando dados locais."
+    );
+  }
+});
