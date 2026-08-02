@@ -953,6 +953,77 @@ syncNowButton?.addEventListener("click", async () => {
     }
   }
 });
+restoreCloudButton?.addEventListener("click", async () => {
+  const originalText = restoreCloudButton.textContent;
+
+  restoreCloudButton.disabled = true;
+  restoreCloudButton.textContent = "Restaurando…";
+  setAccountStatus("Buscando backup na nuvem…");
+
+  try {
+    const user = await firebaseSync.getCurrentFirebaseUser();
+
+    if (!user) {
+      throw new Error("É necessário entrar com Google.");
+    }
+
+    const backup = await firebaseSync.loadFirebaseBackup();
+
+    if (!backup) {
+      setAccountStatus("Nenhum backup encontrado na nuvem.");
+      alert("Nenhum backup foi encontrado para esta conta.");
+      return;
+    }
+
+    const restoredData = backup.data || backup;
+
+    if (
+      !restoredData ||
+      !Array.isArray(restoredData.sessions) ||
+      !Array.isArray(restoredData.questions) ||
+      !Array.isArray(restoredData.reviews) ||
+      !Array.isArray(restoredData.taf)
+    ) {
+      throw new Error("Backup incompatível.");
+    }
+
+    if (!confirm(
+      "Restaurar o backup da nuvem substituirá os dados atuais deste aparelho. Continuar?"
+    )) {
+      setAccountStatus("Restauração cancelada.");
+      return;
+    }
+
+    state = {
+      ...structuredClone(defaults),
+      ...restoredData,
+      goals: {
+        ...defaults.goals,
+        ...(restoredData.goals || {})
+      }
+    };
+
+    save();
+
+    setAccountStatus("Backup restaurado com sucesso.");
+    alert("Backup da nuvem restaurado com sucesso!");
+  } catch (error) {
+    console.error("Erro ao restaurar backup da nuvem:", error);
+
+    setAccountStatus(
+      "Não foi possível restaurar. Seus dados atuais continuam seguros."
+    );
+  } finally {
+    restoreCloudButton.textContent = originalText;
+
+    try {
+      const user = await firebaseSync.getCurrentFirebaseUser();
+      restoreCloudButton.disabled = !user;
+    } catch {
+      restoreCloudButton.disabled = true;
+    }
+  }
+});
   try {
     await firebaseSync.observeFirebaseUser(renderFirebaseUser);
   } catch (error) {
