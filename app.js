@@ -955,7 +955,10 @@ syncNowButton?.addEventListener("click", async () => {
     const backup = createBackupPayload();
 
     await firebaseSync.saveFirebaseBackup(backup);
+const now = new Date().toISOString();
 
+localStorage.setItem("pmmg2027LastSync", now);
+updateLastSyncTime(now);
     setAccountStatus("Sincronização concluída.");
   } catch (error) {
     console.error("Erro ao sincronizar com o Firestore:", error);
