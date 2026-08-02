@@ -20,7 +20,10 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
 import {
-  getFirestore
+  getFirestore,
+  doc,
+  setDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 let firebaseApp = null;
@@ -148,7 +151,37 @@ export async function observeFirebaseUser(callback) {
     callback
   );
 }
+export async function saveFirebaseBackup(backup) {
+  const services = await initializeFirebaseSync();
 
+  if (!services?.auth || !services?.db) {
+    throw new Error("Firebase não está disponível.");
+  }
+
+  const user = services.auth.currentUser;
+
+  if (!user) {
+    throw new Error("É necessário entrar com Google.");
+  }
+
+  if (!backup || typeof backup !== "object") {
+    throw new Error("Backup inválido.");
+  }
+
+  const backupReference = doc(
+    services.db,
+    "userBackups",
+    user.uid
+  );
+
+  await setDoc(backupReference, {
+    ...backup,
+    userId: user.uid,
+    updatedAt: serverTimestamp()
+  });
+
+  return true;
+}
 export function getFirebaseServices() {
   return {
     app: firebaseApp,
@@ -167,7 +200,8 @@ window.firebaseSync = {
   logoutFromGoogle,
   getCurrentFirebaseUser,
   observeFirebaseUser,
-  getFirebaseServices
+  getFirebaseServices,
+  saveFirebaseBackup
 };
 
 initializeFirebaseSync();
