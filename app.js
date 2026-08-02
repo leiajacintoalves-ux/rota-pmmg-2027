@@ -810,13 +810,34 @@ const restoreCloudButton =
   const userEmail = document.getElementById("googleUserEmail");
   const userPhoto = document.getElementById("googleUserPhoto");
   const syncStatus = document.getElementById("syncStatus");
-
+const lastSyncTime = document.getElementById("lastSyncTime");
   function setAccountStatus(message) {
     if (syncStatus) {
       syncStatus.textContent = message;
     }
   }
+function updateLastSyncTime(dateValue) {
+  if (!lastSyncTime) return;
 
+  if (!dateValue) {
+    lastSyncTime.textContent =
+      "Última sincronização: ainda não realizada";
+    return;
+  }
+
+  const formattedDate = new Intl.DateTimeFormat("pt-BR", {
+    dateStyle: "short",
+    timeStyle: "short"
+  }).format(new Date(dateValue));
+
+  lastSyncTime.textContent =
+    `Última sincronização: ${formattedDate}`;
+}
+
+const savedLastSync =
+  localStorage.getItem("pmmg2027LastSync");
+
+updateLastSyncTime(savedLastSync);
   function renderFirebaseUser(user) {
     const isSignedIn = Boolean(user);
 
