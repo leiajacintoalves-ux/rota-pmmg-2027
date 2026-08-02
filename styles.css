@@ -710,4 +710,15 @@ input:focus, select:focus, textarea:focus { border-color:var(--accent); }
   opacity: 0.55;
   cursor: not-allowed;
 }
+/* Organização dos botões de backup */
+.backup-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 18px;
+}
 
+.backup-actions button {
+  width: 100%;
+  min-height: 50px;
+}
