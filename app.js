@@ -614,36 +614,12 @@ exportBackupBtn.onclick = async () => {
     }
   }
 };
-  const backup = {
-    app: "Rota PMMG 2027",
-    version: 1,
-    exportedAt: new Date().toISOString(),
-    data: state
-  };
-
-  const file = new Blob(
-    [JSON.stringify(backup, null, 2)],
-    { type: "application/json" }
-  );
-
-  const url = URL.createObjectURL(file);
-  const link = document.createElement("a");
-  const date = new Date().toISOString().slice(0, 10);
-
-  link.href = url;
-  link.download = `rota-pmmg-backup-${date}.json`;
-
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-
-  URL.revokeObjectURL(url);
-};
 
 importBackupBtn.onclick = () => {
   importBackupFile.value = "";
   importBackupFile.click();
 };
+
 
 importBackupFile.onchange = event => {
   const file = event.target.files[0];
