@@ -351,7 +351,80 @@
           <article class="panel backup-panel">
   <span class="eyebrow">BACKUP DOS DADOS</span>
   <h2>Proteja seu progresso</h2>
+<article class="panel account-panel" id="googleAccountPanel">
+  <span class="eyebrow">CONTA E SINCRONIZAÇÃO</span>
+  <h2>Sincronização na nuvem</h2>
 
+  <div id="googleSignedOutState">
+    <p class="muted">
+      Entre com sua Conta Google para proteger seu progresso
+      e acessar seus dados em outros dispositivos.
+    </p>
+
+    <button
+      class="primary-btn"
+      id="googleLoginButton"
+      type="button"
+    >
+      Entrar com Google
+    </button>
+
+    <small class="account-note">
+      O aplicativo continuará funcionando normalmente sem login
+      e quando estiver offline.
+    </small>
+  </div>
+
+  <div id="googleSignedInState" hidden>
+    <div class="google-user">
+      <div class="google-user-photo-wrap">
+        <img
+          id="googleUserPhoto"
+          alt="Foto da Conta Google"
+          referrerpolicy="no-referrer"
+          hidden
+        />
+
+        <span id="googleUserFallback">U</span>
+      </div>
+
+      <div class="google-user-info">
+        <strong id="googleUserName">Usuário</strong>
+        <small id="googleUserEmail"></small>
+      </div>
+    </div>
+
+    <div class="sync-information">
+      <div>
+        <span>Status</span>
+        <strong id="cloudSyncStatus">Conectado</strong>
+      </div>
+
+      <div>
+        <span>Última sincronização</span>
+        <strong id="lastSyncTime">Ainda não sincronizado</strong>
+      </div>
+    </div>
+
+    <div class="backup-actions">
+      <button
+        class="primary-btn"
+        id="manualSyncButton"
+        type="button"
+      >
+        Sincronizar agora
+      </button>
+
+      <button
+        class="ghost-btn"
+        id="googleLogoutButton"
+        type="button"
+      >
+        Sair da conta
+      </button>
+    </div>
+  </div>
+</article>
   <p class="muted">
     Exporte seus estudos para um arquivo e restaure quando precisar.
   </p>
