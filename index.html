@@ -347,10 +347,6 @@
               <button class="primary-btn" type="submit">Salvar metas</button>
             </form>
           </article>
-
-          <article class="panel backup-panel">
-  <span class="eyebrow">BACKUP DOS DADOS</span>
-  <h2>Proteja seu progresso</h2>
 <article class="panel account-panel" id="googleAccountPanel">
   <span class="eyebrow">CONTA E SINCRONIZAÇÃO</span>
   <h2>Sincronização na nuvem</h2>
@@ -376,6 +372,50 @@
   </div>
 
   <div id="googleSignedInState" hidden>
+      <div class="google-user">
+    <img
+      id="googleUserPhoto"
+      class="google-user-photo"
+      src=""
+      alt="Foto do usuário"
+      hidden
+    />
+
+    <div class="google-user-info">
+      <strong id="googleUserName">Usuário conectado</strong>
+      <span id="googleUserEmail" class="muted"></span>
+    </div>
+  </div>
+
+  <div class="account-actions">
+    <button
+      class="primary-btn"
+      id="syncNowButton"
+      type="button"
+      disabled
+    >
+      Sincronizar agora
+    </button>
+
+    <button
+      class="secondary-btn"
+      id="googleLogoutButton"
+      type="button"
+      disabled
+    >
+      Sair
+    </button>
+  </div>
+</div>
+
+<small
+  id="syncStatus"
+  class="account-note"
+  role="status"
+  aria-live="polite"
+>
+  Dados locais
+</small>
     <div class="google-user">
       <div class="google-user-photo-wrap">
         <img
