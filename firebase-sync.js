@@ -23,6 +23,7 @@ import {
   getFirestore,
   doc,
   setDoc,
+  getDoc,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
@@ -182,6 +183,33 @@ export async function saveFirebaseBackup(backup) {
 
   return true;
 }
+export async function loadFirebaseBackup() {
+  const services = await initializeFirebaseSync();
+
+  if (!services?.auth || !services?.db) {
+    throw new Error("Firebase não está disponível.");
+  }
+
+  const user = services.auth.currentUser;
+
+  if (!user) {
+    throw new Error("É necessário entrar com Google.");
+  }
+
+  const backupReference = doc(
+    services.db,
+    "userBackups",
+    user.uid
+  );
+
+  const backupSnapshot = await getDoc(backupReference);
+
+  if (!backupSnapshot.exists()) {
+    return null;
+  }
+
+  return backupSnapshot.data();
+}
 export function getFirebaseServices() {
   return {
     app: firebaseApp,
@@ -200,8 +228,9 @@ window.firebaseSync = {
   logoutFromGoogle,
   getCurrentFirebaseUser,
   observeFirebaseUser,
-  getFirebaseServices,
-  saveFirebaseBackup
+    getFirebaseServices,
+  saveFirebaseBackup,
+  loadFirebaseBackup
 };
 
 initializeFirebaseSync();
