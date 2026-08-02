@@ -938,7 +938,42 @@ document.addEventListener("DOMContentLoaded", async () => {
       logoutButton.disabled = false;
     }
   });
+syncNowButton?.addEventListener("click", async () => {
+  const originalText = syncNowButton.textContent;
 
+  syncNowButton.disabled = true;
+  syncNowButton.textContent = "Sincronizando…";
+  setAccountStatus("Sincronizando…");
+
+  try {
+    const user = await firebaseSync.getCurrentFirebaseUser();
+
+    if (!user) {
+      throw new Error("É necessário entrar com Google.");
+    }
+
+    const backup = createBackupPayload();
+
+    await firebaseSync.saveFirebaseBackup(backup);
+
+    setAccountStatus("Sincronização concluída.");
+  } catch (error) {
+    console.error("Erro ao sincronizar com o Firestore:", error);
+
+    setAccountStatus(
+      "Erro ao sincronizar. Seus dados locais continuam seguros."
+    );
+  } finally {
+    syncNowButton.textContent = originalText;
+
+    try {
+      const user = await firebaseSync.getCurrentFirebaseUser();
+      syncNowButton.disabled = !user;
+    } catch {
+      syncNowButton.disabled = true;
+    }
+  }
+});
   try {
     await firebaseSync.observeFirebaseUser(renderFirebaseUser);
   } catch (error) {
