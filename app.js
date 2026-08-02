@@ -861,7 +861,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // A sincronização será implementada em outro commit.
     if (syncNowButton) {
-      syncNowButton.disabled = true;
+     syncNowButton.disabled = !isSignedIn;
     }
 
     if (!user) {
