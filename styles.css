@@ -749,3 +749,26 @@ input:focus, select:focus, textarea:focus { border-color:var(--accent); }
     border-radius: 0 14px 14px 0;
   }
 }
+
+.study-answer {
+  margin-top: 16px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--panel-2);
+}
+
+.study-answer strong {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.study-content-test h3 {
+  margin-top: 24px;
+}
+
+.study-content-test li + li {
+  margin-top: 8px;
+}
+
+
