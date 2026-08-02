@@ -560,14 +560,16 @@ document.getElementById("resetWeekBtn").onclick = () => {
 const exportBackupBtn = document.getElementById("exportBackupBtn");
 const importBackupBtn = document.getElementById("importBackupBtn");
 const importBackupFile = document.getElementById("importBackupFile");
-
-}exportBackupBtn.onclick = async () => {
-  const backup = {
+function createBackupPayload() {
+  return {
     app: "Rota PMMG 2027",
     version: 1,
     exportedAt: new Date().toISOString(),
-    data: state
+    data: JSON.parse(JSON.stringify(state))
   };
+}
+exportBackupBtn.onclick = async () => {
+  const backup = createBackupPayload();
 
   const date = new Date().toISOString().slice(0, 10);
   const fileName = `rota-pmmg-backup-${date}.json`;
