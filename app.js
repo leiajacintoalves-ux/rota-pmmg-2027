@@ -804,7 +804,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const loginButton = document.getElementById("googleLoginButton");
   const logoutButton = document.getElementById("googleLogoutButton");
   const syncNowButton = document.getElementById("syncNowButton");
-
+const restoreCloudButton =
+  document.getElementById("restoreCloudButton");
   const userName = document.getElementById("googleUserName");
   const userEmail = document.getElementById("googleUserEmail");
   const userPhoto = document.getElementById("googleUserPhoto");
@@ -839,7 +840,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (syncNowButton) {
      syncNowButton.disabled = !isSignedIn;
     }
-
+if (restoreCloudButton) {
+  restoreCloudButton.disabled = !isSignedIn;
+}
     if (!user) {
       if (userName) {
         userName.textContent = "Usuário conectado";
