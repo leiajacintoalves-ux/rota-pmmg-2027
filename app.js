@@ -577,7 +577,27 @@ if (checkLessonQuiz) {
       const feedback = document.getElementById(
         "lessonFeedback" + questionNumber
       );
+const questionBox =
+  feedback.closest(".lesson-question");
 
+const answerLabels =
+  questionBox.querySelectorAll("label");
+
+const correctInput =
+  questionBox.querySelector(
+    "input[value='" + correctAnswer + "']"
+  );
+
+const correctLabel =
+  correctInput.closest("label");
+
+answerLabels.forEach(label => {
+  label.classList.remove(
+    "answer-correct",
+    "answer-wrong",
+    "answer-muted"
+  );
+});
       feedback.hidden = false;
 
       if (!selected) {
@@ -592,7 +612,20 @@ if (checkLessonQuiz) {
 
       const isCorrect =
         Number(selected.value) === correctAnswer;
+const selectedLabel =
+  selected.closest("label");
 
+answerLabels.forEach(label => {
+  label.classList.add("answer-muted");
+});
+
+correctLabel.classList.remove("answer-muted");
+correctLabel.classList.add("answer-correct");
+
+if (!isCorrect) {
+  selectedLabel.classList.remove("answer-muted");
+  selectedLabel.classList.add("answer-wrong");
+}
       if (isCorrect) {
         score++;
 
