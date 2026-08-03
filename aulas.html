@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f1115">
+  <title>Aulas | Rota PMMG 2027</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0f1115;--panel:#171a21;--panel2:#20242d;--text:#f4f6fb;--muted:#a8afbd;--accent:#e63b3b;--line:#303541;--ok:#45c486}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;line-height:1.65}
+    button,a{font:inherit}.shell{max-width:920px;margin:auto;padding:18px 16px 70px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px;position:sticky;top:0;background:rgba(15,17,21,.94);backdrop-filter:blur(14px);padding:12px 0;z-index:10}
+    .back{color:var(--text);text-decoration:none;background:var(--panel2);border:1px solid var(--line);padding:10px 14px;border-radius:14px}
+    .brand{font-family:Oswald,sans-serif;letter-spacing:.08em}.progress{font-size:.84rem;color:var(--muted)}
+    .hero,.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;margin-bottom:16px}
+    .pill{display:inline-block;background:rgba(230,59,59,.14);color:#ff6666;border:1px solid rgba(230,59,59,.35);padding:5px 10px;border-radius:999px;font-size:.75rem;font-weight:800;letter-spacing:.08em}
+    h1,h2,h3{line-height:1.2}h1{font-family:Oswald,sans-serif;font-size:clamp(2rem,7vw,3.7rem);margin:14px 0 8px}h2{margin:0 0 14px}h3{margin:24px 0 8px}
+    .muted{color:var(--muted)}.objective{border-left:4px solid var(--accent);padding-left:15px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+    .mini{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:16px}
+    .callout{background:rgba(69,196,134,.1);border:1px solid rgba(69,196,134,.3);border-radius:16px;padding:16px}
+    .warning{background:rgba(230,59,59,.1);border:1px solid rgba(230,59,59,.3);border-radius:16px;padding:16px}
+    ul{padding-left:22px}.flashcard{width:100%;text-align:left;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:16px;padding:18px;margin:8px 0;cursor:pointer}
+    .flashcard strong{display:block;margin-bottom:5px}.flashcard .answer{display:none;color:var(--muted);padding-top:10px}.flashcard.open .answer{display:block}
+    .question{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:18px;margin:14px 0}
+    .option{display:block;padding:10px 12px;margin:8px 0;border:1px solid var(--line);border-radius:12px;cursor:pointer}
+    .feedback{display:none;margin-top:12px;padding:12px;border-radius:12px}.feedback.show{display:block}
+    .feedback.ok{background:rgba(69,196,134,.12);border:1px solid rgba(69,196,134,.4)}.feedback.bad{background:rgba(230,59,59,.12);border:1px solid rgba(230,59,59,.4)}
+    .primary{width:100%;border:0;border-radius:14px;background:var(--accent);color:#fff;font-weight:800;padding:14px 18px;cursor:pointer}.primary.done{background:var(--ok)}
+    .lesson-nav{display:flex;gap:10px;flex-wrap:wrap}.lesson-nav button{background:var(--panel2);border:1px solid var(--line);color:var(--text);padding:10px 12px;border-radius:12px;cursor:pointer}
+    @media(max-width:600px){.hero,.card{padding:18px}.progress{display:none}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="back" href="index.html">← Voltar</a>
+      <div class="brand">ROTA PMMG 2027</div>
+      <div class="progress" id="lessonStatus">Aula não concluída</div>
+    </header>
+
+    <section class="hero">
+      <span class="pill">PORTUGUÊS • AULA 01</span>
+      <h1>Interpretação e compreensão de textos</h1>
+      <p class="muted">Aprenda a localizar informações, fazer inferências e escapar das pegadinhas mais comuns das bancas.</p>
+      <div class="lesson-nav">
+        <button onclick="go('conteudo')">Conteúdo</button>
+        <button onclick="go('flashcards')">Flashcards</button>
+        <button onclick="go('questoes')">Questões</button>
+      </div>
+    </section>
+
+    <section class="card objective" id="conteudo">
+      <h2>🎯 Objetivo da aula</h2>
+      <p>Identificar a ideia principal, distinguir informações explícitas e implícitas, reconhecer a intenção do autor e responder questões com base no texto.</p>
+    </section>
+
+    <section class="card">
+      <h2>1. Compreensão e interpretação</h2>
+      <p><strong>Compreensão</strong> é a leitura do que está diretamente escrito. <strong>Interpretação</strong> é a construção de sentidos e conclusões autorizadas pelas pistas do texto.</p>
+      <div class="grid">
+        <div class="mini"><strong>Informação explícita</strong><p>“Maria nasceu em Belo Horizonte.” A cidade está declarada literalmente.</p></div>
+        <div class="mini"><strong>Informação implícita</strong><p>“Pedro chegou encharcado.” É possível inferir chuva ou contato com muita água.</p></div>
+      </div>
+      <div class="callout"><strong>Regra de ouro:</strong> a resposta precisa ser sustentada pelo texto, mesmo quando exige inferência.</div>
+    </section>
+
+    <section class="card">
+      <h2>2. Ideia principal e ideias secundárias</h2>
+      <p>A ideia principal apresenta a mensagem central. As ideias secundárias explicam, detalham, justificam ou exemplificam essa mensagem.</p>
+      <h3>Como encontrar a ideia principal</h3>
+      <ul>
+        <li>Observe o assunto repetido ao longo dos parágrafos.</li>
+        <li>Pergunte: “O que o autor quer que eu entenda?”</li>
+        <li>Elimine exemplos e detalhes; veja o que permanece.</li>
+        <li>Desconfie de alternativas muito específicas ou amplas.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>3. Inferência e intenção do autor</h2>
+      <p><strong>Inferir</strong> é chegar a uma conclusão usando pistas textuais, sem contradizer o texto.</p>
+      <p><strong>Exemplo:</strong> “Ao abrir a conta de energia, Carlos levou um susto.” É razoável inferir que o valor foi inesperado, mas não afirmar um valor exato.</p>
+      <p>A intenção do autor pode ser informar, convencer, alertar, criticar, emocionar, divertir ou explicar.</p>
+    </section>
+
+    <section class="card warning">
+      <h2>⚠️ Pegadinhas frequentes</h2>
+      <ul>
+        <li><strong>Generalização:</strong> o texto diz “alguns”; a alternativa diz “todos”.</li>
+        <li><strong>Exagero:</strong> o texto diz “pode”; a alternativa diz “sempre”.</li>
+        <li><strong>Informação inventada:</strong> parece lógica, mas não tem apoio textual.</li>
+        <li><strong>Inversão de sentido:</strong> troca causa por consequência.</li>
+        <li><strong>Opinião pessoal:</strong> pode ser verdadeira, mas não responde ao texto.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>📌 Resumo rápido</h2>
+      <ul>
+        <li>Compreensão: informação diretamente expressa.</li>
+        <li>Interpretação: sentido construído a partir das pistas.</li>
+        <li>Inferência: conclusão possível e sustentada.</li>
+        <li>Ideia principal: mensagem central do texto.</li>
+        <li>“Sempre”, “nunca” e “todos” merecem atenção.</li>
+      </ul>
+    </section>
+
+    <section class="card" id="flashcards">
+      <h2>🧠 Flashcards</h2>
+      <button class="flashcard"><strong>O que é compreensão textual?</strong><span>Toque para revelar</span><div class="answer">Identificação das informações expressamente apresentadas.</div></button>
+      <button class="flashcard"><strong>O que é interpretação textual?</strong><span>Toque para revelar</span><div class="answer">Construção do sentido, incluindo relações e informações implícitas.</div></button>
+      <button class="flashcard"><strong>O que é inferência?</strong><span>Toque para revelar</span><div class="answer">Conclusão obtida a partir das pistas do texto.</div></button>
+      <button class="flashcard"><strong>A opinião do candidato serve como fundamento?</strong><span>Toque para revelar</span><div class="answer">Não. A resposta deve estar fundamentada no texto.</div></button>
+    </section>
+
+    <section class="card" id="questoes">
+      <h2>📝 Questões inéditas</h2>
+      <div id="quiz"></div>
+      <button class="primary" id="gradeBtn">Corrigir questões</button>
+      <div class="feedback" id="result"></div>
+    </section>
+
+    <section class="card">
+      <h2>✅ Finalizar aula</h2>
+      <p class="muted">A conclusão fica salva neste aparelho.</p>
+      <button class="primary" id="completeBtn">Marcar aula como concluída</button>
+    </section>
+  </main>
+
+  <script>
+    const questions=[
+      {q:'A resposta correta deve estar baseada:',opts:['Na opinião do leitor.','Somente no conhecimento de mundo.','Nas informações e pistas do texto.','Na experiência profissional.'],a:2,e:'Até uma inferência precisa estar apoiada no texto.'},
+      {q:'Uma informação implícita é aquela:',opts:['Escrita literalmente.','Destacada em negrito.','Concluída pelo contexto.','Repetida obrigatoriamente.'],a:2,e:'Ela não aparece literalmente, mas pode ser deduzida.'},
+      {q:'Se o texto diz “alguns cidadãos”, é incorreto afirmar:',opts:['O grupo é limitado.','Nem todos estão incluídos.','Todos estão envolvidos.','Uma parte foi mencionada.'],a:2,e:'“Alguns” não autoriza “todos”.'},
+      {q:'A ideia principal corresponde:',opts:['Ao menor detalhe.','À mensagem central.','À opinião do leitor.','A uma frase aleatória.'],a:1,e:'Ela sintetiza o núcleo da mensagem.'},
+      {q:'Qual alternativa exige maior cuidado?',opts:['Uma alternativa fiel.','Uma alternativa com “sempre” e “nunca”.','Uma repetição literal.','Uma alternativa limitada.'],a:1,e:'Palavras absolutas podem ampliar indevidamente o sentido.'}
+    ];
+    const quiz=document.getElementById('quiz');
+    quiz.innerHTML=questions.map((x,i)=>`<article class="question"><strong>${i+1}. ${x.q}</strong>${x.opts.map((o,j)=>`<label class="option"><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join('')}<div class="feedback" id="f${i}"></div></article>`).join('');
+    document.querySelectorAll('.flashcard').forEach(c=>c.onclick=()=>c.classList.toggle('open'));
+    document.getElementById('gradeBtn').onclick=()=>{
+      let score=0;
+      questions.forEach((x,i)=>{
+        const s=document.querySelector(`input[name="q${i}"]:checked`);
+        const ok=s&&Number(s.value)===x.a;
+        if(ok)score++;
+        const f=document.getElementById(`f${i}`);
+        f.className=`feedback show ${ok?'ok':'bad'}`;
+        f.innerHTML=`<strong>${ok?'Correto!':'Resposta: '+String.fromCharCode(65+x.a)}</strong><br>${x.e}`;
+      });
+      const r=document.getElementById('result');
+      r.className=`feedback show ${score>=4?'ok':'bad'}`;
+      r.innerHTML=`<strong>Resultado: ${score}/5 (${score*20}%)</strong>`;
+      r.scrollIntoView({behavior:'smooth',block:'center'});
+    };
+    const key='rota-pmmg-aula-portugues-interpretacao';
+    const btn=document.getElementById('completeBtn'),status=document.getElementById('lessonStatus');
+    function render(){const done=localStorage.getItem(key)==='done';status.textContent=done?'Aula concluída ✓':'Aula não concluída';btn.textContent=done?'Aula concluída ✓':'Marcar aula como concluída';btn.classList.toggle('done',done)}
+    btn.onclick=()=>{localStorage.setItem(key,'done');render()};render();
+    function go(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+  </script>
+</body>
+</html>
