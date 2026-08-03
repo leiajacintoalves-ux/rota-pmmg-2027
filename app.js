@@ -168,7 +168,19 @@ data-topic="${t}"
 function openLesson(subject, topic) {
   const subjectsGrid =
     document.getElementById("subjectsGrid");
+const sectionIntro =
+  document.querySelector("#disciplinas .section-intro");
 
+const testContent =
+  document.querySelector(".study-content-test");
+
+if (sectionIntro) {
+  sectionIntro.style.display = "none";
+}
+
+if (testContent) {
+  testContent.style.display = "none";
+}
   subjectsGrid.innerHTML = `
     <article class="panel">
       <button
