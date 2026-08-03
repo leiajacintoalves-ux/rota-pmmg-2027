@@ -1,142 +1,142 @@
-const SUBJECTS = [
-  { name: "Português", target: 500, topics: ["Interpretação de textos","Ortografia e acentuação","Classes de palavras","Concordância","Regência e crase","Pontuação e sintaxe","Semântica"] },
-  { name: "Direito Constitucional", target: 400, topics: ["Princípios fundamentais","Direitos e garantias","Direitos sociais","Nacionalidade e direitos políticos","Organização do Estado","Segurança Pública — art. 144","Administração Pública"] },
-  { name: "Direito Administrativo", target: 300, topics: ["Administração Pública","Atos administrativos","Poderes administrativos","Agentes públicos","Licitações — noções","Responsabilidade civil do Estado","Processo administrativo"] },
-  { name: "Direito Penal", target: 400, topics: ["Parte geral","Teoria do crime","Penas","Concurso de pessoas","Crimes contra a pessoa","Crimes contra o patrimônio","Crimes contra a Administração"] },
-  { name: "Processo Penal", target: 250, topics: ["Inquérito policial","Ação penal","Prisões","Provas","Flagrante","Recursos — noções"] },
-  { name: "Direitos Humanos", target: 200, topics: ["Declaração Universal","Dignidade humana","Tratados internacionais","Igualdade","Direitos da criança"] },
-  { name: "Matemática e Raciocínio Lógico", target: 600, topics: ["Operações e frações","Porcentagem","Razão e proporção","Regra de três","Equações","Estatística","Probabilidade","Lógica"] },
-  { name: "Inglês", target: 200, topics: ["Verb to be","Present simple","Past simple","Future","Vocabulário","Reading"] },
-  { name: "Literatura", target: 120, topics: ["Escolas literárias","Leitura das obras do edital","Autores e contexto","Interpretação"] }
+const SUBJECTS = [ 
+{ name: "Português", target: 500, topics: ["Interpretação de textos","Ortografia e acentuação","Classes de palavras","Concordância","Regência e crase","Pontuação e sintaxe","Semântica"] }, 
+{ name: "Direito Constitucional", target: 400, topics: ["Princípios fundamentais","Direitos e garantias","Direitos sociais","Nacionalidade e direitos políticos","Organização do Estado","Segurança Pública — art. 144","Administração Pública"] }, 
+{ name: "Direito Administrativo", target: 300, topics: ["Administração Pública","Atos administrativos","Poderes administrativos","Agentes públicos","Licitações — noções","Responsabilidade civil do Estado","Processo administrativo"] }, 
+{ name: "Direito Penal", target: 400, topics: ["Parte geral","Teoria do crime","Penas","Concurso de pessoas","Crimes contra a pessoa","Crimes contra o patrimônio","Crimes contra a Administração"] }, 
+{ name: "Processo Penal", target: 250, topics: ["Inquérito policial","Ação penal","Prisões","Provas","Flagrante","Recursos — noções"] }, 
+{ name: "Direitos Humanos", target: 200, topics: ["Declaração Universal","Dignidade humana","Tratados internacionais","Igualdade","Direitos da criança"] }, 
+{ name: "Matemática e Raciocínio Lógico", target: 600, topics: ["Operações e frações","Porcentagem","Razão e proporção","Regra de três","Equações","Estatística","Probabilidade","Lógica"] }, 
+{ name: "Inglês", target: 200, topics: ["Verb to be","Present simple","Past simple","Future","Vocabulário","Reading"] }, 
+{ name: "Literatura", target: 120, topics: ["Escolas literárias","Leitura das obras do edital","Autores e contexto","Interpretação"] } 
 ];
 
 
-const WEEK = {
-  "Segunda": [["Português","1h30"],["Direito Constitucional","1h30"]],
-  "Terça": [["Matemática e Raciocínio Lógico","1h30"],["Direito Administrativo","1h30"]],
-  "Quarta": [["Português","1h30"],["Direito Penal","1h30"]],
-  "Quinta": [["Inglês","1h"],["Direitos Humanos","1h"],["Atualidades","30 min"]],
-  "Sexta": [["Literatura","1h"],["Processo Penal","1h30"],["Revisão","30 min"]],
-  "Sábado": [["Questões","2h"],["Lei seca","1h"],["Simulado","1h"]],
-  "Domingo": [["Descanso ou revisão leve","Livre"]]
+const WEEK = { 
+"Segunda": [["Português","1h30"],["Direito Constitucional","1h30"]], 
+"Terça": [["Matemática e Raciocínio Lógico","1h30"],["Direito Administrativo","1h30"]], 
+"Quarta": [["Português","1h30"],["Direito Penal","1h30"]], 
+"Quinta": [["Inglês","1h"],["Direitos Humanos","1h"],["Atualidades","30 min"]], 
+"Sexta": [["Literatura","1h"],["Processo Penal","1h30"],["Revisão","30 min"]], 
+"Sábado": [["Questões","2h"],["Lei seca","1h"],["Simulado","1h"]], 
+"Domingo": [["Descanso ou revisão leve","Livre"]] 
 };
 
 
-const defaults = {
-  theme: "dark",
-  completedTasks: {},
-  sessions: [],
-  questions: [],
-  completedLessons: [],
-  reviews: [],
-  taf: [],
-  goals: { hours: 18, questions: 250, taf: 4, date: "2027-12-31" },
-  streak: 0,
-  xp: 0,
-  level: 1,
-  lastStudyDate: null
+const defaults = { 
+theme: "dark", 
+completedTasks: {}, 
+sessions: [], 
+questions: [], 
+completedLessons: [], 
+reviews: [], 
+taf: [], 
+goals: { hours: 18, questions: 250, taf: 4, date: "2027-12-31" }, 
+streak: 0, 
+xp: 0, 
+level: 1, 
+lastStudyDate: null 
 };
 
-let state = JSON.parse(localStorage.getItem("pmmg2027")) || structuredClone(defaults);
+let state = JSON.parse(localStorage.getItem("pmmg2027")) || structuredClone(defaults); 
 const save = () => { localStorage.setItem("pmmg2027", JSON.stringify(state)); renderAll(); };
 
-const pageTitles = {
-  dashboard: "Visão geral", plano: "Plano semanal", disciplinas: "Disciplinas",
-  sessao: "Sessão de estudo", questoes: "Questões", revisoes: "Revisões",
-  taf: "TAF", metas: "Metas"
+const pageTitles = { 
+dashboard: "Visão geral", plano: "Plano semanal", disciplinas: "Disciplinas", 
+sessao: "Sessão de estudo", questoes: "Questões", revisoes: "Revisões", 
+taf: "TAF", metas: "Metas" 
 };
 
-function navigate(page) {
-  document.querySelectorAll(".page").forEach(x => x.classList.remove("active"));
-  document.querySelectorAll(".nav-item").forEach(x => x.classList.toggle("active", x.dataset.page === page));
-  document.getElementById(page).classList.add("active");
-  document.getElementById("pageTitle").textContent = pageTitles[page];
-  document.getElementById("sidebar").classList.remove("open");
-  window.scrollTo({ top: 0, behavior: "smooth" });
+function navigate(page) { 
+document.querySelectorAll(".page").forEach(x => x.classList.remove("active")); 
+document.querySelectorAll(".nav-item").forEach(x => x.classList.toggle("active", x.dataset.page = page)); 
+document.getElementById(page).classList.add("active"); 
+document.getElementById("pageTitle").textContent = pageTitles[page]; 
+document.getElementById("sidebar").classList.remove("open"); 
+window.scrollTo({ top: 0, behavior: "smooth" }); 
 }
 
-document.querySelectorAll("[data-page]").forEach(btn => btn.onclick = () => navigate(btn.dataset.page));
-document.querySelectorAll("[data-go]").forEach(btn => btn.onclick = () => navigate(btn.dataset.go));
+document.querySelectorAll("[data-page]").forEach(btn => btn.onclick = () => navigate(btn.dataset.page)); 
+document.querySelectorAll("[data-go]").forEach(btn => btn.onclick = () => navigate(btn.dataset.go)); 
 document.getElementById("menuBtn").onclick = () => document.getElementById("sidebar").classList.toggle("open");
 
-function fillSubjectSelects() {
-  ["studySubject","questionSubject","reviewSubject"].forEach(id => {
-    document.getElementById(id).innerHTML = SUBJECTS.map(s => `<option>${s.name}</option>`).join("");
-  });
+function fillSubjectSelects() { 
+["studySubject","questionSubject","reviewSubject"].forEach(id => { 
+document.getElementById(id).innerHTML = SUBJECTS.map(s => <option>${s.name}</option>).join(""); 
+}); 
 }
 
-function todayName() {
-  return ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"][new Date().getDay()];
+function todayName() { 
+return ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"][new Date().getDay()]; 
 }
 
-function renderWeek() {
-  const grid = document.getElementById("weekGrid");
-  grid.innerHTML = Object.entries(WEEK).map(([day,tasks]) => `
-    <article class="day-card">
-      <span class="eyebrow">${day === todayName() ? "HOJE" : "PLANO"}</span>
-      <h3>${day}</h3>
-      ${tasks.map(([name,time],i) => {
-        const key = `${day}-${i}`;
-        return `<label class="task-item">
-          <span class="task-left"><input class="task-check" type="checkbox" data-task="${key}" ${state.completedTasks[key] ? "checked" : ""}>
-          <span><strong>${name}</strong><small>${time}</small></span></span>
-        </label>`;
-      }).join("")}
-    </article>`).join("");
+function renderWeek() { 
+const grid = document.getElementById("weekGrid"); 
+grid.innerHTML = Object.entries(WEEK).map(([day,tasks]) => <article class="day-card"> <span class="eyebrow">${day === todayName() ? "HOJE" : "PLANO"}</span> <h3>${day}</h3> ${tasks.map(([name,time],i) => { const key =${day}-${i}; return <label class="task-item"> 
+<span class="task-left"><input class="task-check" type="checkbox" data-task="${key}" ${state.completedTasks[key] ? "checked" : ""}> 
+<span><strong>${name}</strong><small>${time}</small></span></span> 
+</label>; }).join("")} </article>).join("");
 
-  document.querySelectorAll("[data-task]").forEach(el => el.onchange = e => {
-    state.completedTasks[e.target.dataset.task] = e.target.checked;
-    save();
-  });
+
+
+
+
+
+
+
+
+document.querySelectorAll("[data-task]").forEach(el => el.onchange = e => { 
+state.completedTasks[e.target.dataset.task] = e.target.checked; 
+save(); 
+}); 
 }
 
-function renderToday() {
-  const day = todayName();
-  const tasks = WEEK[day] || [];
-  document.getElementById("todayPlan").innerHTML = tasks.map(([name,time],i) => {
-    const key = `${day}-${i}`;
-    return `<label class="task-item">
-      <span class="task-left"><input class="task-check" type="checkbox" data-today="${key}" ${state.completedTasks[key] ? "checked" : ""}>
-      <span><strong>${name}</strong><small>${time}</small></span></span>
-      <span class="tag">${day}</span>
-    </label>`;
-  }).join("") || `<p class="muted">Sem tarefas para hoje.</p>`;
+function renderToday() { 
+const day = todayName(); 
+const tasks = WEEK[day] || []; 
+document.getElementById("todayPlan").innerHTML = tasks.map(([name,time],i) => { 
+const key = ${day}-${i}; 
+return <label class="task-item"> <span class="task-left"><input class="task-check" type="checkbox" data-today="${key}" ${state.completedTasks[key] ? "checked" : ""}> <span><strong>${name}</strong><small>${time}</small></span></span> <span class="tag">${day}</span> </label>; 
+}).join("") || <p class="muted">Sem tarefas para hoje.</p>;
 
-  document.querySelectorAll("[data-today]").forEach(el => el.onchange = e => {
-    state.completedTasks[e.target.dataset.today] = e.target.checked;
-    save();
-  });
+
+
+
+
+document.querySelectorAll("[data-today]").forEach(el => el.onchange = e => { 
+state.completedTasks[e.target.dataset.today] = e.target.checked; 
+save(); 
+}); 
 }
 
-function subjectStats(name) {
-  const q = state.questions.filter(x => x.subject === name);
-  const total = q.reduce((a,b) => a + b.total,0);
-  const correct = q.reduce((a,b) => a + b.correct,0);
-  return { total, correct, accuracy: total ? Math.round(correct/total*100) : 0 };
+function subjectStats(name) { 
+const q = state.questions.filter(x => x.subject = name); 
+const total = q.reduce((a,b) => a + b.total,0); 
+const correct = q.reduce((a,b) => a + b.correct,0); 
+return { total, correct, accuracy: total ? Math.round(correct/total*100) : 0 }; 
 }
 
-function renderSubjects() {
-  document.getElementById("subjectsGrid").innerHTML = SUBJECTS.map((s,i) => {
-   const completedLessons =
-  s.topics.filter(topic =>
-    state.completedLessons.includes(
-      s.name + "::" + topic
-    )
-  ).length;
+function renderSubjects() { 
+document.getElementById("subjectsGrid").innerHTML = SUBJECTS.map((s,i) => { 
+const completedLessons = 
+s.topics.filter(topic => 
+state.completedLessons.includes( 
+s.name + "::" + topic 
+) 
+).length;
 
-const p = Math.round(
-  (completedLessons / s.topics.length) * 100
+const p = Math.round( 
+(completedLessons / s.topics.length) * 100 
 );
 
-const st = {
-  total: completedLessons,
-  target: s.topics.length
-};
-    return `<article class="subject-card">
-      <span class="eyebrow">MÓDULO ${String(i+1).padStart(2,"0")}</span>
-      <h3>${s.name}</h3>
-      <div class="topics">
-${s.topics.map(t => `
+const st = { 
+total: completedLessons, 
+target: s.topics.length 
+}; 
+return <article class="subject-card"> <span class="eyebrow">MÓDULO ${String(i+1).padStart(2,"0")}</span> <h3>${s.name}</h3> <div class="topics"> ${s.topics.map(t => 
+
+
+
+
 <div
 class="topic-card"
 data-subject="${s.name}"
@@ -153,20 +153,20 @@ data-topic="${t}"
 ${(() => {
   const lessonId = s.name + "::" + t;
 
-  const completed =
-    state.completedLessons.includes(lessonId);
+const completed = 
+state.completedLessons.includes(lessonId);
 
-  return `
-    <strong>${t}</strong>
+return ` 
+<strong>${t}</strong>
 
-    <small>
-      ${
-        completed
-          ? "🟢 Aula concluída"
-          : "⚪ Aula disponível"
-      }
-    </small>
-  `;
+<small>
+  ${
+    completed
+      ? "🟢 Aula concluída"
+      : "⚪ Aula disponível"
+  }
+</small>
+`; 
 })()}
 
 <div class="topic-progress">
@@ -184,50 +184,54 @@ ${(() => {
 `).join("")}
 </div>
 
-      <div class="progress-meta"><span>${st.total}/${s.target} questões</span><strong>${p}%</strong></div>
-      <div class="bar"><i style="width:${p}%"></i></div>
-    </article>`;
-  }).join("");
-  document.querySelectorAll(".topic-card").forEach(button => {
-  button.onclick = () => {
-    const subject = button.dataset.subject;
-    const topic = button.dataset.topic;
+  <div class="progress-meta"><span>${st.total}/${s.target} questões</span><strong>${p}%</strong></div>
+  <div class="bar"><i style="width:${p}%"></i></div>
+</article>`;
+}).join(""); 
+document.querySelectorAll(".topic-card").forEach(button => { 
+button.onclick = () => { 
+const subject = button.dataset.subject; 
+const topic = button.dataset.topic;
 
-    openLesson(subject, topic);
-  };
-});
+openLesson(subject, topic);
+}; 
+}); 
+} 
+function openLesson(subject, topic) { 
+const subjectsGrid = 
+document.getElementById("subjectsGrid"); 
+const sectionIntro = 
+document.querySelector("#disciplinas .section-intro");
+
+const testContent = 
+document.querySelector(".study-content-test");
+
+if (sectionIntro) { 
+sectionIntro.style.display = "none"; 
 }
-function openLesson(subject, topic) {
-  const subjectsGrid =
-    document.getElementById("subjectsGrid");
-const sectionIntro =
-  document.querySelector("#disciplinas .section-intro");
 
-const testContent =
-  document.querySelector(".study-content-test");
+if (testContent) { 
+testContent.style.display = "none"; 
+} 
+subjectsGrid.innerHTML = ` 
+<article class="panel"> 
+<button
+class="ghost-btn"
+id="backToSubjects"
+type="button"
+> 
+← Voltar para disciplinas 
+</button>
 
-if (sectionIntro) {
-  sectionIntro.style.display = "none";
-}
 
-if (testContent) {
-  testContent.style.display = "none";
-}
-  subjectsGrid.innerHTML = `
-    <article class="panel">
-      <button
-        class="ghost-btn"
-        id="backToSubjects"
-        type="button"
-      >
-        ← Voltar para disciplinas
-      </button>
 
-      <span class="eyebrow">${subject}</span>
 
-      <h2>${topic}</h2>
 
-      <div class="lesson-block">
+  <span class="eyebrow">${subject}</span>
+
+  <h2>${topic}</h2>
+
+  <div class="lesson-block">
   <h3>🎯 Objetivo da aula</h3>
 
   <p>
@@ -300,20 +304,20 @@ if (testContent) {
       o texto diz “alguns”, mas a alternativa afirma “todos”.
     </li>
 
-    <li>
-      <strong>Exagero:</strong>
-      o texto diz “pode”, mas a alternativa afirma “sempre”.
-    </li>
+<li>
+  <strong>Exagero:</strong>
+  o texto diz “pode”, mas a alternativa afirma “sempre”.
+</li>
 
-    <li>
-      <strong>Informação inventada:</strong>
-      a alternativa apresenta algo que não possui apoio no texto.
-    </li>
+<li>
+  <strong>Informação inventada:</strong>
+  a alternativa apresenta algo que não possui apoio no texto.
+</li>
 
-    <li>
-      <strong>Troca de sentido:</strong>
-      a alternativa inverte causa e consequência.
-    </li>
+<li>
+  <strong>Troca de sentido:</strong>
+  a alternativa inverte causa e consequência.
+</li>
   </ul>
 </div>
 
@@ -340,10 +344,10 @@ if (testContent) {
       O que é compreensão textual?
     </summary>
 
-    <p>
-      É a identificação das informações que estão
-      diretamente expressas no texto.
-    </p>
+<p>
+  É a identificação das informações que estão
+  diretamente expressas no texto.
+</p>
   </details>
 
   <details class="lesson-flashcard">
@@ -351,10 +355,10 @@ if (testContent) {
       O que é interpretação textual?
     </summary>
 
-    <p>
-      É a construção do sentido a partir das informações,
-      relações e pistas apresentadas pelo autor.
-    </p>
+<p>
+  É a construção do sentido a partir das informações,
+  relações e pistas apresentadas pelo autor.
+</p>
   </details>
 
   <details class="lesson-flashcard">
@@ -362,10 +366,10 @@ if (testContent) {
       O que é uma inferência?
     </summary>
 
-    <p>
-      É uma conclusão obtida por meio de pistas do texto,
-      mesmo quando a informação não aparece literalmente.
-    </p>
+<p>
+  É uma conclusão obtida por meio de pistas do texto,
+  mesmo quando a informação não aparece literalmente.
+</p>
   </details>
 
   <details class="lesson-flashcard">
@@ -373,10 +377,10 @@ if (testContent) {
       A resposta pode ser baseada na opinião pessoal?
     </summary>
 
-    <p>
-      Não. A resposta deve estar fundamentada nas
-      informações apresentadas pelo texto.
-    </p>
+<p>
+  Não. A resposta deve estar fundamentada nas
+  informações apresentadas pelo texto.
+</p>
   </details>
 
   <details class="lesson-flashcard">
@@ -384,10 +388,10 @@ if (testContent) {
       O que é a ideia principal?
     </summary>
 
-    <p>
-      É a mensagem central do texto, desenvolvida pelas
-      ideias secundárias, exemplos e explicações.
-    </p>
+<p>
+  É a mensagem central do texto, desenvolvida pelas
+  ideias secundárias, exemplos e explicações.
+</p>
   </details>
 </div>
 <div class="lesson-block">
@@ -403,31 +407,31 @@ if (testContent) {
       deve estar baseada:
     </strong>
 
-    <label>
-      <input type="radio" name="lessonQ1" value="0">
-      A) Na opinião pessoal do candidato.
-    </label>
+<label>
+  <input type="radio" name="lessonQ1" value="0">
+  A) Na opinião pessoal do candidato.
+</label>
 
-    <label>
-      <input type="radio" name="lessonQ1" value="1">
-      B) Somente no conhecimento de mundo.
-    </label>
+<label>
+  <input type="radio" name="lessonQ1" value="1">
+  B) Somente no conhecimento de mundo.
+</label>
 
-    <label>
-      <input type="radio" name="lessonQ1" value="2">
-      C) Nas informações e pistas apresentadas pelo texto.
-    </label>
+<label>
+  <input type="radio" name="lessonQ1" value="2">
+  C) Nas informações e pistas apresentadas pelo texto.
+</label>
 
-    <label>
-      <input type="radio" name="lessonQ1" value="3">
-      D) Na experiência profissional do leitor.
-    </label>
+<label>
+  <input type="radio" name="lessonQ1" value="3">
+  D) Na experiência profissional do leitor.
+</label>
 
-    <div
-      class="lesson-question-feedback"
-      id="lessonFeedback1"
-      hidden
-    ></div>
+<div
+  class="lesson-question-feedback"
+  id="lessonFeedback1"
+  hidden
+></div>
   </div>
 
   <div class="lesson-question">
@@ -435,31 +439,31 @@ if (testContent) {
       2. Uma informação implícita é aquela:
     </strong>
 
-    <label>
-      <input type="radio" name="lessonQ2" value="0">
-      A) Escrita literalmente no texto.
-    </label>
+<label>
+  <input type="radio" name="lessonQ2" value="0">
+  A) Escrita literalmente no texto.
+</label>
 
-    <label>
-      <input type="radio" name="lessonQ2" value="1">
-      B) Destacada obrigatoriamente em negrito.
-    </label>
+<label>
+  <input type="radio" name="lessonQ2" value="1">
+  B) Destacada obrigatoriamente em negrito.
+</label>
 
-    <label>
-      <input type="radio" name="lessonQ2" value="2">
-      C) Que pode ser concluída por meio do contexto.
-    </label>
+<label>
+  <input type="radio" name="lessonQ2" value="2">
+  C) Que pode ser concluída por meio do contexto.
+</label>
 
-    <label>
-      <input type="radio" name="lessonQ2" value="3">
-      D) Que aparece em todos os parágrafos.
-    </label>
+<label>
+  <input type="radio" name="lessonQ2" value="3">
+  D) Que aparece em todos os parágrafos.
+</label>
 
-    <div
-      class="lesson-question-feedback"
-      id="lessonFeedback2"
-      hidden
-    ></div>
+<div
+  class="lesson-question-feedback"
+  id="lessonFeedback2"
+  hidden
+></div>
   </div>
 
   <div class="lesson-question">
@@ -467,31 +471,31 @@ if (testContent) {
       3. Se o texto afirma “alguns cidadãos”, é incorreto concluir:
     </strong>
 
-    <label>
-      <input type="radio" name="lessonQ3" value="0">
-      A) Uma parte dos cidadãos foi mencionada.
-    </label>
+<label>
+  <input type="radio" name="lessonQ3" value="0">
+  A) Uma parte dos cidadãos foi mencionada.
+</label>
 
-    <label>
-      <input type="radio" name="lessonQ3" value="1">
-      B) Nem todos estão necessariamente incluídos.
-    </label>
+<label>
+  <input type="radio" name="lessonQ3" value="1">
+  B) Nem todos estão necessariamente incluídos.
+</label>
 
-    <label>
-      <input type="radio" name="lessonQ3" value="2">
-      C) Todos os cidadãos estão envolvidos.
-    </label>
+<label>
+  <input type="radio" name="lessonQ3" value="2">
+  C) Todos os cidadãos estão envolvidos.
+</label>
 
-    <label>
-      <input type="radio" name="lessonQ3" value="3">
-      D) O grupo apresentado é limitado.
-    </label>
+<label>
+  <input type="radio" name="lessonQ3" value="3">
+  D) O grupo apresentado é limitado.
+</label>
 
-    <div
-      class="lesson-question-feedback"
-      id="lessonFeedback3"
-      hidden
-    ></div>
+<div
+  class="lesson-question-feedback"
+  id="lessonFeedback3"
+  hidden
+></div>
   </div>
 
   <div class="lesson-question">
@@ -499,31 +503,31 @@ if (testContent) {
       4. A ideia principal de um texto corresponde:
     </strong>
 
-    <label>
-      <input type="radio" name="lessonQ4" value="0">
-      A) Ao menor detalhe apresentado.
-    </label>
+<label>
+  <input type="radio" name="lessonQ4" value="0">
+  A) Ao menor detalhe apresentado.
+</label>
 
-    <label>
-      <input type="radio" name="lessonQ4" value="1">
-      B) À mensagem central desenvolvida pelo autor.
-    </label>
+<label>
+  <input type="radio" name="lessonQ4" value="1">
+  B) À mensagem central desenvolvida pelo autor.
+</label>
 
-    <label>
-      <input type="radio" name="lessonQ4" value="2">
-      C) À opinião pessoal de cada leitor.
-    </label>
+<label>
+  <input type="radio" name="lessonQ4" value="2">
+  C) À opinião pessoal de cada leitor.
+</label>
 
-    <label>
-      <input type="radio" name="lessonQ4" value="3">
-      D) A uma frase escolhida aleatoriamente.
-    </label>
+<label>
+  <input type="radio" name="lessonQ4" value="3">
+  D) A uma frase escolhida aleatoriamente.
+</label>
 
-    <div
-      class="lesson-question-feedback"
-      id="lessonFeedback4"
-      hidden
-    ></div>
+<div
+  class="lesson-question-feedback"
+  id="lessonFeedback4"
+  hidden
+></div>
   </div>
 
   <div class="lesson-question">
@@ -531,39 +535,39 @@ if (testContent) {
       5. Inferir uma informação significa:
     </strong>
 
-    <label>
-      <input type="radio" name="lessonQ5" value="0">
-      A) Copiar uma frase literalmente.
-    </label>
+<label>
+  <input type="radio" name="lessonQ5" value="0">
+  A) Copiar uma frase literalmente.
+</label>
 
-    <label>
-      <input type="radio" name="lessonQ5" value="1">
-      B) Chegar a uma conclusão usando pistas do texto.
-    </label>
+<label>
+  <input type="radio" name="lessonQ5" value="1">
+  B) Chegar a uma conclusão usando pistas do texto.
+</label>
 
-    <label>
-      <input type="radio" name="lessonQ5" value="2">
-      C) Inventar uma informação que não aparece.
-    </label>
+<label>
+  <input type="radio" name="lessonQ5" value="2">
+  C) Inventar uma informação que não aparece.
+</label>
 
-    <label>
-      <input type="radio" name="lessonQ5" value="3">
-      D) Ignorar o contexto apresentado.
-    </label>
+<label>
+  <input type="radio" name="lessonQ5" value="3">
+  D) Ignorar o contexto apresentado.
+</label>
 
-    <div
-      class="lesson-question-feedback"
-      id="lessonFeedback5"
-      hidden
-    ></div>
+<div
+  class="lesson-question-feedback"
+  id="lessonFeedback5"
+  hidden
+></div>
   </div>
 
-  <button
-    class="primary-btn lesson-quiz-button"
-    id="checkLessonQuiz"
-    type="button"
-  >
-    Corrigir questões
+<button 
+class="primary-btn lesson-quiz-button" 
+id="checkLessonQuiz" 
+type="button"
+
+Corrigir questões
   </button>
 
   <div
@@ -575,1107 +579,1106 @@ if (testContent) {
     </article>
   `;
 
-  document
-    .getElementById("backToSubjects")
-    .onclick = () => {
-      renderSubjects();
-    };
-const checkLessonQuiz =
-  document.getElementById("checkLessonQuiz");
+document 
+.getElementById("backToSubjects") 
+.onclick = () => { 
+renderSubjects(); 
+}; 
+const checkLessonQuiz = 
+document.getElementById("checkLessonQuiz");
 
-if (checkLessonQuiz) {
-  checkLessonQuiz.onclick = () => {
-    const correctAnswers = [2, 2, 2, 1, 1];
+if (checkLessonQuiz) { 
+checkLessonQuiz.onclick = () => { 
+const correctAnswers = [2, 2, 2, 1, 1];
 
-    const explanations = [
-      "A resposta deve estar fundamentada nas informações e pistas do texto.",
-      "A informação implícita não aparece literalmente, mas pode ser deduzida pelo contexto.",
-      "A palavra “alguns” não permite concluir que todos estejam envolvidos.",
-      "A ideia principal representa a mensagem central desenvolvida pelo autor.",
-      "Inferência é uma conclusão construída a partir das pistas textuais."
-    ];
+const explanations = [
+  "A resposta deve estar fundamentada nas informações e pistas do texto.",
+  "A informação implícita não aparece literalmente, mas pode ser deduzida pelo contexto.",
+  "A palavra “alguns” não permite concluir que todos estejam envolvidos.",
+  "A ideia principal representa a mensagem central desenvolvida pelo autor.",
+  "Inferência é uma conclusão construída a partir das pistas textuais."
+];
 
-    let score = 0;
+let score = 0;
 
-    correctAnswers.forEach((correctAnswer, index) => {
-      const questionNumber = index + 1;
+correctAnswers.forEach((correctAnswer, index) => {
+  const questionNumber = index + 1;
 
-      const selected = document.querySelector(
-        "input[name='lessonQ" +
-        questionNumber +
-        "']:checked"
-      );
-
-      const feedback = document.getElementById(
-        "lessonFeedback" + questionNumber
-      );
-const questionBox =
-  feedback.closest(".lesson-question");
-
-const answerLabels =
-  questionBox.querySelectorAll("label");
-
-const correctInput =
-  questionBox.querySelector(
-    "input[value='" + correctAnswer + "']"
+  const selected = document.querySelector(
+    "input[name='lessonQ" +
+    questionNumber +
+    "']:checked"
   );
 
-const correctLabel =
-  correctInput.closest("label");
-
-answerLabels.forEach(label => {
-  label.classList.remove(
-    "answer-correct",
-    "answer-wrong",
-    "answer-muted"
+  const feedback = document.getElementById(
+    "lessonFeedback" + questionNumber
   );
-});
-      feedback.hidden = false;
+const questionBox = 
+feedback.closest(".lesson-question");
 
-      if (!selected) {
-        feedback.className =
-          "lesson-question-feedback unanswered";
+const answerLabels = 
+questionBox.querySelectorAll("label");
 
-        feedback.innerHTML =
-          "<strong>Selecione uma alternativa.</strong>";
-
-        return;
-      }
-
-      const isCorrect =
-        Number(selected.value) === correctAnswer;
-const selectedLabel =
-  selected.closest("label");
-
-answerLabels.forEach(label => {
-  label.classList.add("answer-muted");
-});
-
-correctLabel.classList.remove("answer-muted");
-correctLabel.classList.add("answer-correct");
-
-if (!isCorrect) {
-  selectedLabel.classList.remove("answer-muted");
-  selectedLabel.classList.add("answer-wrong");
-}
-      if (isCorrect) {
-        score++;
-
-        feedback.className =
-          "lesson-question-feedback correct";
-
-        feedback.innerHTML =
-          "<strong>Resposta correta! ✅</strong>" +
-          "<p>" + explanations[index] + "</p>";
-      } else {
-        feedback.className =
-          "lesson-question-feedback incorrect";
-
-        feedback.innerHTML =
-          "<strong>Resposta incorreta.</strong>" +
-          "<p>" + explanations[index] + "</p>";
-      }
-    });
-
-    const result =
-      document.getElementById("lessonQuizResult");
-
-    const percentage =
-      Math.round((score / correctAnswers.length) * 100);
-state.questions = state.questions.filter(
-  question =>
-    !(
-      question.subject === subject &&
-      question.topic === topic
-    )
+const correctInput = 
+questionBox.querySelector( 
+"input[value='" + correctAnswer + "']" 
 );
 
-state.questions.push({
-  subject: subject,
-  topic: topic,
-  total: correctAnswers.length,
-  correct: score,
-  percentage: percentage,
-  date: new Date().toLocaleDateString("pt-BR")
+const correctLabel = 
+correctInput.closest("label");
+
+answerLabels.forEach(label => { 
+label.classList.remove( 
+"answer-correct", 
+"answer-wrong", 
+"answer-muted" 
+); 
+}); 
+feedback.hidden = false;
+
+  if (!selected) {
+    feedback.className =
+      "lesson-question-feedback unanswered";
+
+    feedback.innerHTML =
+      "<strong>Selecione uma alternativa.</strong>";
+
+    return;
+  }
+
+  const isCorrect =
+    Number(selected.value) === correctAnswer;
+const selectedLabel = 
+selected.closest("label");
+
+answerLabels.forEach(label => { 
+label.classList.add("answer-muted"); 
 });
-const lessonId = subject + "::" + topic;
-const lessonCompleted =
-  state.completedLessons.includes(lessonId);
-if (!state.completedLessons.includes(lessonId)) {
-  state.completedLessons.push(lessonId);
-}
-const gainedXP =
-  50 + score * 10;
+
+correctLabel.classList.remove("answer-muted"); 
+correctLabel.classList.add("answer-correct");
+
+if (!isCorrect) { 
+selectedLabel.classList.remove("answer-muted"); 
+selectedLabel.classList.add("answer-wrong"); 
+} 
+if (isCorrect) { 
+score++;
+
+    feedback.className =
+      "lesson-question-feedback correct";
+
+    feedback.innerHTML =
+      "<strong>Resposta correta! ✅</strong>" +
+      "<p>" + explanations[index] + "</p>";
+  } else {
+    feedback.className =
+      "lesson-question-feedback incorrect";
+
+    feedback.innerHTML =
+      "<strong>Resposta incorreta.</strong>" +
+      "<p>" + explanations[index] + "</p>";
+  }
+});
+
+const result =
+  document.getElementById("lessonQuizResult");
+
+const percentage =
+  Math.round((score / correctAnswers.length) * 100);
+state.questions = state.questions.filter( 
+question => 
+!( 
+question.subject = subject && 
+question.topic = topic 
+) 
+);
+
+state.questions.push({ 
+subject: subject, 
+topic: topic, 
+total: correctAnswers.length, 
+correct: score, 
+percentage: percentage, 
+date: new Date().toLocaleDateString("pt-BR") 
+}); 
+const lessonId = subject + "::" + topic; 
+const lessonCompleted = 
+state.completedLessons.includes(lessonId); 
+if (!state.completedLessons.includes(lessonId)) { 
+state.completedLessons.push(lessonId); 
+} 
+const gainedXP = 
+50 + score * 10;
 
 state.xp += gainedXP;
 
-state.level =
-  Math.floor(state.xp / 250) + 1;
-save();
-    result.hidden = false;
+state.level = 
+Math.floor(state.xp / 250) + 1; 
+save(); 
+result.hidden = false;
 
-    result.className =
-      "lesson-quiz-result " +
-      (percentage >= 70 ? "approved" : "review");
+result.className =
+  "lesson-quiz-result " +
+  (percentage >= 70 ? "approved" : "review");
 
-    result.innerHTML =
-      "<strong>Resultado: " +
-      score +
-      "/5 — " +
-      percentage +
-      "%</strong>" +
-      "<p>" +
-      (percentage >= 70
-        ? "Bom trabalho! Continue revisando os comentários."
-        : "Revise o conteúdo e tente novamente.") +
-      "</p>";
+result.innerHTML =
+  "<strong>Resultado: " +
+  score +
+  "/5 — " +
+  percentage +
+  "%</strong>" +
+  "<p>" +
+  (percentage >= 70
+    ? "Bom trabalho! Continue revisando os comentários."
+    : "Revise o conteúdo e tente novamente.") +
+  "</p>";
 
-    result.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
-  };
-}
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-}
-function renderSubjectProgress() {
-  const studiedSubjects = SUBJECTS.map(subject => {
-    const minutes = state.sessions
-      .filter(session => session.subject === subject.name)
-      .reduce((total, session) => total + session.minutes, 0);
-
-    return {
-      name: subject.name,
-      minutes
-    };
-  });
-
-  const highestMinutes = Math.max(
-    60,
-    ...studiedSubjects.map(subject => subject.minutes)
-  );
-
-  document.getElementById("subjectProgress").innerHTML =
-    studiedSubjects
-      .sort((a, b) => b.minutes - a.minutes)
-      .slice(0, 5)
-      .map(subject => {
-        const percentage = Math.round(
-          (subject.minutes / highestMinutes) * 100
-        );
-
-        const timeText =
-          subject.minutes >= 60
-            ? `${(subject.minutes / 60).toFixed(1)}h`
-            : `${subject.minutes} min`;
-
-        return `
-          <div class="progress-line">
-            <div class="progress-meta">
-              <span>${subject.name}</span>
-              <strong>${timeText}</strong>
-            </div>
-
-            <div class="bar">
-              <i style="width:${percentage}%"></i>
-            </div>
-          </div>
-        `;
-      })
-      .join("");
-
-}
-
-function renderQuestions() {
-  const total = state.questions.reduce((a,b)=>a+b.total,0);
-  const correct = state.questions.reduce((a,b)=>a+b.correct,0);
-  const accuracy = total ? Math.round(correct/total*100) : 0;
-  document.getElementById("questionsStat").textContent = total;
-  document.getElementById("accuracyStat").textContent = accuracy + "%";
-  document.getElementById("questionSummary").textContent = accuracy + "%";
-  document.getElementById("questionBars").innerHTML = SUBJECTS.filter(s=>subjectStats(s.name).total>0).map(s => {
-    const st = subjectStats(s.name);
-    return `<div class="progress-line">
-      <div class="progress-meta"><span>${s.name}</span><strong>${st.correct}/${st.total}</strong></div>
-      <div class="bar"><i style="width:${st.accuracy}%"></i></div>
-    </div>`;
-  }).join("") || `<p class="muted">Registre seu primeiro bloco de questões.</p>`;
-}
-
-function renderSessions() {
-  const totalMinutes = state.sessions.reduce((a,b)=>a+b.minutes,0);
-  document.getElementById("hoursStat").textContent = `${(totalMinutes/60).toFixed(1)}h`;
-  document.getElementById("sessionHistory").innerHTML = state.sessions.slice().reverse().slice(0,8).map(x => `
-    <div class="history-item">
-      <div><strong>${x.subject}</strong><small>${x.topic || "Estudo geral"} • ${x.minutes} min • ${x.date}</small></div>
-      <span class="tag">CONCLUÍDO</span>
-    </div>`).join("") || `<p class="muted">Nenhuma sessão registrada ainda.</p>`;
-}
-
-function renderReviews() {
-  const today = new Date(); today.setHours(0,0,0,0);
-  document.getElementById("reviewList").innerHTML = state.reviews.slice().sort((a,b)=>new Date(a.due)-new Date(b.due)).map((r,i) => {
-    const due = new Date(r.due + "T00:00:00");
-    const overdue = due < today && !r.done;
-    return `<div class="review-item">
-      <div>
-        <strong>${r.topic}</strong>
-        <small>${r.subject} • ${new Date(r.due+"T00:00:00").toLocaleDateString("pt-BR")}</small>
-      </div>
-      <div>
-        <span class="tag">${r.done ? "FEITA" : overdue ? "ATRASADA" : "PENDENTE"}</span>
-        <button class="text-btn" data-review="${i}">${r.done ? "Reabrir" : "Concluir"}</button>
-      </div>
-    </div>`;
-  }).join("") || `<article class="panel"><p class="muted">Nenhuma revisão agendada.</p></article>`;
-
-  document.querySelectorAll("[data-review]").forEach(btn => btn.onclick = () => {
-    const sorted = state.reviews.slice().sort((a,b)=>new Date(a.due)-new Date(b.due));
-    const item = sorted[+btn.dataset.review];
-    const original = state.reviews.find(x => x.id === item.id);
-    original.done = !original.done;
-    save();
-  });
-}
-
-function renderTaf() {
-  document.getElementById("tafHistory").innerHTML = state.taf.slice().reverse().slice(0,10).map(x => `
-    <div class="history-item">
-      <div><strong>${x.exercise}</strong><small>${x.result} • ${x.date}</small></div>
-      <span class="tag">${x.effort}</span>
-    </div>`).join("") || `<p class="muted">Nenhum treino registrado.</p>`;
-}
-
-function renderGoals() {
-  document.getElementById("goalHours").value = state.goals.hours;
-  document.getElementById("goalQuestions").value = state.goals.questions;
-  document.getElementById("goalTaf").value = state.goals.taf;
-  document.getElementById("goalDate").value = state.goals.date;
-
-  const target = new Date(state.goals.date + "T23:59:59");
-  const days = Math.max(0, Math.ceil((target - new Date()) / 86400000));
-  document.getElementById("countdownDays").textContent = `${days} dias`;
-
-  const doneTasks = Object.values(state.completedTasks).filter(Boolean).length;
-  const taskTotal = Object.keys(WEEK).reduce((sum,d)=>sum+WEEK[d].length,0);
-  const qTotal = state.questions.reduce((a,b)=>a+b.total,0);
-  const studyHours = state.sessions.reduce((a,b)=>a+b.minutes,0)/60;
-  const components = [
-    Math.min(100,doneTasks/taskTotal*100),
-    Math.min(100,qTotal/state.goals.questions*100),
-    Math.min(100,studyHours/state.goals.hours*100)
-  ];
-  const overall = Math.round(components.reduce((a,b)=>a+b,0)/components.length);
-  document.getElementById("overallProgress").textContent = overall+"%";
-  document.getElementById("progressRing").style.setProperty("--p", overall);
-  document.getElementById("streakStat").textContent = `${state.streak || 0} dias`;
-}
-
-
-function renderDashboardOverview() {
-  const now = new Date();
-  const hour = now.getHours();
-  const greeting = hour < 12 ? "Bom dia" : hour < 18 ? "Boa tarde" : "Boa noite";
-  const dayText = now.toLocaleDateString("pt-BR", {
-    weekday: "long",
-    day: "2-digit",
-    month: "long"
-  });
-
-  const dateEl = document.getElementById("dashboardDate");
-  const greetingEl = document.getElementById("dashboardGreeting");
-  const messageEl = document.getElementById("dashboardMessage");
-
-  if (dateEl) dateEl.textContent = dayText.toUpperCase();
-  if (greetingEl) greetingEl.textContent = `${greeting}! Vamos avançar mais um pouco?`;
-
-  const totalMinutes = state.sessions.reduce((sum, item) => sum + item.minutes, 0);
-  const totalHours = totalMinutes / 60;
-  const today = new Date().toISOString().slice(0,10);
-
-const todayMinutes = state.sessions
-  .filter(s => s.date === today)
-  .reduce((sum, s) => sum + s.minutes, 0);
-
-const todayStudy = document.getElementById("todayStudyTime");
-if (todayStudy) {
-  if (todayMinutes >= 60) {
-    todayStudy.textContent = (todayMinutes / 60).toFixed(1) + "h";
-  } else {
-    todayStudy.textContent = todayMinutes + " min";
-  }
-}
-
-const welcomeStreak = document.getElementById("welcomeStreak");
-if (welcomeStreak) {
-  welcomeStreak.textContent = `${state.streak || 0} dias`;
-}
-  const weeklyGoal = Number(state.goals.hours) || 18;
-  const weeklyPercent = Math.min(100, Math.round((totalHours / weeklyGoal) * 100));
-
-  const progressText = document.getElementById("weeklyProgressText");
-  const progressBar = document.getElementById("weeklyProgressBar");
-  const progressDetail = document.getElementById("weeklyProgressDetail");
-
-  if (progressText) progressText.textContent = `${weeklyPercent}%`;
-  if (progressBar) progressBar.style.width = `${weeklyPercent}%`;
-  if (progressDetail) {
-    progressDetail.textContent = `${totalHours.toFixed(1)}h de ${weeklyGoal}h concluídas`;
-  }
-
-  if (messageEl) {
-    if (weeklyPercent >= 100) {
-      messageEl.textContent = "Meta semanal concluída. Excelente — agora mantenha o ritmo.";
-    } else if (weeklyPercent >= 60) {
-      messageEl.textContent = "Você já passou da metade da meta semanal. Continue firme.";
-    } else if (state.sessions.length > 0) {
-      messageEl.textContent = "Cada sessão registrada aproxima você da meta de 2027.";
-    } else {
-      messageEl.textContent = "Comece com uma sessão curta. Constância vale mais que pressa.";
-    }
-  }
-
-  const pendingReviews = state.reviews
-    .filter(item => !item.done)
-    .sort((a, b) => new Date(a.due) - new Date(b.due));
-
-  const nextReview = pendingReviews[0];
-  const nextReviewTitle = document.getElementById("nextReviewTitle");
-  const nextReviewDate = document.getElementById("nextReviewDate");
-
-  if (nextReview) {
-    if (nextReviewTitle) nextReviewTitle.textContent = nextReview.topic;
-    if (nextReviewDate) {
-      nextReviewDate.textContent = `${nextReview.subject} • ${new Date(nextReview.due + "T00:00:00").toLocaleDateString("pt-BR")}`;
-    }
-  } else {
-    if (nextReviewTitle) nextReviewTitle.textContent = "Nenhuma revisão";
-    if (nextReviewDate) nextReviewDate.textContent = "Adicione uma revisão para começar";
-  }
-
-  const tafGoal = Number(state.goals.taf) || 4;
-  const tafDone = state.taf.length;
-  const tafRemaining = Math.max(0, tafGoal - tafDone);
-  const nextTafTitle = document.getElementById("nextTafTitle");
-  const nextTafDetail = document.getElementById("nextTafDetail");
-
-  if (tafRemaining === 0) {
-    if (nextTafTitle) nextTafTitle.textContent = "Meta física concluída";
-    if (nextTafDetail) nextTafDetail.textContent = `${tafDone} treinos registrados`;
-  } else {
-    if (nextTafTitle) nextTafTitle.textContent = `${tafRemaining} treino${tafRemaining > 1 ? "s" : ""} restante${tafRemaining > 1 ? "s" : ""}`;
-    if (nextTafDetail) nextTafDetail.textContent = `${tafDone} de ${tafGoal} treinos registrados`;
-  }
-}
-
-function renderAll() {
-  renderWeek(); renderToday(); renderSubjects(); renderSubjectProgress();
-  renderQuestions(); renderSessions(); renderReviews(); renderTaf(); renderGoals();
-  renderDashboardOverview();
-}
-
-document.getElementById("questionForm").onsubmit = e => {
-  e.preventDefault();
-  const total = +document.getElementById("questionTotal").value;
-  const correct = +document.getElementById("questionCorrect").value;
-  if (correct > total) return alert("A quantidade correta não pode superar o total.");
-  state.questions.push({
-    subject: document.getElementById("questionSubject").value,
-    total, correct, date: new Date().toLocaleDateString("pt-BR")
-  });
-  save(); e.target.reset();
-};
-
-let selectedMinutes = 25, remaining = 25 * 60, timerId = null;
-function formatTime(date) {
-  return date.toLocaleTimeString("pt-BR", {
-    hour: "2-digit",
-    minute: "2-digit"
-  });
-}
-
-function updateTimerTimes() {
-  const startEl = document.getElementById("timerStartTime");
-  const endEl = document.getElementById("timerEndTime");
-
-  if (!startEl || !endEl) return;
-
-  const now = new Date();
-  const end = new Date(now.getTime() + remaining * 1000);
-
-  startEl.textContent = formatTime(now);
-  endEl.textContent = formatTime(end);
-}
-function updateTimer() {
-  const m = String(Math.floor(remaining/60)).padStart(2,"0");
-  const s = String(remaining%60).padStart(2,"0");
-  document.getElementById("timerDisplay").textContent = `${m}:${s}`;
-}function registerCompletedSession() {
-  const subjectEl = document.getElementById("studySubject");
-  const topicEl = document.getElementById("studyTopic");
-  const notesEl = document.getElementById("studyNotes");
-
-  state.sessions.push({
-    subject: subjectEl ? subjectEl.value : "Estudo geral",
-    topic: topicEl?.value || "Sessão focada",
-    notes: notesEl?.value || "",
-    minutes: selectedMinutes,
-    date: new Date().toLocaleDateString("pt-BR")
-  });
-
-  const today = new Date().toISOString().slice(0, 10);
-
-  if (state.lastStudyDate !== today) {
-    const yesterday = new Date(Date.now() - 86400000)
-      .toISOString()
-      .slice(0, 10);
-
-    state.streak =
-      state.lastStudyDate === yesterday
-        ? (state.streak || 0) + 1
-        : 1;
-
-    state.lastStudyDate = today;
-  }
-
-  save();
-}
-document.querySelectorAll(".preset").forEach(btn => btn.onclick = () => {
-  if (timerId) return;
-  document.querySelectorAll(".preset").forEach(x=>x.classList.remove("active"));
-  btn.classList.add("active");
-  selectedMinutes = +btn.dataset.minutes; remaining = selectedMinutes*60; updateTimer();
+result.scrollIntoView({
+  behavior: "smooth",
+  block: "center"
 });
-document.getElementById("startTimer").onclick = () => {
-  const startButton = document.getElementById("startTimer");
+}; 
+} 
+window.scrollTo({ 
+top: 0, 
+behavior: "smooth" 
+}); 
+} 
+function renderSubjectProgress() { 
+const studiedSubjects = SUBJECTS.map(subject => { 
+const minutes = state.sessions 
+.filter(session => session.subject = subject.name) 
+.reduce((total, session) => total + session.minutes, 0);
 
-  // Se estiver rodando, pausa
-  if (timerId) {
-    clearInterval(timerId);
-    timerId = null;
-    startButton.textContent = "Continuar";
-    return;
-  }
+return {
+  name: subject.name,
+  minutes
+};
+});
 
-  const subject = document.getElementById("studySubject").value;
-  const topic = document.getElementById("studyTopic").value.trim();
+const highestMinutes = Math.max( 
+60, 
+...studiedSubjects.map(subject => subject.minutes) 
+);
 
-  if (!subject) {
-    alert("Selecione uma disciplina antes de iniciar.");
-    return;
-  }
+document.getElementById("subjectProgress").innerHTML = 
+studiedSubjects 
+.sort((a, b) => b.minutes - a.minutes) 
+.slice(0, 5) 
+.map(subject => { 
+const percentage = Math.round( 
+(subject.minutes / highestMinutes) * 100 
+);
 
-  if (!topic) {
-    alert("Informe o tópico que será estudado.");
-    return;
-  }
+    const timeText =
+      subject.minutes >= 60
+        ? `${(subject.minutes / 60).toFixed(1)}h`
+        : `${subject.minutes} min`;
 
-  updateTimerTimes();
-  startButton.textContent = "Pausar";
+    return `
+      <div class="progress-line">
+        <div class="progress-meta">
+          <span>${subject.name}</span>
+          <strong>${timeText}</strong>
+        </div>
 
-  timerId = setInterval(() => {
-    remaining--;
-    updateTimer();
+        <div class="bar">
+          <i style="width:${percentage}%"></i>
+        </div>
+      </div>
+    `;
+  })
+  .join("");
+}
 
-    if (remaining <= 0) {
-      clearInterval(timerId);
-      timerId = null;
-      remaining = 0;
-      updateTimer();
+function renderQuestions() { 
+const total = state.questions.reduce((a,b)=>a+b.total,0); 
+const correct = state.questions.reduce((a,b)=>a+b.correct,0); 
+const accuracy = total ? Math.round(correct/total*100) : 0; 
+document.getElementById("questionsStat").textContent = total; 
+document.getElementById("accuracyStat").textContent = accuracy + "%"; 
+document.getElementById("questionSummary").textContent = accuracy + "%"; 
+document.getElementById("questionBars").innerHTML = SUBJECTS.filter(s=>subjectStats(s.name).total>0).map(s => { 
+const st = subjectStats(s.name); 
+return <div class="progress-line"> <div class="progress-meta"><span>${s.name}</span><strong>${st.correct}/${st.total}</strong></div> <div class="bar"><i style="width:${st.accuracy}%"></i></div> </div>; 
+}).join("") || <p class="muted">Registre seu primeiro bloco de questões.</p>; 
+}
 
-      registerCompletedSession();
 
-      startButton.textContent = "Iniciar";
 
-      alert("Sessão concluída e registrada automaticamente!");
-    }
-  }, 1000);
+
+function renderSessions() { 
+const totalMinutes = state.sessions.reduce((a,b)=>a+b.minutes,0); 
+document.getElementById("hoursStat").textContent = ${(totalMinutes/60).toFixed(1)}h; 
+document.getElementById("sessionHistory").innerHTML = state.sessions.slice().reverse().slice(0,8).map(x =>  <div class="history-item"> <div><strong>${x.subject}</strong><small>${x.topic || "Estudo geral"} • ${x.minutes} min • ${x.date}</small></div> <span class="tag">CONCLUÍDO</span> </div>).join("") || <p class="muted">Nenhuma sessão registrada ainda.</p>; 
+}
+
+
+
+
+
+function renderReviews() { 
+const today = new Date(); today.setHours(0,0,0,0); 
+document.getElementById("reviewList").innerHTML = state.reviews.slice().sort((a,b)=>new Date(a.due)-new Date(b.due)).map((r,i) => { 
+const due = new Date(r.due + "T00:00:00"); 
+const overdue = due < today && !r.done; 
+return <div class="review-item"> <div> <strong>${r.topic}</strong> <small>${r.subject} • ${new Date(r.due+"T00:00:00").toLocaleDateString("pt-BR")}</small> </div> <div> <span class="tag">${r.done ? "FEITA" : overdue ? "ATRASADA" : "PENDENTE"}</span> <button class="text-btn" data-review="${i}">${r.done ? "Reabrir" : "Concluir"}</button> </div> </div>; 
+}).join("") || <article class="panel"><p class="muted">Nenhuma revisão agendada.</p></article>;
+
+
+
+
+
+
+
+
+
+
+document.querySelectorAll("[data-review]").forEach(btn => btn.onclick = () => { 
+const sorted = state.reviews.slice().sort((a,b)=>new Date(a.due)-new Date(b.due)); 
+const item = sorted[+btn.dataset.review]; 
+const original = state.reviews.find(x => x.id = item.id); 
+original.done = !original.done; 
+save(); 
+}); 
+}
+
+function renderTaf() { 
+document.getElementById("tafHistory").innerHTML = state.taf.slice().reverse().slice(0,10).map(x =>  <div class="history-item"> <div><strong>${x.exercise}</strong><small>${x.result} • ${x.date}</small></div> <span class="tag">${x.effort}</span> </div>).join("") || <p class="muted">Nenhum treino registrado.</p>; 
+}
+
+
+
+
+
+function renderGoals() { 
+document.getElementById("goalHours").value = state.goals.hours; 
+document.getElementById("goalQuestions").value = state.goals.questions; 
+document.getElementById("goalTaf").value = state.goals.taf; 
+document.getElementById("goalDate").value = state.goals.date;
+
+const target = new Date(state.goals.date + "T23:59:59"); 
+const days = Math.max(0, Math.ceil((target - new Date()) / 86400000)); 
+document.getElementById("countdownDays").textContent = ${days} dias;
+
+const doneTasks = Object.values(state.completedTasks).filter(Boolean).length; 
+const taskTotal = Object.keys(WEEK).reduce((sum,d)=>sum+WEEK[d].length,0); 
+const qTotal = state.questions.reduce((a,b)=>a+b.total,0); 
+const studyHours = state.sessions.reduce((a,b)=>a+b.minutes,0)/60; 
+const components = [ 
+Math.min(100,doneTasks/taskTotal100), 
+Math.min(100,qTotal/state.goals.questions100), 
+Math.min(100,studyHours/state.goals.hours*100) 
+]; 
+const overall = Math.round(components.reduce((a,b)=>a+b,0)/components.length); 
+document.getElementById("overallProgress").textContent = overall+"%"; 
+document.getElementById("progressRing").style.setProperty("--p", overall); 
+document.getElementById("streakStat").textContent = ${state.streak || 0} dias; 
+}
+
+
+function renderDashboardOverview() { 
+const now = new Date(); 
+const hour = now.getHours(); 
+const greeting = hour < 12 ? "Bom dia" : hour < 18 ? "Boa tarde" : "Boa noite"; 
+const dayText = now.toLocaleDateString("pt-BR", { 
+weekday: "long", 
+day: "2-digit", 
+month: "long" 
+});
+
+const dateEl = document.getElementById("dashboardDate"); 
+const greetingEl = document.getElementById("dashboardGreeting"); 
+const messageEl = document.getElementById("dashboardMessage");
+
+if (dateEl) dateEl.textContent = dayText.toUpperCase(); 
+if (greetingEl) greetingEl.textContent = ${greeting}! Vamos avançar mais um pouco?;
+
+const totalMinutes = state.sessions.reduce((sum, item) => sum + item.minutes, 0); 
+const totalHours = totalMinutes / 60; 
+const today = new Date().toISOString().slice(0,10);
+
+const todayMinutes = state.sessions 
+.filter(s => s.date = today) 
+.reduce((sum, s) => sum + s.minutes, 0);
+
+const todayStudy = document.getElementById("todayStudyTime"); 
+if (todayStudy) { 
+if (todayMinutes >= 60) { 
+todayStudy.textContent = (todayMinutes / 60).toFixed(1) + "h"; 
+} else { 
+todayStudy.textContent = todayMinutes + " min"; 
+} 
+}
+
+const welcomeStreak = document.getElementById("welcomeStreak"); 
+if (welcomeStreak) { 
+welcomeStreak.textContent = ${state.streak || 0} dias; 
+} 
+const weeklyGoal = Number(state.goals.hours) || 18; 
+const weeklyPercent = Math.min(100, Math.round((totalHours / weeklyGoal) * 100));
+
+const progressText = document.getElementById("weeklyProgressText"); 
+const progressBar = document.getElementById("weeklyProgressBar"); 
+const progressDetail = document.getElementById("weeklyProgressDetail");
+
+if (progressText) progressText.textContent = ${weeklyPercent}%; 
+if (progressBar) progressBar.style.width = ${weeklyPercent}%; 
+if (progressDetail) { 
+progressDetail.textContent = ${totalHours.toFixed(1)}h de ${weeklyGoal}h concluídas; 
+}
+
+if (messageEl) { 
+if (weeklyPercent >= 100) { 
+messageEl.textContent = "Meta semanal concluída. Excelente — agora mantenha o ritmo."; 
+} else if (weeklyPercent >= 60) { 
+messageEl.textContent = "Você já passou da metade da meta semanal. Continue firme."; 
+} else if (state.sessions.length > 0) { 
+messageEl.textContent = "Cada sessão registrada aproxima você da meta de 2027."; 
+} else { 
+messageEl.textContent = "Comece com uma sessão curta. Constância vale mais que pressa."; 
+} 
+}
+
+const pendingReviews = state.reviews 
+.filter(item => !item.done) 
+.sort((a, b) => new Date(a.due) - new Date(b.due));
+
+const nextReview = pendingReviews[0]; 
+const nextReviewTitle = document.getElementById("nextReviewTitle"); 
+const nextReviewDate = document.getElementById("nextReviewDate");
+
+if (nextReview) { 
+if (nextReviewTitle) nextReviewTitle.textContent = nextReview.topic; 
+if (nextReviewDate) { 
+nextReviewDate.textContent = ${nextReview.subject} • ${new Date(nextReview.due + "T00:00:00").toLocaleDateString("pt-BR")}; 
+} 
+} else { 
+if (nextReviewTitle) nextReviewTitle.textContent = "Nenhuma revisão"; 
+if (nextReviewDate) nextReviewDate.textContent = "Adicione uma revisão para começar"; 
+}
+
+const tafGoal = Number(state.goals.taf) || 4; 
+const tafDone = state.taf.length; 
+const tafRemaining = Math.max(0, tafGoal - tafDone); 
+const nextTafTitle = document.getElementById("nextTafTitle"); 
+const nextTafDetail = document.getElementById("nextTafDetail");
+
+if (tafRemaining = 0) { 
+if (nextTafTitle) nextTafTitle.textContent = "Meta física concluída"; 
+if (nextTafDetail) nextTafDetail.textContent = ${tafDone} treinos registrados; 
+} else { 
+if (nextTafTitle) nextTafTitle.textContent = ${tafRemaining} treino${tafRemaining > 1 ? "s" : ""} restante${tafRemaining > 1 ? "s" : ""}; 
+if (nextTafDetail) nextTafDetail.textContent = ${tafDone} de ${tafGoal} treinos registrados; 
+} 
+}
+
+function renderAll() { 
+renderWeek(); renderToday(); renderSubjects(); renderSubjectProgress(); 
+renderQuestions(); renderSessions(); renderReviews(); renderTaf(); renderGoals(); 
+renderDashboardOverview(); 
+}
+
+document.getElementById("questionForm").onsubmit = e => { 
+e.preventDefault(); 
+const total = +document.getElementById("questionTotal").value; 
+const correct = +document.getElementById("questionCorrect").value; 
+if (correct > total) return alert("A quantidade correta não pode superar o total."); 
+state.questions.push({ 
+subject: document.getElementById("questionSubject").value, 
+total, correct, date: new Date().toLocaleDateString("pt-BR") 
+}); 
+save(); e.target.reset(); 
 };
 
-document.getElementById("resetTimer").onclick = () => {
+let selectedMinutes = 25, remaining = 25 * 60, timerId = null; 
+function formatTime(date) { 
+return date.toLocaleTimeString("pt-BR", { 
+hour: "2-digit", 
+minute: "2-digit" 
+}); 
+}
+
+function updateTimerTimes() { 
+const startEl = document.getElementById("timerStartTime"); 
+const endEl = document.getElementById("timerEndTime");
+
+if (!startEl || !endEl) return;
+
+const now = new Date(); 
+const end = new Date(now.getTime() + remaining * 1000);
+
+startEl.textContent = formatTime(now); 
+endEl.textContent = formatTime(end); 
+} 
+function updateTimer() { 
+const m = String(Math.floor(remaining/60)).padStart(2,"0"); 
+const s = String(remaining%60).padStart(2,"0"); 
+document.getElementById("timerDisplay").textContent = ${m}:${s}; 
+}function registerCompletedSession() { 
+const subjectEl = document.getElementById("studySubject"); 
+const topicEl = document.getElementById("studyTopic"); 
+const notesEl = document.getElementById("studyNotes");
+
+state.sessions.push({ 
+subject: subjectEl ? subjectEl.value : "Estudo geral", 
+topic: topicEl?.value || "Sessão focada", 
+notes: notesEl?.value || "", 
+minutes: selectedMinutes, 
+date: new Date().toLocaleDateString("pt-BR") 
+});
+
+const today = new Date().toISOString().slice(0, 10);
+
+if (state.lastStudyDate ! today) { 
+const yesterday = new Date(Date.now() - 86400000) 
+.toISOString() 
+.slice(0, 10);
+
+state.streak =
+  state.lastStudyDate === yesterday
+    ? (state.streak || 0) + 1
+    : 1;
+
+state.lastStudyDate = today;
+}
+
+save(); 
+} 
+document.querySelectorAll(".preset").forEach(btn => btn.onclick = () => { 
+if (timerId) return; 
+document.querySelectorAll(".preset").forEach(x=>x.classList.remove("active")); 
+btn.classList.add("active"); 
+selectedMinutes = +btn.dataset.minutes; remaining = selectedMinutes*60; updateTimer(); 
+}); 
+document.getElementById("startTimer").onclick = () => { 
+const startButton = document.getElementById("startTimer");
+
+// Se estiver rodando, pausa 
+if (timerId) { 
+clearInterval(timerId); 
+timerId = null; 
+startButton.textContent = "Continuar"; 
+return; 
+}
+
+const subject = document.getElementById("studySubject").value; 
+const topic = document.getElementById("studyTopic").value.trim();
+
+if (!subject) { 
+alert("Selecione uma disciplina antes de iniciar."); 
+return; 
+}
+
+if (!topic) { 
+alert("Informe o tópico que será estudado."); 
+return; 
+}
+
+updateTimerTimes(); 
+startButton.textContent = "Pausar";
+
+timerId = setInterval(() => { 
+remaining--; 
+updateTimer();
+
+if (remaining <= 0) {
   clearInterval(timerId);
   timerId = null;
-  remaining = selectedMinutes * 60;
+  remaining = 0;
   updateTimer();
 
-  document.getElementById("startTimer").textContent = "Iniciar";
+  registerCompletedSession();
 
-  const startEl = document.getElementById("timerStartTime");
-  const endEl = document.getElementById("timerEndTime");
+  startButton.textContent = "Iniciar";
 
-  if (startEl) startEl.textContent = "--:--";
-  if (endEl) endEl.textContent = "--:--";
-};
-
-document.getElementById("studyForm").onsubmit = e => {
-  e.preventDefault();
-  state.sessions.push({
-    subject: document.getElementById("studySubject").value,
-    topic: document.getElementById("studyTopic").value,
-    notes: document.getElementById("studyNotes").value,
-    minutes: Math.max(1, selectedMinutes - Math.floor(remaining/60)),
-    date: new Date().toLocaleDateString("pt-BR")
-  });
-  const today = new Date().toISOString().slice(0,10);
-  if (state.lastStudyDate !== today) {
-    const yesterday = new Date(Date.now()-86400000).toISOString().slice(0,10);
-    state.streak = state.lastStudyDate === yesterday ? (state.streak||0)+1 : 1;
-    state.lastStudyDate = today;
-  }
-  save(); e.target.reset();
-};
-
-document.getElementById("tafForm").onsubmit = e => {
-  e.preventDefault();
-  state.taf.push({
-    exercise: document.getElementById("tafExercise").value,
-    result: document.getElementById("tafResult").value || "Treino concluído",
-    effort: document.getElementById("tafEffort").value,
-    date: new Date().toLocaleDateString("pt-BR")
-  });
-  save(); e.target.reset();
-};
-
-document.getElementById("goalsForm").onsubmit = e => {
-  e.preventDefault();
-  state.goals = {
-    hours:+document.getElementById("goalHours").value,
-    questions:+document.getElementById("goalQuestions").value,
-    taf:+document.getElementById("goalTaf").value,
-    date:document.getElementById("goalDate").value
-  };
-  save();
-};
-
-document.getElementById("reviewForm").onsubmit = e => {
-  e.preventDefault();
-  const d = new Date();
-  d.setDate(d.getDate() + +document.getElementById("reviewCycle").value);
-  state.reviews.push({
-    id: crypto.randomUUID(),
-    subject:document.getElementById("reviewSubject").value,
-    topic:document.getElementById("reviewTopic").value,
-    due:d.toISOString().slice(0,10), done:false
-  });
-  save(); e.target.reset(); document.getElementById("reviewModal").classList.remove("open");
-};
-document.getElementById("addReviewBtn").onclick = () => document.getElementById("reviewModal").classList.add("open");
-document.getElementById("closeReviewModal").onclick = () => document.getElementById("reviewModal").classList.remove("open");
-document.getElementById("reviewModal").onclick = e => { if (e.target.id==="reviewModal") e.currentTarget.classList.remove("open"); };
-
-document.getElementById("resetWeekBtn").onclick = () => {
-  if (confirm("Reiniciar todas as marcações da semana?")) {
-    state.completedTasks = {};
-    save();
-  }
-};
-const exportBackupBtn = document.getElementById("exportBackupBtn");
-const importBackupBtn = document.getElementById("importBackupBtn");
-const importBackupFile = document.getElementById("importBackupFile");
-function createBackupPayload() {
-  return {
-    app: "Rota PMMG 2027",
-    version: 1,
-    exportedAt: new Date().toISOString(),
-    data: JSON.parse(JSON.stringify(state))
-  };
+  alert("Sessão concluída e registrada automaticamente!");
 }
-exportBackupBtn.onclick = async () => {
-  const backup = createBackupPayload();
+}, 1000); 
+};
 
-  const date = new Date().toISOString().slice(0, 10);
-  const fileName = `rota-pmmg-backup-${date}.json`;
+document.getElementById("resetTimer").onclick = () => { 
+clearInterval(timerId); 
+timerId = null; 
+remaining = selectedMinutes * 60; 
+updateTimer();
 
-  const file = new File(
-    [JSON.stringify(backup, null, 2)],
-    fileName,
-    { type: "application/json" }
-  );
+document.getElementById("startTimer").textContent = "Iniciar";
 
-  try {
-    if (
-      navigator.share &&
-      navigator.canShare &&
-      navigator.canShare({ files: [file] })
-    ) {
-      await navigator.share({
-        title: "Backup Rota PMMG 2027",
-        text: "Backup dos meus dados de estudo.",
-        files: [file]
-      });
+const startEl = document.getElementById("timerStartTime"); 
+const endEl = document.getElementById("timerEndTime");
 
-      return;
-    }
+if (startEl) startEl.textContent = "--:--"; 
+if (endEl) endEl.textContent = "--:--"; 
+};
 
-    const url = URL.createObjectURL(file);
-    const link = document.createElement("a");
+document.getElementById("studyForm").onsubmit = e => { 
+e.preventDefault(); 
+state.sessions.push({ 
+subject: document.getElementById("studySubject").value, 
+topic: document.getElementById("studyTopic").value, 
+notes: document.getElementById("studyNotes").value, 
+minutes: Math.max(1, selectedMinutes - Math.floor(remaining/60)), 
+date: new Date().toLocaleDateString("pt-BR") 
+}); 
+const today = new Date().toISOString().slice(0,10); 
+if (state.lastStudyDate ! today) { 
+const yesterday = new Date(Date.now()-86400000).toISOString().slice(0,10); 
+state.streak = state.lastStudyDate = yesterday ? (state.streak||0)+1 : 1; 
+state.lastStudyDate = today; 
+} 
+save(); e.target.reset(); 
+};
 
-    link.href = url;
-    link.download = fileName;
+document.getElementById("tafForm").onsubmit = e => { 
+e.preventDefault(); 
+state.taf.push({ 
+exercise: document.getElementById("tafExercise").value, 
+result: document.getElementById("tafResult").value || "Treino concluído", 
+effort: document.getElementById("tafEffort").value, 
+date: new Date().toLocaleDateString("pt-BR") 
+}); 
+save(); e.target.reset(); 
+};
 
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+document.getElementById("goalsForm").onsubmit = e => { 
+e.preventDefault(); 
+state.goals = { 
+hours:+document.getElementById("goalHours").value, 
+questions:+document.getElementById("goalQuestions").value, 
+taf:+document.getElementById("goalTaf").value, 
+date:document.getElementById("goalDate").value 
+}; 
+save(); 
+};
 
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+document.getElementById("reviewForm").onsubmit = e => { 
+e.preventDefault(); 
+const d = new Date(); 
+d.setDate(d.getDate() + +document.getElementById("reviewCycle").value); 
+state.reviews.push({ 
+id: crypto.randomUUID(), 
+subject:document.getElementById("reviewSubject").value, 
+topic:document.getElementById("reviewTopic").value, 
+due:d.toISOString().slice(0,10), done:false 
+}); 
+save(); e.target.reset(); document.getElementById("reviewModal").classList.remove("open"); 
+}; 
+document.getElementById("addReviewBtn").onclick = () => document.getElementById("reviewModal").classList.add("open"); 
+document.getElementById("closeReviewModal").onclick = () => document.getElementById("reviewModal").classList.remove("open"); 
+document.getElementById("reviewModal").onclick = e => { if (e.target.id="reviewModal") e.currentTarget.classList.remove("open"); };
 
-    alert("Backup criado. Confira a pasta Downloads do navegador.");
-  } catch (error) {
-    if (error.name !== "AbortError") {
-      alert("Não foi possível exportar o backup.");
-    }
+document.getElementById("resetWeekBtn").onclick = () => { 
+if (confirm("Reiniciar todas as marcações da semana?")) { 
+state.completedTasks = {}; 
+save(); 
+} 
+}; 
+const exportBackupBtn = document.getElementById("exportBackupBtn"); 
+const importBackupBtn = document.getElementById("importBackupBtn"); 
+const importBackupFile = document.getElementById("importBackupFile"); 
+function createBackupPayload() { 
+return { 
+app: "Rota PMMG 2027", 
+version: 1, 
+exportedAt: new Date().toISOString(), 
+data: JSON.parse(JSON.stringify(state)) 
+}; 
+} 
+exportBackupBtn.onclick = async () => { 
+const backup = createBackupPayload();
+
+const date = new Date().toISOString().slice(0, 10); 
+const fileName = rota-pmmg-backup-${date}.json;
+
+const file = new File( 
+[JSON.stringify(backup, null, 2)], 
+fileName, 
+{ type: "application/json" } 
+);
+
+try { 
+if ( 
+navigator.share && 
+navigator.canShare && 
+navigator.canShare({ files: [file] }) 
+) { 
+await navigator.share({ 
+title: "Backup Rota PMMG 2027", 
+text: "Backup dos meus dados de estudo.", 
+files: [file] 
+});
+
+  return;
+}
+
+const url = URL.createObjectURL(file);
+const link = document.createElement("a");
+
+link.href = url;
+link.download = fileName;
+
+document.body.appendChild(link);
+link.click();
+link.remove();
+
+setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+alert("Backup criado. Confira a pasta Downloads do navegador.");
+} catch (error) { 
+if (error.name ! "AbortError") { 
+alert("Não foi possível exportar o backup."); 
+} 
+} 
+};
+
+importBackupBtn.onclick = () => { 
+importBackupFile.value = ""; 
+importBackupFile.click(); 
+};
+
+
+importBackupFile.onchange = event => { 
+const file = event.target.files[0];
+
+if (!file) return;
+
+const reader = new FileReader();
+
+reader.onload = () => { 
+try { 
+const backup = JSON.parse(reader.result); 
+const importedData = backup.data || backup;
+
+  if (
+    !importedData ||
+    !Array.isArray(importedData.sessions) ||
+    !Array.isArray(importedData.questions) ||
+    !Array.isArray(importedData.reviews) ||
+    !Array.isArray(importedData.taf)
+  ) {
+    throw new Error("Backup incompatível");
   }
-};
 
-importBackupBtn.onclick = () => {
-  importBackupFile.value = "";
-  importBackupFile.click();
-};
+  if (!confirm(
+    "Importar este backup substituirá os dados atuais. Continuar?"
+  )) {
+    return;
+  }
 
-
-importBackupFile.onchange = event => {
-  const file = event.target.files[0];
-
-  if (!file) return;
-
-  const reader = new FileReader();
-
-  reader.onload = () => {
-    try {
-      const backup = JSON.parse(reader.result);
-      const importedData = backup.data || backup;
-
-      if (
-        !importedData ||
-        !Array.isArray(importedData.sessions) ||
-        !Array.isArray(importedData.questions) ||
-        !Array.isArray(importedData.reviews) ||
-        !Array.isArray(importedData.taf)
-      ) {
-        throw new Error("Backup incompatível");
-      }
-
-      if (!confirm(
-        "Importar este backup substituirá os dados atuais. Continuar?"
-      )) {
-        return;
-      }
-
-      state = {
-        ...structuredClone(defaults),
-        ...importedData,
-        goals: {
-          ...defaults.goals,
-          ...(importedData.goals || {})
-        }
-      };
-
-      save();
-
-      alert("Backup importado com sucesso!");
-    } catch (error) {
-      alert("Não foi possível importar. Escolha um backup válido do Rota PMMG.");
+  state = {
+    ...structuredClone(defaults),
+    ...importedData,
+    goals: {
+      ...defaults.goals,
+      ...(importedData.goals || {})
     }
   };
 
-  reader.readAsText(file);
-};
-  
- document.getElementById("resetWeekBtn").onclick = () => {
-  if (confirm("Reiniciar todas as marcações da semana?")) {
-    state.completedTasks = {};
-    save();
-  }
-};
-document.getElementById("clearDataBtn").onclick = () => {
-  if (confirm("Isso apagará todo o histórico salvo neste navegador. Continuar?")) {
-    state=structuredClone(defaults); save();
-  }
-};
-document.getElementById("themeToggle").onclick = () => {
-  state.theme = state.theme === "light" ? "dark" : "light";
-  document.body.classList.toggle("light", state.theme==="light");
-  document.getElementById("themeToggle").textContent = state.theme==="light" ? "☀" : "☾";
-  localStorage.setItem("pmmg2027", JSON.stringify(state));
+  save();
+
+  alert("Backup importado com sucesso!");
+} catch (error) {
+  alert("Não foi possível importar. Escolha um backup válido do Rota PMMG.");
+}
 };
 
-fillSubjectSelects();
-document.body.classList.toggle("light", state.theme==="light");
-document.getElementById("themeToggle").textContent = state.theme==="light" ? "☀" : "☾";
-renderAll();
+reader.readAsText(file); 
+};
+
+document.getElementById("resetWeekBtn").onclick = () => { 
+if (confirm("Reiniciar todas as marcações da semana?")) { 
+state.completedTasks = {}; 
+save(); 
+} 
+}; 
+document.getElementById("clearDataBtn").onclick = () => { 
+if (confirm("Isso apagará todo o histórico salvo neste navegador. Continuar?")) { 
+state=structuredClone(defaults); save(); 
+} 
+}; 
+document.getElementById("themeToggle").onclick = () => { 
+state.theme = state.theme = "light" ? "dark" : "light"; 
+document.body.classList.toggle("light", state.theme="light"); 
+document.getElementById("themeToggle").textContent = state.theme="light" ? "☀" : "☾"; 
+localStorage.setItem("pmmg2027", JSON.stringify(state)); 
+};
+
+fillSubjectSelects(); 
+document.body.classList.toggle("light", state.theme="light"); 
+document.getElementById("themeToggle").textContent = state.theme="light" ? "☀" : "☾"; 
+renderAll(); 
 updateTimer();
 
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(err => {
-      console.warn('Service worker não registrado:', err);
-    });
-  });
+if ('serviceWorker' in navigator) { 
+window.addEventListener('load', () => { 
+navigator.serviceWorker.register('./sw.js').catch(err => { 
+console.warn('Service worker não registrado:', err); 
+}); 
+}); 
 }
 
 
-// ===== Versão 1.1: navegação mobile =====
-const mobileSheet = document.getElementById("mobileSheet");
-const moreMenuBtn = document.getElementById("moreMenuBtn");
+// = Versão 1.1: navegação mobile = 
+const mobileSheet = document.getElementById("mobileSheet"); 
+const moreMenuBtn = document.getElementById("moreMenuBtn"); 
 const closeMobileSheet = document.getElementById("closeMobileSheet");
 
-function syncMobileNav(page) {
-  document.querySelectorAll("[data-mobile-page]").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.mobilePage === page);
-  });
-  if (["disciplinas", "questoes", "revisoes", "metas"].includes(page)) {
-    moreMenuBtn?.classList.add("active");
-  } else {
-    moreMenuBtn?.classList.remove("active");
-  }
+function syncMobileNav(page) { 
+document.querySelectorAll("[data-mobile-page]").forEach(btn => { 
+btn.classList.toggle("active", btn.dataset.mobilePage = page); 
+}); 
+if (["disciplinas", "questoes", "revisoes", "metas"].includes(page)) { 
+moreMenuBtn?.classList.add("active"); 
+} else { 
+moreMenuBtn?.classList.remove("active"); 
+} 
 }
 
-document.querySelectorAll("[data-mobile-page]").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const page = btn.dataset.mobilePage;
-    navigate(page);
-    syncMobileNav(page);
-  });
+document.querySelectorAll("[data-mobile-page]").forEach(btn => { 
+btn.addEventListener("click", () => { 
+const page = btn.dataset.mobilePage; 
+navigate(page); 
+syncMobileNav(page); 
+}); 
 });
 
-moreMenuBtn?.addEventListener("click", () => {
-  mobileSheet?.classList.add("open");
-  document.body.style.overflow = "hidden";
+moreMenuBtn?.addEventListener("click", () => { 
+mobileSheet?.classList.add("open"); 
+document.body.style.overflow = "hidden"; 
 });
 
-closeMobileSheet?.addEventListener("click", () => {
-  mobileSheet?.classList.remove("open");
-  document.body.style.overflow = "";
-});
-document.getElementById("exportBackupMenu").onclick = () => {
-  document.getElementById("exportBackupBtn").click();
-  document.getElementById("mobileSheet").classList.remove("active");
+closeMobileSheet?.addEventListener("click", () => { 
+mobileSheet?.classList.remove("open"); 
+document.body.style.overflow = ""; 
+}); 
+document.getElementById("exportBackupMenu").onclick = () => { 
+document.getElementById("exportBackupBtn").click(); 
+document.getElementById("mobileSheet").classList.remove("active"); 
 };
 
-document.getElementById("importBackupMenu").onclick = () => {
-  document.getElementById("importBackupBtn").click();
-  document.getElementById("mobileSheet").classList.remove("active");
-};
-mobileSheet?.addEventListener("click", (event) => {
-  if (event.target === mobileSheet) {
-    mobileSheet.classList.remove("open");
-    document.body.style.overflow = "";
-  }
+document.getElementById("importBackupMenu").onclick = () => { 
+document.getElementById("importBackupBtn").click(); 
+document.getElementById("mobileSheet").classList.remove("active"); 
+}; 
+mobileSheet?.addEventListener("click", (event) => { 
+if (event.target = mobileSheet) { 
+mobileSheet.classList.remove("open"); 
+document.body.style.overflow = ""; 
+} 
 });
 
-document.querySelectorAll("[data-sheet-page]").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const page = btn.dataset.sheetPage;
-    navigate(page);
-    syncMobileNav(page);
-    mobileSheet?.classList.remove("open");
-    document.body.style.overflow = "";
-  });
+document.querySelectorAll("[data-sheet-page]").forEach(btn => { 
+btn.addEventListener("click", () => { 
+const page = btn.dataset.sheetPage; 
+navigate(page); 
+syncMobileNav(page); 
+mobileSheet?.classList.remove("open"); 
+document.body.style.overflow = ""; 
+}); 
 });
 
-// Mantém a barra inferior sincronizada também ao usar o menu lateral.
-document.querySelectorAll("[data-page], [data-go]").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const page = btn.dataset.page || btn.dataset.go;
-    if (page) syncMobileNav(page);
-  });
+// Mantém a barra inferior sincronizada também ao usar o menu lateral. 
+document.querySelectorAll("[data-page], [data-go]").forEach(btn => { 
+btn.addEventListener("click", () => { 
+const page = btn.dataset.page || btn.dataset.go; 
+if (page) syncMobileNav(page); 
+}); 
 });
 
 syncMobileNav("dashboard");
 
 
-// Progresso visual do cronômetro
-function updateTimerProgress() {
-  const progress = document.getElementById("timerProgress");
-  if (!progress) return;
+// Progresso visual do cronômetro 
+function updateTimerProgress() { 
+const progress = document.getElementById("timerProgress"); 
+if (!progress) return;
 
-  const totalSeconds = selectedMinutes * 60;
-  const elapsedSeconds = totalSeconds - remaining;
-  const percentage = totalSeconds > 0
-    ? Math.min(100, Math.max(0, (elapsedSeconds / totalSeconds) * 100))
-    : 0;
+const totalSeconds = selectedMinutes * 60; 
+const elapsedSeconds = totalSeconds - remaining; 
+const percentage = totalSeconds > 0 
+? Math.min(100, Math.max(0, (elapsedSeconds / totalSeconds) * 100)) 
+: 0;
 
-  progress.style.width = `${percentage}%`;
+progress.style.width = ${percentage}%; 
 }
 
-// Atualiza a barra sempre que o cronômetro muda
+// Atualiza a barra sempre que o cronômetro muda 
 const originalUpdateTimer = updateTimer;
 
-updateTimer = function () {
-  originalUpdateTimer();
-  updateTimerProgress();
+updateTimer = function () { 
+originalUpdateTimer(); 
+updateTimerProgress(); 
 };
 
 updateTimerProgress();
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const signedOutState = document.getElementById("googleSignedOutState");
-  const signedInState = document.getElementById("googleSignedInState");
+document.addEventListener("DOMContentLoaded", async () => { 
+const signedOutState = document.getElementById("googleSignedOutState"); 
+const signedInState = document.getElementById("googleSignedInState");
 
-  const loginButton = document.getElementById("googleLoginButton");
-  const logoutButton = document.getElementById("googleLogoutButton");
-  const syncNowButton = document.getElementById("syncNowButton");
-const restoreCloudButton =
-  document.getElementById("restoreCloudButton");
-  const userName = document.getElementById("googleUserName");
-  const userEmail = document.getElementById("googleUserEmail");
-  const userPhoto = document.getElementById("googleUserPhoto");
-  const syncStatus = document.getElementById("syncStatus");
+const loginButton = document.getElementById("googleLoginButton"); 
+const logoutButton = document.getElementById("googleLogoutButton"); 
+const syncNowButton = document.getElementById("syncNowButton"); 
+const restoreCloudButton = 
+document.getElementById("restoreCloudButton"); 
+const userName = document.getElementById("googleUserName"); 
+const userEmail = document.getElementById("googleUserEmail"); 
+const userPhoto = document.getElementById("googleUserPhoto"); 
+const syncStatus = document.getElementById("syncStatus"); 
 let lastSyncTime = document.getElementById("lastSyncTime");
 
-if (!lastSyncTime && syncStatus) {
-  lastSyncTime = document.createElement("small");
-  lastSyncTime.id = "lastSyncTime";
-  lastSyncTime.className = "account-note";
-  syncStatus.insertAdjacentElement("afterend", lastSyncTime);
-}
-  function setAccountStatus(message) {
-    if (syncStatus) {
-      syncStatus.textContent = message;
-    }
-  }
-function updateLastSyncTime(dateValue) {
-  if (!lastSyncTime) return;
+if (!lastSyncTime && syncStatus) { 
+lastSyncTime = document.createElement("small"); 
+lastSyncTime.id = "lastSyncTime"; 
+lastSyncTime.className = "account-note"; 
+syncStatus.insertAdjacentElement("afterend", lastSyncTime); 
+} 
+function setAccountStatus(message) { 
+if (syncStatus) { 
+syncStatus.textContent = message; 
+} 
+} 
+function updateLastSyncTime(dateValue) { 
+if (!lastSyncTime) return;
 
-  if (!dateValue) {
-    lastSyncTime.textContent =
-      "Última sincronização: ainda não realizada";
-    return;
-  }
-
-  const formattedDate = new Intl.DateTimeFormat("pt-BR", {
-    dateStyle: "short",
-    timeStyle: "short"
-  }).format(new Date(dateValue));
-
-  lastSyncTime.textContent =
-    `Última sincronização: ${formattedDate}`;
+if (!dateValue) { 
+lastSyncTime.textContent = 
+"Última sincronização: ainda não realizada"; 
+return; 
 }
 
-const savedLastSync =
-  localStorage.getItem("pmmg2027LastSync");
+const formattedDate = new Intl.DateTimeFormat("pt-BR", { 
+dateStyle: "short", 
+timeStyle: "short" 
+}).format(new Date(dateValue));
 
-updateLastSyncTime(savedLastSync);
-  function renderFirebaseUser(user) {
-    const isSignedIn = Boolean(user);
-
-    if (signedOutState) {
-      signedOutState.hidden = isSignedIn;
-    }
-
-    if (signedInState) {
-      signedInState.hidden = !isSignedIn;
-    }
-
-    if (loginButton) {
-      loginButton.disabled = isSignedIn;
-    }
-
-    if (logoutButton) {
-      logoutButton.disabled = !isSignedIn;
-    }
-
-    // A sincronização será implementada em outro commit.
-    if (syncNowButton) {
-     syncNowButton.disabled = !isSignedIn;
-    }
-if (restoreCloudButton) {
-  restoreCloudButton.disabled = !isSignedIn;
+lastSyncTime.textContent = 
+Última sincronização: ${formattedDate}; 
 }
-    if (!user) {
-      if (userName) {
-        userName.textContent = "Usuário conectado";
-      }
 
-      if (userEmail) {
-        userEmail.textContent = "";
-      }
+const savedLastSync = 
+localStorage.getItem("pmmg2027LastSync");
 
-      if (userPhoto) {
-        userPhoto.src = "";
-        userPhoto.hidden = true;
-      }
+updateLastSyncTime(savedLastSync); 
+function renderFirebaseUser(user) { 
+const isSignedIn = Boolean(user);
 
-      setAccountStatus("Dados locais");
-      return;
-    }
+if (signedOutState) {
+  signedOutState.hidden = isSignedIn;
+}
 
-    if (userName) {
-      userName.textContent = user.displayName || "Usuário conectado";
-    }
+if (signedInState) {
+  signedInState.hidden = !isSignedIn;
+}
 
-    if (userEmail) {
-      userEmail.textContent = user.email || "";
-    }
+if (loginButton) {
+  loginButton.disabled = isSignedIn;
+}
 
-    if (userPhoto) {
-      if (user.photoURL) {
-        userPhoto.src = user.photoURL;
-        userPhoto.hidden = false;
-      } else {
-        userPhoto.src = "";
-        userPhoto.hidden = true;
-      }
-    }
+if (logoutButton) {
+  logoutButton.disabled = !isSignedIn;
+}
 
-    setAccountStatus("Conta conectada — dados locais");
+// A sincronização será implementada em outro commit.
+if (syncNowButton) {
+ syncNowButton.disabled = !isSignedIn;
+}
+if (restoreCloudButton) { 
+restoreCloudButton.disabled = !isSignedIn; 
+} 
+if (!user) { 
+if (userName) { 
+userName.textContent = "Usuário conectado"; 
+}
+
+  if (userEmail) {
+    userEmail.textContent = "";
   }
 
-  const firebaseSync = window.firebaseSync;
-
-  if (!firebaseSync) {
-    console.error("O módulo firebase-sync.js não está disponível.");
-    setAccountStatus(
-      "Firebase indisponível — o aplicativo continua com dados locais."
-    );
-    return;
+  if (userPhoto) {
+    userPhoto.src = "";
+    userPhoto.hidden = true;
   }
 
-  loginButton?.addEventListener("click", async () => {
-    loginButton.disabled = true;
-    setAccountStatus("Abrindo login do Google…");
+  setAccountStatus("Dados locais");
+  return;
+}
 
-    try {
-      await firebaseSync.loginWithGoogle();
-    } catch (error) {
-      console.error("Erro ao entrar com Google:", error);
-      setAccountStatus("Não foi possível entrar com Google.");
-      loginButton.disabled = false;
-    }
-  });
+if (userName) {
+  userName.textContent = user.displayName || "Usuário conectado";
+}
 
-  logoutButton?.addEventListener("click", async () => {
-    logoutButton.disabled = true;
-    setAccountStatus("Saindo da conta…");
+if (userEmail) {
+  userEmail.textContent = user.email || "";
+}
 
-    try {
-      await firebaseSync.logoutFromGoogle();
-    } catch (error) {
-      console.error("Erro ao sair da conta Google:", error);
-      setAccountStatus("Não foi possível sair da conta.");
-      logoutButton.disabled = false;
-    }
-  });
-syncNowButton?.addEventListener("click", async () => {
-  const originalText = syncNowButton.textContent;
+if (userPhoto) {
+  if (user.photoURL) {
+    userPhoto.src = user.photoURL;
+    userPhoto.hidden = false;
+  } else {
+    userPhoto.src = "";
+    userPhoto.hidden = true;
+  }
+}
 
-  syncNowButton.disabled = true;
-  syncNowButton.textContent = "Sincronizando…";
-  setAccountStatus("Sincronizando…");
+setAccountStatus("Conta conectada — dados locais");
+}
 
-  try {
-    const user = await firebaseSync.getCurrentFirebaseUser();
+const firebaseSync = window.firebaseSync;
 
-    if (!user) {
-      throw new Error("É necessário entrar com Google.");
-    }
+if (!firebaseSync) { 
+console.error("O módulo firebase-sync.js não está disponível."); 
+setAccountStatus( 
+"Firebase indisponível — o aplicativo continua com dados locais." 
+); 
+return; 
+}
 
-    const backup = createBackupPayload();
+loginButton?.addEventListener("click", async () => { 
+loginButton.disabled = true; 
+setAccountStatus("Abrindo login do Google…");
 
-    await firebaseSync.saveFirebaseBackup(backup);
+try {
+  await firebaseSync.loginWithGoogle();
+} catch (error) {
+  console.error("Erro ao entrar com Google:", error);
+  setAccountStatus("Não foi possível entrar com Google.");
+  loginButton.disabled = false;
+}
+});
+
+logoutButton?.addEventListener("click", async () => { 
+logoutButton.disabled = true; 
+setAccountStatus("Saindo da conta…");
+
+try {
+  await firebaseSync.logoutFromGoogle();
+} catch (error) {
+  console.error("Erro ao sair da conta Google:", error);
+  setAccountStatus("Não foi possível sair da conta.");
+  logoutButton.disabled = false;
+}
+}); 
+syncNowButton?.addEventListener("click", async () => { 
+const originalText = syncNowButton.textContent;
+
+syncNowButton.disabled = true; 
+syncNowButton.textContent = "Sincronizando…"; 
+setAccountStatus("Sincronizando…");
+
+try { 
+const user = await firebaseSync.getCurrentFirebaseUser();
+
+if (!user) {
+  throw new Error("É necessário entrar com Google.");
+}
+
+const backup = createBackupPayload();
+
+await firebaseSync.saveFirebaseBackup(backup);
 const now = new Date().toISOString();
 
-localStorage.setItem("pmmg2027LastSync", now);
-updateLastSyncTime(now);
-    setAccountStatus("Sincronização concluída.");
-  } catch (error) {
-    console.error("Erro ao sincronizar com o Firestore:", error);
+localStorage.setItem("pmmg2027LastSync", now); 
+updateLastSyncTime(now); 
+setAccountStatus("Sincronização concluída."); 
+} catch (error) { 
+console.error("Erro ao sincronizar com o Firestore:", error);
 
-    setAccountStatus(
-      "Erro ao sincronizar. Seus dados locais continuam seguros."
-    );
-  } finally {
-    syncNowButton.textContent = originalText;
+setAccountStatus(
+  "Erro ao sincronizar. Seus dados locais continuam seguros."
+);
+} finally { 
+syncNowButton.textContent = originalText;
 
-    try {
-      const user = await firebaseSync.getCurrentFirebaseUser();
-      syncNowButton.disabled = !user;
-    } catch {
-      syncNowButton.disabled = true;
-    }
+try {
+  const user = await firebaseSync.getCurrentFirebaseUser();
+  syncNowButton.disabled = !user;
+} catch {
+  syncNowButton.disabled = true;
+}
+} 
+}); 
+restoreCloudButton?.addEventListener("click", async () => { 
+const originalText = restoreCloudButton.textContent;
+
+restoreCloudButton.disabled = true; 
+restoreCloudButton.textContent = "Restaurando…"; 
+setAccountStatus("Buscando backup na nuvem…");
+
+try { 
+const user = await firebaseSync.getCurrentFirebaseUser();
+
+if (!user) {
+  throw new Error("É necessário entrar com Google.");
+}
+
+const backup = await firebaseSync.loadFirebaseBackup();
+
+if (!backup) {
+  setAccountStatus("Nenhum backup encontrado na nuvem.");
+  alert("Nenhum backup foi encontrado para esta conta.");
+  return;
+}
+
+const restoredData = backup.data || backup;
+
+if (
+  !restoredData ||
+  !Array.isArray(restoredData.sessions) ||
+  !Array.isArray(restoredData.questions) ||
+  !Array.isArray(restoredData.reviews) ||
+  !Array.isArray(restoredData.taf)
+) {
+  throw new Error("Backup incompatível.");
+}
+
+if (!confirm(
+  "Restaurar o backup da nuvem substituirá os dados atuais deste aparelho. Continuar?"
+)) {
+  setAccountStatus("Restauração cancelada.");
+  return;
+}
+
+state = {
+  ...structuredClone(defaults),
+  ...restoredData,
+  goals: {
+    ...defaults.goals,
+    ...(restoredData.goals || {})
   }
-});
-restoreCloudButton?.addEventListener("click", async () => {
-  const originalText = restoreCloudButton.textContent;
+};
 
+save();
+
+setAccountStatus("Backup restaurado com sucesso.");
+alert("Backup da nuvem restaurado com sucesso!");
+} catch (error) { 
+console.error("Erro ao restaurar backup da nuvem:", error);
+
+setAccountStatus(
+  "Não foi possível restaurar. Seus dados atuais continuam seguros."
+);
+} finally { 
+restoreCloudButton.textContent = originalText;
+
+try {
+  const user = await firebaseSync.getCurrentFirebaseUser();
+  restoreCloudButton.disabled = !user;
+} catch {
   restoreCloudButton.disabled = true;
-  restoreCloudButton.textContent = "Restaurando…";
-  setAccountStatus("Buscando backup na nuvem…");
-
-  try {
-    const user = await firebaseSync.getCurrentFirebaseUser();
-
-    if (!user) {
-      throw new Error("É necessário entrar com Google.");
-    }
-
-    const backup = await firebaseSync.loadFirebaseBackup();
-
-    if (!backup) {
-      setAccountStatus("Nenhum backup encontrado na nuvem.");
-      alert("Nenhum backup foi encontrado para esta conta.");
-      return;
-    }
-
-    const restoredData = backup.data || backup;
-
-    if (
-      !restoredData ||
-      !Array.isArray(restoredData.sessions) ||
-      !Array.isArray(restoredData.questions) ||
-      !Array.isArray(restoredData.reviews) ||
-      !Array.isArray(restoredData.taf)
-    ) {
-      throw new Error("Backup incompatível.");
-    }
-
-    if (!confirm(
-      "Restaurar o backup da nuvem substituirá os dados atuais deste aparelho. Continuar?"
-    )) {
-      setAccountStatus("Restauração cancelada.");
-      return;
-    }
-
-    state = {
-      ...structuredClone(defaults),
-      ...restoredData,
-      goals: {
-        ...defaults.goals,
-        ...(restoredData.goals || {})
-      }
-    };
-
-    save();
-
-    setAccountStatus("Backup restaurado com sucesso.");
-    alert("Backup da nuvem restaurado com sucesso!");
-  } catch (error) {
-    console.error("Erro ao restaurar backup da nuvem:", error);
-
-    setAccountStatus(
-      "Não foi possível restaurar. Seus dados atuais continuam seguros."
-    );
-  } finally {
-    restoreCloudButton.textContent = originalText;
-
-    try {
-      const user = await firebaseSync.getCurrentFirebaseUser();
-      restoreCloudButton.disabled = !user;
-    } catch {
-      restoreCloudButton.disabled = true;
-    }
-  }
-});
-  try {
-    await firebaseSync.observeFirebaseUser(renderFirebaseUser);
-  } catch (error) {
-    console.error("Erro ao observar a conta Google:", error);
-    setAccountStatus(
-      "Não foi possível verificar a conta — usando dados locais."
-    );
-  }
+}
+} 
+}); 
+try { 
+await firebaseSync.observeFirebaseUser(renderFirebaseUser); 
+} catch (error) { 
+console.error("Erro ao observar a conta Google:", error); 
+setAccountStatus( 
+"Não foi possível verificar a conta — usando dados locais." 
+); 
+} 
 });
