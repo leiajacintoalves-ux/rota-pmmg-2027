@@ -699,7 +699,8 @@ state.questions.push({
   date: new Date().toLocaleDateString("pt-BR")
 });
 const lessonId = subject + "::" + topic;
-
+const lessonCompleted =
+  state.completedLessons.includes(lessonId);
 if (!state.completedLessons.includes(lessonId)) {
   state.completedLessons.push(lessonId);
 }
