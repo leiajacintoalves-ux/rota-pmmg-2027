@@ -1067,3 +1067,117 @@ input:focus, select:focus, textarea:focus { border-color:var(--accent); }
   background: rgba(216, 59, 59, 0.1);
 }
 
+/* ===== Alternativas mais elegantes ===== */
+
+.lesson-question label {
+  position: relative;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  margin-top: 10px;
+  padding: 14px 15px;
+
+  border: 1px solid var(--line);
+  border-radius: 14px;
+
+  background: color-mix(
+    in srgb,
+    var(--panel-2) 94%,
+    transparent
+  );
+
+  color: var(--text);
+  line-height: 1.5;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.lesson-question label:hover {
+  transform: translateY(-1px);
+
+  border-color: color-mix(
+    in srgb,
+    var(--accent) 65%,
+    var(--line)
+  );
+
+  background: color-mix(
+    in srgb,
+    var(--panel-2) 88%,
+    var(--accent) 12%
+  );
+}
+
+/* Remove o botão padrão grande do navegador */
+.lesson-question input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+
+  margin: 1px 0 0;
+
+  border: 2px solid #697383;
+  border-radius: 50%;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+/* Círculo interno quando selecionado */
+.lesson-question input[type="radio"]:checked {
+  border-color: var(--accent);
+
+  background:
+    radial-gradient(
+      circle,
+      var(--accent) 0 42%,
+      transparent 46%
+    );
+
+  box-shadow:
+    0 0 0 4px rgba(216, 59, 59, 0.14);
+}
+
+/* Destaca toda a alternativa marcada */
+.lesson-question label:has(
+  input[type="radio"]:checked
+) {
+  border-color: var(--accent);
+
+  background: color-mix(
+    in srgb,
+    var(--panel-2) 84%,
+    var(--accent) 16%
+  );
+}
+
+/* Melhora o toque no celular */
+@media (max-width: 580px) {
+  .lesson-question label {
+    padding: 13px;
+    border-radius: 13px;
+    font-size: 15px;
+  }
+
+  .lesson-question input[type="radio"] {
+    width: 21px;
+    height: 21px;
+    min-width: 21px;
+  }
+}
