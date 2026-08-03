@@ -121,17 +121,69 @@ function renderSubjects() {
       <h3>${s.name}</h3>
       <div class="topics">
 ${s.topics.map(t => `
-<button class="topic-btn">
-📖 ${t}
+<button
+  class="topic-btn"
+  data-subject="${s.name}"
+  data-topic="${t}"
+>
+  📖 ${t}
 </button>
 `).join("")}
 </div>
+
       <div class="progress-meta"><span>${st.total}/${s.target} questões</span><strong>${p}%</strong></div>
       <div class="bar"><i style="width:${p}%"></i></div>
     </article>`;
   }).join("");
-}
+  document.querySelectorAll(".topic-btn").forEach(button => {
+  button.onclick = () => {
+    const subject = button.dataset.subject;
+    const topic = button.dataset.topic;
 
+    openLesson(subject, topic);
+  };
+});
+}
+function openLesson(subject, topic) {
+  const subjectsGrid =
+    document.getElementById("subjectsGrid");
+
+  subjectsGrid.innerHTML = `
+    <article class="panel">
+      <button
+        class="ghost-btn"
+        id="backToSubjects"
+        type="button"
+      >
+        ← Voltar para disciplinas
+      </button>
+
+      <span class="eyebrow">${subject}</span>
+
+      <h2>${topic}</h2>
+
+      <p class="muted">
+        Conteúdo da aula em preparação.
+      </p>
+
+      <p>
+        Esta será a página de estudo do tópico
+        <strong>${topic}</strong>.
+      </p>
+    </article>
+  `;
+
+  document
+    .getElementById("backToSubjects")
+    .onclick = () => {
+      renderSubjects();
+    };
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
 function renderSubjectProgress() {
   const studiedSubjects = SUBJECTS.map(subject => {
     const minutes = state.sessions
