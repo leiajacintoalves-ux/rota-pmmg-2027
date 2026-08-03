@@ -121,13 +121,30 @@ function renderSubjects() {
       <h3>${s.name}</h3>
       <div class="topics">
 ${s.topics.map(t => `
-<button
-  class="topic-btn"
-  data-subject="${s.name}"
-  data-topic="${t}"
+<div
+class="topic-card"
+data-subject="${s.name}"
+data-topic="${t}"
 >
-  📖 ${t}
-</button>
+
+<div class="topic-left">
+
+<div class="topic-icon">
+📖
+</div>
+
+<div class="topic-info">
+<strong>${t}</strong>
+<small>25 min • Aula disponível</small>
+</div>
+
+</div>
+
+<div class="topic-arrow">
+›
+</div>
+
+</div>
 `).join("")}
 </div>
 
@@ -135,7 +152,7 @@ ${s.topics.map(t => `
       <div class="bar"><i style="width:${p}%"></i></div>
     </article>`;
   }).join("");
-  document.querySelectorAll(".topic-btn").forEach(button => {
+  document.querySelectorAll(".topic-card").forEach(button => {
   button.onclick = () => {
     const subject = button.dataset.subject;
     const topic = button.dataset.topic;
