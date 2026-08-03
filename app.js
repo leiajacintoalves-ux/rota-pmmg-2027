@@ -136,6 +136,10 @@ data-topic="${t}"
 <div class="topic-info">
 <strong>${t}</strong>
 <small>25 min • Aula disponível</small>
+
+<div class="topic-progress">
+  <div class="topic-progress-fill"></div>
+</div>
 </div>
 
 </div>
