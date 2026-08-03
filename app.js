@@ -196,14 +196,107 @@ if (testContent) {
 
       <h2>${topic}</h2>
 
-      <p class="muted">
-        Conteúdo da aula em preparação.
-      </p>
+      <div class="lesson-block">
+  <h3>🎯 Objetivo da aula</h3>
 
-      <p>
-        Esta será a página de estudo do tópico
-        <strong>${topic}</strong>.
-      </p>
+  <p>
+    Aprender a identificar a ideia principal de um texto,
+    localizar informações explícitas e implícitas,
+    reconhecer inferências e evitar as pegadinhas mais comuns
+    das provas da PMMG.
+  </p>
+</div>
+
+<div class="lesson-block">
+  <h3>📖 Compreensão e interpretação</h3>
+
+  <p>
+    <strong>Compreensão</strong> é identificar aquilo que está
+    diretamente escrito no texto.
+  </p>
+
+  <p>
+    <strong>Interpretação</strong> é construir o sentido do texto
+    com base nas informações, relações e pistas apresentadas
+    pelo autor.
+  </p>
+
+  <p>
+    Mesmo quando a questão exige uma conclusão, a resposta
+    precisa estar sustentada pelo texto. A opinião pessoal do
+    candidato não pode substituir o que foi efetivamente dito.
+  </p>
+</div>
+
+<div class="lesson-block">
+  <h3>💡 Exemplo</h3>
+
+  <p>
+    “Pedro chegou completamente encharcado.”
+  </p>
+
+  <p>
+    O texto não afirma diretamente que estava chovendo,
+    mas essa é uma conclusão possível a partir do contexto.
+    Esse tipo de conclusão recebe o nome de
+    <strong>inferência</strong>.
+  </p>
+</div>
+
+<div class="lesson-block">
+  <h3>📌 Ideia principal</h3>
+
+  <p>
+    A ideia principal é a mensagem central do texto.
+    As demais informações servem para explicar,
+    detalhar, justificar ou exemplificar essa mensagem.
+  </p>
+
+  <ul>
+    <li>Observe o assunto repetido nos parágrafos.</li>
+    <li>Identifique o que o autor deseja comunicar.</li>
+    <li>Elimine exemplos e detalhes secundários.</li>
+    <li>Evite alternativas amplas ou específicas demais.</li>
+  </ul>
+</div>
+
+<div class="lesson-block">
+  <h3>⚠️ Pegadinhas frequentes</h3>
+
+  <ul>
+    <li>
+      <strong>Generalização:</strong>
+      o texto diz “alguns”, mas a alternativa afirma “todos”.
+    </li>
+
+    <li>
+      <strong>Exagero:</strong>
+      o texto diz “pode”, mas a alternativa afirma “sempre”.
+    </li>
+
+    <li>
+      <strong>Informação inventada:</strong>
+      a alternativa apresenta algo que não possui apoio no texto.
+    </li>
+
+    <li>
+      <strong>Troca de sentido:</strong>
+      a alternativa inverte causa e consequência.
+    </li>
+  </ul>
+</div>
+
+<div class="lesson-block">
+  <h3>📌 Resumo rápido</h3>
+
+  <ul>
+    <li>Compreensão: informação diretamente expressa.</li>
+    <li>Interpretação: construção do sentido.</li>
+    <li>Inferência: conclusão baseada em pistas do texto.</li>
+    <li>A ideia principal corresponde à mensagem central.</li>
+    <li>A resposta deve sempre estar fundamentada no texto.</li>
+  </ul>
+</div>
     </article>
   `;
 
