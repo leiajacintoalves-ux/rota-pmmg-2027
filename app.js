@@ -650,10 +650,20 @@ if (!isCorrect) {
 
     const percentage =
       Math.round((score / correctAnswers.length) * 100);
+state.questions = state.questions.filter(
+  question =>
+    !(
+      question.subject === subject &&
+      question.topic === topic
+    )
+);
+
 state.questions.push({
   subject: subject,
+  topic: topic,
   total: correctAnswers.length,
   correct: score,
+  percentage: percentage,
   date: new Date().toLocaleDateString("pt-BR")
 });
 
