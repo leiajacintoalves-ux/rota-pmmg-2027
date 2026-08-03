@@ -911,3 +911,59 @@ input:focus, select:focus, textarea:focus { border-color:var(--accent); }
   border-radius: 999px;
   transition: .3s;
 }
+
+.lesson-flashcard {
+  margin-top: 12px;
+  overflow: hidden;
+
+  border: 1px solid var(--line);
+  border-radius: 15px;
+
+  background: var(--panel-2);
+}
+
+.lesson-flashcard summary {
+  position: relative;
+  padding: 16px 46px 16px 16px;
+
+  color: var(--text);
+  font-weight: 700;
+  line-height: 1.4;
+
+  cursor: pointer;
+  list-style: none;
+}
+
+.lesson-flashcard summary::-webkit-details-marker {
+  display: none;
+}
+
+.lesson-flashcard summary::after {
+  content: "+";
+
+  position: absolute;
+  top: 50%;
+  right: 16px;
+
+  color: var(--accent-2);
+  font-size: 24px;
+  font-weight: 700;
+
+  transform: translateY(-50%);
+}
+
+.lesson-flashcard[open] summary::after {
+  content: "−";
+}
+
+.lesson-flashcard[open] summary {
+  border-bottom: 1px solid var(--line);
+}
+
+.lesson-flashcard p {
+  margin: 0;
+  padding: 16px;
+
+  color: var(--muted);
+  line-height: 1.7;
+}
