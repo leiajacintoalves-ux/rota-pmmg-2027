@@ -296,6 +296,68 @@ if (testContent) {
     <li>A resposta deve sempre estar fundamentada no texto.</li>
   </ul>
 </div>
+<div class="lesson-block">
+  <h3>🧠 Flashcards</h3>
+
+  <p class="muted">
+    Toque em uma pergunta para revelar a resposta.
+  </p>
+
+  <details class="lesson-flashcard">
+    <summary>
+      O que é compreensão textual?
+    </summary>
+
+    <p>
+      É a identificação das informações que estão
+      diretamente expressas no texto.
+    </p>
+  </details>
+
+  <details class="lesson-flashcard">
+    <summary>
+      O que é interpretação textual?
+    </summary>
+
+    <p>
+      É a construção do sentido a partir das informações,
+      relações e pistas apresentadas pelo autor.
+    </p>
+  </details>
+
+  <details class="lesson-flashcard">
+    <summary>
+      O que é uma inferência?
+    </summary>
+
+    <p>
+      É uma conclusão obtida por meio de pistas do texto,
+      mesmo quando a informação não aparece literalmente.
+    </p>
+  </details>
+
+  <details class="lesson-flashcard">
+    <summary>
+      A resposta pode ser baseada na opinião pessoal?
+    </summary>
+
+    <p>
+      Não. A resposta deve estar fundamentada nas
+      informações apresentadas pelo texto.
+    </p>
+  </details>
+
+  <details class="lesson-flashcard">
+    <summary>
+      O que é a ideia principal?
+    </summary>
+
+    <p>
+      É a mensagem central do texto, desenvolvida pelas
+      ideias secundárias, exemplos e explicações.
+    </p>
+  </details>
+</div>
     </article>
   `;
 
