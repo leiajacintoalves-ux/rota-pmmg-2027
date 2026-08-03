@@ -32,6 +32,8 @@ const defaults = {
   taf: [],
   goals: { hours: 18, questions: 250, taf: 4, date: "2027-12-31" },
   streak: 0,
+  xp: 0,
+  level: 1,
   lastStudyDate: null
 };
 
@@ -701,6 +703,13 @@ const lessonId = subject + "::" + topic;
 if (!state.completedLessons.includes(lessonId)) {
   state.completedLessons.push(lessonId);
 }
+const gainedXP =
+  50 + score * 10;
+
+state.xp += gainedXP;
+
+state.level =
+  Math.floor(state.xp / 250) + 1;
 save();
     result.hidden = false;
 
