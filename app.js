@@ -27,6 +27,7 @@ const defaults = {
   completedTasks: {},
   sessions: [],
   questions: [],
+  completedLessons: [],
   reviews: [],
   taf: [],
   goals: { hours: 18, questions: 250, taf: 4, date: "2027-12-31" },
@@ -666,7 +667,11 @@ state.questions.push({
   percentage: percentage,
   date: new Date().toLocaleDateString("pt-BR")
 });
+const lessonId = subject + "::" + topic;
 
+if (!state.completedLessons.includes(lessonId)) {
+  state.completedLessons.push(lessonId);
+}
 save();
     result.hidden = false;
 
