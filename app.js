@@ -650,7 +650,14 @@ if (!isCorrect) {
 
     const percentage =
       Math.round((score / correctAnswers.length) * 100);
+state.questions.push({
+  subject: subject,
+  total: correctAnswers.length,
+  correct: score,
+  date: new Date().toLocaleDateString("pt-BR")
+});
 
+save();
     result.hidden = false;
 
     result.className =
