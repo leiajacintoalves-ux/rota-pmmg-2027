@@ -358,6 +358,188 @@ if (testContent) {
     </p>
   </details>
 </div>
+<div class="lesson-block">
+  <h3>📝 Questões comentadas</h3>
+
+  <p class="muted">
+    Marque uma alternativa em cada questão e toque em corrigir.
+  </p>
+
+  <div class="lesson-question">
+    <strong>
+      1. Em uma questão de interpretação, a resposta correta
+      deve estar baseada:
+    </strong>
+
+    <label>
+      <input type="radio" name="lessonQ1" value="0">
+      A) Na opinião pessoal do candidato.
+    </label>
+
+    <label>
+      <input type="radio" name="lessonQ1" value="1">
+      B) Somente no conhecimento de mundo.
+    </label>
+
+    <label>
+      <input type="radio" name="lessonQ1" value="2">
+      C) Nas informações e pistas apresentadas pelo texto.
+    </label>
+
+    <label>
+      <input type="radio" name="lessonQ1" value="3">
+      D) Na experiência profissional do leitor.
+    </label>
+
+    <div
+      class="lesson-question-feedback"
+      id="lessonFeedback1"
+      hidden
+    ></div>
+  </div>
+
+  <div class="lesson-question">
+    <strong>
+      2. Uma informação implícita é aquela:
+    </strong>
+
+    <label>
+      <input type="radio" name="lessonQ2" value="0">
+      A) Escrita literalmente no texto.
+    </label>
+
+    <label>
+      <input type="radio" name="lessonQ2" value="1">
+      B) Destacada obrigatoriamente em negrito.
+    </label>
+
+    <label>
+      <input type="radio" name="lessonQ2" value="2">
+      C) Que pode ser concluída por meio do contexto.
+    </label>
+
+    <label>
+      <input type="radio" name="lessonQ2" value="3">
+      D) Que aparece em todos os parágrafos.
+    </label>
+
+    <div
+      class="lesson-question-feedback"
+      id="lessonFeedback2"
+      hidden
+    ></div>
+  </div>
+
+  <div class="lesson-question">
+    <strong>
+      3. Se o texto afirma “alguns cidadãos”, é incorreto concluir:
+    </strong>
+
+    <label>
+      <input type="radio" name="lessonQ3" value="0">
+      A) Uma parte dos cidadãos foi mencionada.
+    </label>
+
+    <label>
+      <input type="radio" name="lessonQ3" value="1">
+      B) Nem todos estão necessariamente incluídos.
+    </label>
+
+    <label>
+      <input type="radio" name="lessonQ3" value="2">
+      C) Todos os cidadãos estão envolvidos.
+    </label>
+
+    <label>
+      <input type="radio" name="lessonQ3" value="3">
+      D) O grupo apresentado é limitado.
+    </label>
+
+    <div
+      class="lesson-question-feedback"
+      id="lessonFeedback3"
+      hidden
+    ></div>
+  </div>
+
+  <div class="lesson-question">
+    <strong>
+      4. A ideia principal de um texto corresponde:
+    </strong>
+
+    <label>
+      <input type="radio" name="lessonQ4" value="0">
+      A) Ao menor detalhe apresentado.
+    </label>
+
+    <label>
+      <input type="radio" name="lessonQ4" value="1">
+      B) À mensagem central desenvolvida pelo autor.
+    </label>
+
+    <label>
+      <input type="radio" name="lessonQ4" value="2">
+      C) À opinião pessoal de cada leitor.
+    </label>
+
+    <label>
+      <input type="radio" name="lessonQ4" value="3">
+      D) A uma frase escolhida aleatoriamente.
+    </label>
+
+    <div
+      class="lesson-question-feedback"
+      id="lessonFeedback4"
+      hidden
+    ></div>
+  </div>
+
+  <div class="lesson-question">
+    <strong>
+      5. Inferir uma informação significa:
+    </strong>
+
+    <label>
+      <input type="radio" name="lessonQ5" value="0">
+      A) Copiar uma frase literalmente.
+    </label>
+
+    <label>
+      <input type="radio" name="lessonQ5" value="1">
+      B) Chegar a uma conclusão usando pistas do texto.
+    </label>
+
+    <label>
+      <input type="radio" name="lessonQ5" value="2">
+      C) Inventar uma informação que não aparece.
+    </label>
+
+    <label>
+      <input type="radio" name="lessonQ5" value="3">
+      D) Ignorar o contexto apresentado.
+    </label>
+
+    <div
+      class="lesson-question-feedback"
+      id="lessonFeedback5"
+      hidden
+    ></div>
+  </div>
+
+  <button
+    class="primary-btn lesson-quiz-button"
+    id="checkLessonQuiz"
+    type="button"
+  >
+    Corrigir questões
+  </button>
+
+  <div
+    class="lesson-quiz-result"
+    id="lessonQuizResult"
+    hidden
+  ></div>
+</div>
     </article>
   `;
 
@@ -366,7 +548,100 @@ if (testContent) {
     .onclick = () => {
       renderSubjects();
     };
+const checkLessonQuiz =
+  document.getElementById("checkLessonQuiz");
 
+if (checkLessonQuiz) {
+  checkLessonQuiz.onclick = () => {
+    const correctAnswers = [2, 2, 2, 1, 1];
+
+    const explanations = [
+      "A resposta deve estar fundamentada nas informações e pistas do texto.",
+      "A informação implícita não aparece literalmente, mas pode ser deduzida pelo contexto.",
+      "A palavra “alguns” não permite concluir que todos estejam envolvidos.",
+      "A ideia principal representa a mensagem central desenvolvida pelo autor.",
+      "Inferência é uma conclusão construída a partir das pistas textuais."
+    ];
+
+    let score = 0;
+
+    correctAnswers.forEach((correctAnswer, index) => {
+      const questionNumber = index + 1;
+
+      const selected = document.querySelector(
+        "input[name='lessonQ" +
+        questionNumber +
+        "']:checked"
+      );
+
+      const feedback = document.getElementById(
+        "lessonFeedback" + questionNumber
+      );
+
+      feedback.hidden = false;
+
+      if (!selected) {
+        feedback.className =
+          "lesson-question-feedback unanswered";
+
+        feedback.innerHTML =
+          "<strong>Selecione uma alternativa.</strong>";
+
+        return;
+      }
+
+      const isCorrect =
+        Number(selected.value) === correctAnswer;
+
+      if (isCorrect) {
+        score++;
+
+        feedback.className =
+          "lesson-question-feedback correct";
+
+        feedback.innerHTML =
+          "<strong>Resposta correta! ✅</strong>" +
+          "<p>" + explanations[index] + "</p>";
+      } else {
+        feedback.className =
+          "lesson-question-feedback incorrect";
+
+        feedback.innerHTML =
+          "<strong>Resposta incorreta.</strong>" +
+          "<p>" + explanations[index] + "</p>";
+      }
+    });
+
+    const result =
+      document.getElementById("lessonQuizResult");
+
+    const percentage =
+      Math.round((score / correctAnswers.length) * 100);
+
+    result.hidden = false;
+
+    result.className =
+      "lesson-quiz-result " +
+      (percentage >= 70 ? "approved" : "review");
+
+    result.innerHTML =
+      "<strong>Resultado: " +
+      score +
+      "/5 — " +
+      percentage +
+      "%</strong>" +
+      "<p>" +
+      (percentage >= 70
+        ? "Bom trabalho! Continue revisando os comentários."
+        : "Revise o conteúdo e tente novamente.") +
+      "</p>";
+
+    result.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+  };
+}
   window.scrollTo({
     top: 0,
     behavior: "smooth"
