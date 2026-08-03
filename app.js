@@ -119,7 +119,13 @@ function renderSubjects() {
     return `<article class="subject-card">
       <span class="eyebrow">MÓDULO ${String(i+1).padStart(2,"0")}</span>
       <h3>${s.name}</h3>
-      <ul>${s.topics.map(t => `<li>${t}</li>`).join("")}</ul>
+      <div class="topics">
+${s.topics.map(t => `
+<button class="topic-btn">
+📖 ${t}
+</button>
+`).join("")}
+</div>
       <div class="progress-meta"><span>${st.total}/${s.target} questões</span><strong>${p}%</strong></div>
       <div class="bar"><i style="width:${p}%"></i></div>
     </article>`;
