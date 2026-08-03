@@ -11,6 +11,7 @@ const SUBJECTS = [
 ];
 
 
+
 const WEEK = {
   "Segunda": [["Português","1h30"],["Direito Constitucional","1h30"]],
   "Terça": [["Matemática e Raciocínio Lógico","1h30"],["Direito Administrativo","1h30"]],
