@@ -284,10 +284,27 @@ function renderSubjectProgress() {
   `;
 
   document
-    .getElementById("backToSubjects")
-    .onclick = () => {
-      renderSubjects();
-    };
+  .getElementById("backToSubjects")
+  .onclick = () => {
+    const sectionIntro =
+      document.querySelector("#disciplinas .section-intro");
+
+    const testContent =
+      document.querySelector(".study-content-test");
+
+    if (sectionIntro) {
+      sectionIntro.style.display = "";
+    }
+
+    if (testContent) {
+      testContent.style.display = "none";
+    }
+
+    renderSubjects();
+
+    document.getElementById("pageTitle").textContent =
+      "Disciplinas";
+  };
 
   document
     .getElementById("completeLesson")
