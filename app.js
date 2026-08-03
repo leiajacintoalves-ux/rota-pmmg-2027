@@ -115,8 +115,21 @@ function subjectStats(name) {
 
 function renderSubjects() {
   document.getElementById("subjectsGrid").innerHTML = SUBJECTS.map((s,i) => {
-    const st = subjectStats(s.name);
-    const p = Math.min(100, Math.round(st.total/s.target*100));
+   const completedLessons =
+  s.topics.filter(topic =>
+    state.completedLessons.includes(
+      s.name + "::" + topic
+    )
+  ).length;
+
+const p = Math.round(
+  (completedLessons / s.topics.length) * 100
+);
+
+const st = {
+  total: completedLessons,
+  target: s.topics.length
+};
     return `<article class="subject-card">
       <span class="eyebrow">MÓDULO ${String(i+1).padStart(2,"0")}</span>
       <h3>${s.name}</h3>
@@ -135,8 +148,24 @@ data-topic="${t}"
 </div>
 
 <div class="topic-info">
-<strong>${t}</strong>
-<small>25 min • Aula disponível</small>
+${(() => {
+  const lessonId = s.name + "::" + t;
+
+  const completed =
+    state.completedLessons.includes(lessonId);
+
+  return `
+    <strong>${t}</strong>
+
+    <small>
+      ${
+        completed
+          ? "🟢 Aula concluída"
+          : "⚪ Aula disponível"
+      }
+    </small>
+  `;
+})()}
 
 <div class="topic-progress">
   <div class="topic-progress-fill"></div>
