@@ -642,5 +642,415 @@ window.PMMG_LESSONS = {
           "Herói, papéis e chapéu continuam acentuados."
       }
     ]
-  }
-};
+    },
+
+  "Português::Classes de palavras": {
+    access: "free",
+
+    objective:
+      "Identificar as dez classes de palavras, compreender suas funções e reconhecer seus usos nas frases.",
+
+    sections: [
+      {
+        title: "📖 Classes variáveis e invariáveis",
+
+        html: `
+          <p>
+            As palavras são classificadas de acordo com
+            sua função e seu comportamento nas frases.
+          </p>
+
+          <p>
+            As classes <strong>variáveis</strong> podem sofrer
+            flexões de gênero, número, pessoa, tempo ou modo.
+          </p>
+
+          <ul>
+            <li>Substantivo</li>
+            <li>Artigo</li>
+            <li>Adjetivo</li>
+            <li>Numeral</li>
+            <li>Pronome</li>
+            <li>Verbo</li>
+          </ul>
+
+          <p>
+            As classes <strong>invariáveis</strong> normalmente
+            não sofrem flexões.
+          </p>
+
+          <ul>
+            <li>Advérbio</li>
+            <li>Preposição</li>
+            <li>Conjunção</li>
+            <li>Interjeição</li>
+          </ul>
+        `
+      },
+
+      {
+        title: "📌 Substantivo, artigo e adjetivo",
+
+        html: `
+          <p>
+            <strong>Substantivo</strong> nomeia seres,
+            objetos, lugares, sentimentos, ações ou ideias.
+          </p>
+
+          <p>
+            Exemplos: policial, quartel, coragem,
+            liberdade e treinamento.
+          </p>
+
+          <p>
+            <strong>Artigo</strong> acompanha o substantivo,
+            determinando-o ou indeterminando-o.
+          </p>
+
+          <p>
+            Artigos definidos: o, a, os, as.
+            Artigos indefinidos: um, uma, uns, umas.
+          </p>
+
+          <p>
+            <strong>Adjetivo</strong> caracteriza ou atribui
+            uma qualidade ao substantivo.
+          </p>
+
+          <p>
+            Em “policial dedicado”, policial é substantivo
+            e dedicado é adjetivo.
+          </p>
+        `
+      },
+
+      {
+        title: "🔢 Numeral e pronome",
+
+        html: `
+          <p>
+            <strong>Numeral</strong> indica quantidade,
+            ordem, multiplicação ou fração.
+          </p>
+
+          <ul>
+            <li>Cardinal: dois candidatos.</li>
+            <li>Ordinal: primeiro colocado.</li>
+            <li>Multiplicativo: dobro do resultado.</li>
+            <li>Fracionário: metade da turma.</li>
+          </ul>
+
+          <p>
+            <strong>Pronome</strong> acompanha ou substitui
+            um substantivo.
+          </p>
+
+          <p>
+            Exemplos: eu, ele, nós, meu, aquele,
+            ninguém e quem.
+          </p>
+        `
+      },
+
+      {
+        title: "⚙️ Verbo",
+
+        html: `
+          <p>
+            <strong>Verbo</strong> pode indicar ação,
+            estado, mudança de estado ou fenômeno
+            da natureza.
+          </p>
+
+          <ul>
+            <li>Ação: o candidato estudou.</li>
+            <li>Estado: o candidato está preparado.</li>
+            <li>Mudança: ele ficou preocupado.</li>
+            <li>Fenômeno: choveu durante a prova.</li>
+          </ul>
+
+          <p>
+            Os verbos podem variar em pessoa,
+            número, tempo e modo.
+          </p>
+        `
+      },
+
+      {
+        title: "📍 Advérbio",
+
+        html: `
+          <p>
+            <strong>Advérbio</strong> modifica principalmente
+            um verbo, um adjetivo ou outro advérbio.
+          </p>
+
+          <ul>
+            <li>Tempo: hoje, ontem, cedo.</li>
+            <li>Lugar: aqui, perto, longe.</li>
+            <li>Modo: bem, mal, rapidamente.</li>
+            <li>Intensidade: muito, pouco, bastante.</li>
+            <li>Negação: não, nunca, jamais.</li>
+            <li>Afirmação: sim, certamente.</li>
+            <li>Dúvida: talvez, provavelmente.</li>
+          </ul>
+
+          <p>
+            Em “ele estudou muito”, a palavra
+            “muito” modifica o verbo “estudou”.
+          </p>
+        `
+      },
+
+      {
+        title: "🔗 Preposição e conjunção",
+
+        html: `
+          <p>
+            <strong>Preposição</strong> liga palavras,
+            estabelecendo uma relação entre elas.
+          </p>
+
+          <p>
+            Exemplos: a, ante, após, até, com,
+            contra, de, desde, em, entre, para,
+            perante, por, sem, sob e sobre.
+          </p>
+
+          <p>
+            Em “livro de português”, a preposição
+            “de” liga “livro” a “português”.
+          </p>
+
+          <p>
+            <strong>Conjunção</strong> liga orações
+            ou termos semelhantes.
+          </p>
+
+          <ul>
+            <li>Adição: e, nem.</li>
+            <li>Oposição: mas, porém.</li>
+            <li>Alternância: ou.</li>
+            <li>Conclusão: portanto, logo.</li>
+            <li>Explicação: porque, pois.</li>
+          </ul>
+        `
+      },
+
+      {
+        title: "💬 Interjeição",
+
+        html: `
+          <p>
+            <strong>Interjeição</strong> expressa emoções,
+            sentimentos, reações ou chamados.
+          </p>
+
+          <ul>
+            <li>Alegria: viva!</li>
+            <li>Dor: ai!</li>
+            <li>Espanto: nossa!</li>
+            <li>Chamado: ei!</li>
+            <li>Silêncio: psiu!</li>
+          </ul>
+
+          <p>
+            A interjeição pode aparecer acompanhada
+            de ponto de exclamação.
+          </p>
+        `
+      },
+
+      {
+        title: "⚠️ Pegadinhas frequentes",
+
+        html: `
+          <ul>
+            <li>
+              A classe da palavra depende do uso
+              que ela possui na frase.
+            </li>
+
+            <li>
+              “Muito” pode ser pronome ou advérbio,
+              dependendo do contexto.
+            </li>
+
+            <li>
+              “O” pode ser artigo ou pronome.
+            </li>
+
+            <li>
+              Palavras terminadas em “-mente”
+              normalmente são advérbios de modo.
+            </li>
+
+            <li>
+              Preposição liga palavras; conjunção
+              normalmente liga orações ou termos.
+            </li>
+          </ul>
+        `
+      }
+    ],
+
+    flashcards: [
+      {
+        question:
+          "Quais são as classes de palavras variáveis?",
+
+        answer:
+          "Substantivo, artigo, adjetivo, numeral, pronome e verbo."
+      },
+
+      {
+        question:
+          "Quais são as classes de palavras invariáveis?",
+
+        answer:
+          "Advérbio, preposição, conjunção e interjeição."
+      },
+
+      {
+        question:
+          "Qual é a função do substantivo?",
+
+        answer:
+          "Nomear seres, objetos, lugares, sentimentos, ações ou ideias."
+      },
+
+      {
+        question:
+          "Qual é a função do adjetivo?",
+
+        answer:
+          "Caracterizar ou atribuir uma qualidade ao substantivo."
+      },
+
+      {
+        question:
+          "Qual é a função do pronome?",
+
+        answer:
+          "Acompanhar ou substituir um substantivo."
+      },
+
+      {
+        question:
+          "O que um verbo pode indicar?",
+
+        answer:
+          "Ação, estado, mudança de estado ou fenômeno da natureza."
+      },
+
+      {
+        question:
+          "Qual é a diferença entre preposição e conjunção?",
+
+        answer:
+          "A preposição liga palavras; a conjunção liga orações ou termos semelhantes."
+      },
+
+      {
+        question:
+          "O que é uma interjeição?",
+
+        answer:
+          "É uma palavra ou expressão que manifesta emoção, reação, sentimento ou chamado."
+      }
+    ],
+
+    questions: [
+      {
+        prompt:
+          "Na frase “O policial dedicado concluiu o treinamento”, a palavra “dedicado” é:",
+
+        options: [
+          "Substantivo.",
+          "Adjetivo.",
+          "Advérbio.",
+          "Pronome."
+        ],
+
+        correct: 1,
+
+        explanation:
+          "Dedicado caracteriza o substantivo policial e, portanto, é um adjetivo."
+      },
+
+      {
+        prompt:
+          "Na frase “Os candidatos chegaram cedo”, a palavra “cedo” é:",
+
+        options: [
+          "Advérbio de tempo.",
+          "Adjetivo.",
+          "Substantivo.",
+          "Preposição."
+        ],
+
+        correct: 0,
+
+        explanation:
+          "Cedo modifica o verbo chegaram e indica circunstância de tempo."
+      },
+
+      {
+        prompt:
+          "Assinale a alternativa que contém apenas classes invariáveis:",
+
+        options: [
+          "Substantivo, artigo e pronome.",
+          "Adjetivo, numeral e verbo.",
+          "Advérbio, preposição e conjunção.",
+          "Artigo, verbo e interjeição."
+        ],
+
+        correct: 2,
+
+        explanation:
+          "Advérbio, preposição, conjunção e interjeição são classes invariáveis."
+      },
+
+      {
+        prompt:
+          "Na expressão “três candidatos”, a palavra “três” é:",
+
+        options: [
+          "Pronome.",
+          "Numeral cardinal.",
+          "Artigo indefinido.",
+          "Advérbio de intensidade."
+        ],
+
+        correct: 1,
+
+        explanation:
+          "Três indica uma quantidade exata e é um numeral cardinal."
+      },
+
+      {
+        prompt:
+          "Na frase “Ele estudou, mas não foi aprovado”, a palavra “mas” é:",
+
+        options: [
+          "Preposição.",
+          "Advérbio.",
+          "Conjunção.",
+          "Interjeição."
+        ],
+
+        correct: 2,
+
+        explanation:
+          "Mas liga duas orações e estabelece uma relação de oposição."
+      },
+
+      {
+        prompt:
+          "Na expressão “livro de português”, a palavra
+
+
+
+
+
