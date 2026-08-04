@@ -1,4 +1,4 @@
-const CACHE = "rota-pmmg-v19";
+const CACHE = "rota-pmmg-v20";
 
 const ASSETS = [
   "./",
@@ -6,6 +6,7 @@ const ASSETS = [
   "./styles.css",
   "./app.js",
   "./lessons.js",
+  "./lessons-portugueses-extra.js",
   "./manifest.webmanifest",
   "./icon-192.png",
   "./icon-512.png",
