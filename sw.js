@@ -9,6 +9,7 @@ const ASSETS = [
   "./lessons-portugueses-extra.js",
   "./lessons-constitucional.js",
   "./lessons-administrativo.js",
+  "./lessons-penal.js",
   "./manifest.webmanifest",
   "./icon-192.png",
   "./icon-512.png",
