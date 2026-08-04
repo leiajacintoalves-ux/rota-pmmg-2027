@@ -786,30 +786,189 @@
     );
   }
 
-  function openLesson(subject, topic) {
+ function getLessonData(subject, topic) {
+  return (
+    window.PMMG_LESSONS?.[
+      `${subject}::${topic}`
+    ] || null
+  );
+}
+
+function renderLessonSections(sections = []) {
+  return sections
+    .map(
+      (section) => `
+        <div class="lesson-block">
+          <h3>
+            ${escapeHtml(section.title)}
+          </h3>
+
+          ${section.html || ""}
+        </div>
+      `
+    )
+    .join("");
+}
+
+function renderLessonFlashcards(
+  flashcards = []
+) {
+  if (!flashcards.length) {
+    return "";
+  }
+
+  return `
+    <div class="lesson-block">
+      <h3>🧠 Flashcards</h3>
+
+      <p class="muted">
+        Toque em uma pergunta para revelar
+        a resposta.
+      </p>
+
+      ${flashcards
+        .map(
+          (card) => `
+            <details class="lesson-flashcard">
+              <summary>
+                ${escapeHtml(card.question)}
+              </summary>
+
+              <p>
+                ${escapeHtml(card.answer)}
+              </p>
+            </details>
+          `
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function renderLessonQuestions(
+  questions = []
+) {
+  if (!questions.length) {
+    return "";
+  }
+
+  const letters = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+  ];
+
+  return `
+    <div class="lesson-block">
+      <h3>📝 Questões comentadas</h3>
+
+      <p class="muted">
+        Marque uma alternativa em cada questão
+        e toque em corrigir.
+      </p>
+
+      ${questions
+        .map(
+          (
+            question,
+            questionIndex
+          ) => `
+            <div class="lesson-question">
+              <strong>
+                ${questionIndex + 1}.
+                ${escapeHtml(
+                  question.prompt
+                )}
+              </strong>
+
+              ${question.options
+                .map(
+                  (
+                    option,
+                    optionIndex
+                  ) => `
+                    <label>
+                      <input
+                        type="radio"
+                        name="lessonQ${
+                          questionIndex + 1
+                        }"
+                        value="${optionIndex}"
+                      >
+
+                      ${
+                        letters[
+                          optionIndex
+                        ] ||
+                        optionIndex + 1
+                      })
+
+                      ${escapeHtml(option)}
+                    </label>
+                  `
+                )
+                .join("")}
+
+              <div
+                class="lesson-question-feedback"
+                id="lessonFeedback${
+                  questionIndex + 1
+                }"
+                hidden
+              ></div>
+            </div>
+          `
+        )
+        .join("")}
+
+      <button
+        class="primary-btn lesson-quiz-button"
+        id="checkLessonQuiz"
+        type="button"
+      >
+        Corrigir questões
+      </button>
+
+      <div
+        class="lesson-quiz-result"
+        id="lessonQuizResult"
+        hidden
+      ></div>
+    </div>
+  `;
+}
+
+function openLesson(subject, topic) {
   const grid = $("#subjectsGrid");
-  if (!grid) return;
 
-  $("#disciplinas .section-intro")?.style.setProperty(
-    "display",
-    "none"
-  );
+  if (!grid) {
+    return;
+  }
 
-  $(".study-content-test")?.style.setProperty(
-    "display",
-    "none"
-  );
+  $("#disciplinas .section-intro")
+    ?.style.setProperty(
+      "display",
+      "none"
+    );
 
-  const lessonId = `${subject}::${topic}`;
+  $(".study-content-test")
+    ?.style.setProperty(
+      "display",
+      "none"
+    );
 
-  const isInterpretationLesson =
-    subject === "Português" &&
-    topic === "Interpretação de textos";
+  const lessonId =
+    `${subject}::${topic}`;
 
-  if (!isInterpretationLesson) {
-    const completed =
-      state.completedLessons.includes(lessonId);
+  const lesson =
+    getLessonData(
+      subject,
+      topic
+    );
 
+  if (!lesson) {
     grid.innerHTML = `
       <article class="panel">
         <button
@@ -829,90 +988,23 @@
         </h2>
 
         <div class="lesson-block">
-          <h3>📚 Conteúdo em preparação</h3>
+          <h3>
+            📚 Conteúdo em preparação
+          </h3>
 
           <p>
-            O material detalhado deste tópico ainda
-            não foi cadastrado. A aula completa
-            disponível no momento é
-            <strong>
-              Português — Interpretação de textos
-            </strong>.
+            Esta aula será adicionada
+            nas próximas atualizações.
           </p>
         </div>
-
-        <div class="lesson-block">
-          <h3>📌 Roteiro de estudo</h3>
-
-          <ul>
-            <li>
-              Leia a teoria e destaque definições,
-              regras e exceções.
-            </li>
-
-            <li>
-              Faça um resumo curto com suas
-              próprias palavras.
-            </li>
-
-            <li>
-              Resolva questões e registre os erros
-              mais recorrentes.
-            </li>
-
-            <li>
-              Agende uma revisão para 24 horas,
-              7 dias ou 30 dias.
-            </li>
-          </ul>
-        </div>
-
-        <button
-          class="primary-btn"
-          id="completeLesson"
-          type="button"
-        >
-          ${
-            completed
-              ? "Aula concluída ✓"
-              : "Marcar estudo como concluído"
-          }
-        </button>
       </article>
     `;
 
-    $("#backToSubjects")?.addEventListener(
-      "click",
-      renderSubjects
-    );
-
-    $("#completeLesson")?.addEventListener(
-      "click",
-      () => {
-        if (
-          !state.completedLessons.includes(
-            lessonId
-          )
-        ) {
-          state.completedLessons.push(lessonId);
-
-          state.xp =
-            Number(state.xp || 0) + 50;
-
-          state.level =
-            Math.floor(state.xp / 250) + 1;
-
-          persist(false);
-        }
-
-        renderSubjects();
-      }
-    );
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+    $("#backToSubjects")
+      ?.addEventListener(
+        "click",
+        renderSubjects
+      );
 
     return;
   }
@@ -936,734 +1028,308 @@
       </h2>
 
       <div class="lesson-block">
-        <h3>🎯 Objetivo da aula</h3>
+        <h3>
+          🎯 Objetivo da aula
+        </h3>
 
         <p>
-          Aprender a identificar a ideia principal
-          de um texto, localizar informações
-          explícitas e implícitas, reconhecer
-          inferências e evitar as pegadinhas mais
-          comuns das provas da PMMG.
+          ${escapeHtml(
+            lesson.objective
+          )}
         </p>
       </div>
 
-      <div class="lesson-block">
-        <h3>📖 Compreensão e interpretação</h3>
-
-        <p>
-          <strong>Compreensão</strong> é identificar
-          aquilo que está diretamente escrito no
-          texto.
-        </p>
-
-        <p>
-          <strong>Interpretação</strong> é construir
-          o sentido do texto com base nas
-          informações, relações e pistas
-          apresentadas pelo autor.
-        </p>
-
-        <p>
-          Mesmo quando a questão exige uma
-          conclusão, a resposta precisa estar
-          sustentada pelo texto. A opinião pessoal
-          do candidato não pode substituir o que
-          foi efetivamente dito.
-        </p>
-      </div>
-
-      <div class="lesson-block">
-        <h3>💡 Exemplo</h3>
-
-        <p>
-          “Pedro chegou completamente encharcado.”
-        </p>
-
-        <p>
-          O texto não afirma diretamente que estava
-          chovendo, mas essa é uma conclusão possível
-          a partir do contexto. Esse tipo de conclusão
-          recebe o nome de
-          <strong>inferência</strong>.
-        </p>
-      </div>
-
-      <div class="lesson-block">
-        <h3>📌 Ideia principal</h3>
-
-        <p>
-          A ideia principal é a mensagem central do
-          texto. As demais informações servem para
-          explicar, detalhar, justificar ou
-          exemplificar essa mensagem.
-        </p>
-
-        <ul>
-          <li>
-            Observe o assunto repetido nos parágrafos.
-          </li>
-
-          <li>
-            Identifique o que o autor deseja
-            comunicar.
-          </li>
-
-          <li>
-            Elimine exemplos e detalhes secundários.
-          </li>
-
-          <li>
-            Evite alternativas amplas ou específicas
-            demais.
-          </li>
-        </ul>
-      </div>
-
-      <div class="lesson-block">
-        <h3>⚠️ Pegadinhas frequentes</h3>
-
-        <ul>
-          <li>
-            <strong>Generalização:</strong>
-            o texto diz “alguns”, mas a alternativa
-            afirma “todos”.
-          </li>
-
-          <li>
-            <strong>Exagero:</strong>
-            o texto diz “pode”, mas a alternativa
-            afirma “sempre”.
-          </li>
-
-          <li>
-            <strong>Informação inventada:</strong>
-            a alternativa apresenta algo sem apoio
-            no texto.
-          </li>
-
-          <li>
-            <strong>Troca de sentido:</strong>
-            a alternativa inverte causa e
-            consequência.
-          </li>
-        </ul>
-      </div>
-
-      <div class="lesson-block">
-        <h3>📌 Resumo rápido</h3>
-
-        <ul>
-          <li>
-            Compreensão: informação diretamente
-            expressa.
-          </li>
-
-          <li>
-            Interpretação: construção do sentido.
-          </li>
-
-          <li>
-            Inferência: conclusão baseada em pistas
-            do texto.
-          </li>
-
-          <li>
-            A ideia principal corresponde à mensagem
-            central.
-          </li>
-
-          <li>
-            A resposta deve sempre estar
-            fundamentada no texto.
-          </li>
-        </ul>
-      </div>
-
-      <div class="lesson-block">
-        <h3>🧠 Flashcards</h3>
-
-        <p class="muted">
-          Toque em uma pergunta para revelar a
-          resposta.
-        </p>
-
-        <details class="lesson-flashcard">
-          <summary>
-            O que é compreensão textual?
-          </summary>
-
-          <p>
-            É a identificação das informações que
-            estão diretamente expressas no texto.
-          </p>
-        </details>
-
-        <details class="lesson-flashcard">
-          <summary>
-            O que é interpretação textual?
-          </summary>
-
-          <p>
-            É a construção do sentido a partir das
-            informações, relações e pistas
-            apresentadas pelo autor.
-          </p>
-        </details>
-
-        <details class="lesson-flashcard">
-          <summary>
-            O que é uma inferência?
-          </summary>
-
-          <p>
-            É uma conclusão obtida por meio de pistas
-            do texto, mesmo quando a informação não
-            aparece literalmente.
-          </p>
-        </details>
-
-        <details class="lesson-flashcard">
-          <summary>
-            A resposta pode ser baseada na opinião
-            pessoal?
-          </summary>
-
-          <p>
-            Não. A resposta deve estar fundamentada
-            nas informações apresentadas pelo texto.
-          </p>
-        </details>
-
-        <details class="lesson-flashcard">
-          <summary>
-            O que é a ideia principal?
-          </summary>
-
-          <p>
-            É a mensagem central do texto,
-            desenvolvida pelas ideias secundárias,
-            exemplos e explicações.
-          </p>
-        </details>
-      </div>
-
-      <div class="lesson-block">
-        <h3>📝 Questões comentadas</h3>
-
-        <p class="muted">
-          Marque uma alternativa em cada questão e
-          toque em corrigir.
-        </p>
-
-        <div class="lesson-question">
-          <strong>
-            1. Em uma questão de interpretação, a
-            resposta correta deve estar baseada:
-          </strong>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ1"
-              value="0"
-            >
-            A) Na opinião pessoal do candidato.
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ1"
-              value="1"
-            >
-            B) Somente no conhecimento de mundo.
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ1"
-              value="2"
-            >
-            C) Nas informações e pistas apresentadas
-            pelo texto.
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ1"
-              value="3"
-            >
-            D) Na experiência profissional do leitor.
-          </label>
-
-          <div
-            class="lesson-question-feedback"
-            id="lessonFeedback1"
-            hidden
-          ></div>
-        </div>
-
-        <div class="lesson-question">
-          <strong>
-            2. Uma informação implícita é aquela:
-          </strong>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ2"
-              value="0"
-            >
-            A) Escrita literalmente no texto.
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ2"
-              value="1"
-            >
-            B) Destacada obrigatoriamente em negrito.
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ2"
-              value="2"
-            >
-            C) Que pode ser concluída por meio do
-            contexto.
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ2"
-              value="3"
-            >
-            D) Que aparece em todos os parágrafos.
-          </label>
-
-          <div
-            class="lesson-question-feedback"
-            id="lessonFeedback2"
-            hidden
-          ></div>
-        </div>
-
-        <div class="lesson-question">
-          <strong>
-            3. Se o texto afirma “alguns cidadãos”,
-            é incorreto concluir:
-          </strong>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ3"
-              value="0"
-            >
-            A) Uma parte dos cidadãos foi mencionada.
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ3"
-              value="1"
-            >
-            B) Nem todos estão necessariamente
-            incluídos.
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ3"
-              value="2"
-            >
-            C) Todos os cidadãos estão envolvidos.
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ3"
-              value="3"
-            >
-            D) O grupo apresentado é limitado.
-          </label>
-
-          <div
-            class="lesson-question-feedback"
-            id="lessonFeedback3"
-            hidden
-          ></div>
-        </div>
-
-        <div class="lesson-question">
-          <strong>
-            4. A ideia principal de um texto
-            corresponde:
-          </strong>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ4"
-              value="0"
-            >
-            A) Ao menor detalhe apresentado.
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ4"
-              value="1"
-            >
-            B) À mensagem central desenvolvida pelo
-            autor.
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ4"
-              value="2"
-            >
-            C) À opinião pessoal de cada leitor.
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ4"
-              value="3"
-            >
-            D) A uma frase escolhida aleatoriamente.
-          </label>
-
-          <div
-            class="lesson-question-feedback"
-            id="lessonFeedback4"
-            hidden
-          ></div>
-        </div>
-
-        <div class="lesson-question">
-          <strong>
-            5. Inferir uma informação significa:
-          </strong>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ5"
-              value="0"
-            >
-            A) Copiar uma frase literalmente.
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ5"
-              value="1"
-            >
-            B) Chegar a uma conclusão usando pistas
-            do texto.
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ5"
-              value="2"
-            >
-            C) Inventar uma informação que não
-            aparece.
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              name="lessonQ5"
-              value="3"
-            >
-            D) Ignorar o contexto apresentado.
-          </label>
-
-          <div
-            class="lesson-question-feedback"
-            id="lessonFeedback5"
-            hidden
-          ></div>
-        </div>
-
-        <button
-          class="primary-btn lesson-quiz-button"
-          id="checkLessonQuiz"
-          type="button"
-        >
-          Corrigir questões
-        </button>
-
-        <div
-          class="lesson-quiz-result"
-          id="lessonQuizResult"
-          hidden
-        ></div>
-      </div>
+      ${renderLessonSections(
+        lesson.sections
+      )}
+
+      ${renderLessonFlashcards(
+        lesson.flashcards
+      )}
+
+      ${renderLessonQuestions(
+        lesson.questions
+      )}
     </article>
   `;
 
-  $("#backToSubjects")?.addEventListener(
-    "click",
-    renderSubjects
-  );
+  $("#backToSubjects")
+    ?.addEventListener(
+      "click",
+      renderSubjects
+    );
 
-  $("#checkLessonQuiz")?.addEventListener(
-    "click",
-    () => {
-      const correctAnswers = [2, 2, 2, 1, 1];
+  const checkButton =
+    $("#checkLessonQuiz");
 
-      const explanations = [
-        "A resposta deve estar fundamentada nas informações e pistas do texto.",
-        "A informação implícita não aparece literalmente, mas pode ser deduzida pelo contexto.",
-        "A palavra “alguns” não permite concluir que todos estejam envolvidos.",
-        "A ideia principal representa a mensagem central desenvolvida pelo autor.",
-        "Inferência é uma conclusão construída a partir das pistas textuais."
-      ];
+  if (
+    checkButton &&
+    lesson.questions?.length
+  ) {
+    checkButton.addEventListener(
+      "click",
+      () => {
+        let score = 0;
+        let unanswered = false;
 
-      let score = 0;
-      let unanswered = false;
+        lesson.questions.forEach(
+          (question, index) => {
+            const number =
+              index + 1;
 
-      correctAnswers.forEach(
-        (correctAnswer, index) => {
-          const number = index + 1;
+            const selected =
+              document.querySelector(
+                `input[name="lessonQ${number}"]:checked`
+              );
 
-          const selected =
-            document.querySelector(
-              `input[name="lessonQ${number}"]:checked`
+            const feedback =
+              document.getElementById(
+                `lessonFeedback${number}`
+              );
+
+            const questionBox =
+              feedback?.closest(
+                ".lesson-question"
+              );
+
+            if (
+              !feedback ||
+              !questionBox
+            ) {
+              return;
+            }
+
+            const labels = [
+              ...questionBox
+                .querySelectorAll(
+                  "label"
+                )
+            ];
+
+            const correctInput =
+              questionBox
+                .querySelector(
+                  `input[value="${question.correct}"]`
+                );
+
+            const correctLabel =
+              correctInput?.closest(
+                "label"
+              );
+
+            labels.forEach(
+              (label) => {
+                label.classList.remove(
+                  "answer-correct",
+                  "answer-wrong",
+                  "answer-muted"
+                );
+              }
             );
 
-          const feedback =
-            document.getElementById(
-              `lessonFeedback${number}`
+            feedback.hidden = false;
+
+            if (!selected) {
+              unanswered = true;
+
+              feedback.className =
+                "lesson-question-feedback unanswered";
+
+              feedback.innerHTML =
+                "<strong>Selecione uma alternativa.</strong>";
+
+              return;
+            }
+
+            const isCorrect =
+              Number(
+                selected.value
+              ) ===
+              question.correct;
+
+            const selectedLabel =
+              selected.closest(
+                "label"
+              );
+
+            labels.forEach(
+              (label) => {
+                label.classList.add(
+                  "answer-muted"
+                );
+              }
             );
 
-          const questionBox =
-            feedback?.closest(
-              ".lesson-question"
-            );
+            correctLabel
+              ?.classList.remove(
+                "answer-muted"
+              );
 
-          if (!feedback || !questionBox) {
-            return;
-          }
+            correctLabel
+              ?.classList.add(
+                "answer-correct"
+              );
 
-          const labels = [
-            ...questionBox.querySelectorAll(
-              "label"
-            )
-          ];
+            if (!isCorrect) {
+              selectedLabel
+                ?.classList.remove(
+                  "answer-muted"
+                );
 
-          const correctInput =
-            questionBox.querySelector(
-              `input[value="${correctAnswer}"]`
-            );
-
-          const correctLabel =
-            correctInput?.closest("label");
-
-          labels.forEach((label) => {
-            label.classList.remove(
-              "answer-correct",
-              "answer-wrong",
-              "answer-muted"
-            );
-          });
-
-          feedback.hidden = false;
-
-          if (!selected) {
-            unanswered = true;
+              selectedLabel
+                ?.classList.add(
+                  "answer-wrong"
+                );
+            } else {
+              score += 1;
+            }
 
             feedback.className =
-              "lesson-question-feedback unanswered";
+              `lesson-question-feedback ${
+                isCorrect
+                  ? "correct"
+                  : "incorrect"
+              }`;
 
-            feedback.innerHTML =
-              "<strong>Selecione uma alternativa.</strong>";
+            feedback.innerHTML = `
+              <strong>
+                ${
+                  isCorrect
+                    ? "Resposta correta! ✅"
+                    : "Resposta incorreta."
+                }
+              </strong>
 
-            return;
+              <p>
+                ${escapeHtml(
+                  question.explanation
+                )}
+              </p>
+            `;
           }
+        );
 
-          const isCorrect =
-            Number(selected.value) ===
-            correctAnswer;
+        const result =
+          $("#lessonQuizResult");
 
-          const selectedLabel =
-            selected.closest("label");
+        if (!result) {
+          return;
+        }
 
-          labels.forEach((label) => {
-            label.classList.add(
-              "answer-muted"
-            );
+        if (unanswered) {
+          result.hidden = false;
+
+          result.className =
+            "lesson-quiz-result review";
+
+          result.innerHTML = `
+            <strong>
+              Responda todas as questões
+              antes de concluir a aula.
+            </strong>
+          `;
+
+          result.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
           });
 
-          correctLabel?.classList.remove(
-            "answer-muted"
-          );
-
-          correctLabel?.classList.add(
-            "answer-correct"
-          );
-
-          if (!isCorrect) {
-            selectedLabel?.classList.remove(
-              "answer-muted"
-            );
-
-            selectedLabel?.classList.add(
-              "answer-wrong"
-            );
-          }
-
-          if (isCorrect) {
-            score += 1;
-          }
-
-          feedback.className =
-            `lesson-question-feedback ${
-              isCorrect
-                ? "correct"
-                : "incorrect"
-            }`;
-
-          feedback.innerHTML = `
-            <strong>
-              ${
-                isCorrect
-                  ? "Resposta correta! ✅"
-                  : "Resposta incorreta."
-              }
-            </strong>
-
-            <p>
-              ${escapeHtml(
-                explanations[index]
-              )}
-            </p>
-          `;
+          return;
         }
-      );
 
-      const result =
-        $("#lessonQuizResult");
+        const total =
+          lesson.questions.length;
 
-      if (!result) {
-        return;
-      }
+        const percentage =
+          Math.round(
+            (score / total) *
+              100
+          );
 
-      if (unanswered) {
+        state.questions =
+          state.questions.filter(
+            (question) =>
+              !(
+                question.subject ===
+                  subject &&
+                question.topic ===
+                  topic
+              )
+          );
+
+        state.questions.push({
+          subject,
+          topic,
+          total,
+          correct: score,
+          percentage,
+
+          date:
+            new Date()
+              .toLocaleDateString(
+                "pt-BR"
+              ),
+
+          dateKey:
+            localDateKey()
+        });
+
+        const firstCompletion =
+          !state.completedLessons
+            .includes(lessonId);
+
+        if (firstCompletion) {
+          state.completedLessons
+            .push(lessonId);
+
+          state.xp =
+            Number(
+              state.xp || 0
+            ) +
+            50 +
+            score * 10;
+
+          state.level =
+            Math.floor(
+              state.xp / 250
+            ) + 1;
+        }
+
+        persist(false);
+        renderQuestions();
+
         result.hidden = false;
 
         result.className =
-          "lesson-quiz-result review";
+          `lesson-quiz-result ${
+            percentage >= 70
+              ? "approved"
+              : "review"
+          }`;
 
-        result.innerHTML =
-          "<strong>Responda todas as cinco questões antes de concluir a aula.</strong>";
+        result.innerHTML = `
+          <strong>
+            Resultado:
+            ${score}/${total}
+            — ${percentage}%
+          </strong>
+
+          <p>
+            ${
+              percentage >= 70
+                ? "Bom trabalho! Continue revisando os comentários."
+                : "Revise o conteúdo e tente novamente."
+            }
+          </p>
+        `;
 
         result.scrollIntoView({
           behavior: "smooth",
           block: "center"
         });
-
-        return;
       }
-
-      const percentage = Math.round(
-        (score / correctAnswers.length) *
-          100
-      );
-
-      state.questions =
-        state.questions.filter(
-          (question) =>
-            !(
-              question.subject === subject &&
-              question.topic === topic
-            )
-        );
-
-      state.questions.push({
-        subject,
-        topic,
-        total: correctAnswers.length,
-        correct: score,
-        percentage,
-        date:
-          new Date().toLocaleDateString(
-            "pt-BR"
-          ),
-        dateKey: localDateKey()
-      });
-
-      const firstCompletion =
-        !state.completedLessons.includes(
-          lessonId
-        );
-
-      if (firstCompletion) {
-        state.completedLessons.push(
-          lessonId
-        );
-
-        state.xp =
-          Number(state.xp || 0) +
-          50 +
-          score * 10;
-
-        state.level =
-          Math.floor(state.xp / 250) + 1;
-      }
-
-      persist(false);
-      renderQuestions();
-
-      result.hidden = false;
-
-      result.className =
-        `lesson-quiz-result ${
-          percentage >= 70
-            ? "approved"
-            : "review"
-        }`;
-
-      result.innerHTML = `
-        <strong>
-          Resultado: ${score}/5 —
-          ${percentage}%
-        </strong>
-
-        <p>
-          ${
-            percentage >= 70
-              ? "Bom trabalho! Continue revisando os comentários."
-              : "Revise o conteúdo e tente novamente."
-          }
-        </p>
-      `;
-
-      result.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
-    }
-  );
+    );
+  }
 
   window.scrollTo({
     top: 0,
