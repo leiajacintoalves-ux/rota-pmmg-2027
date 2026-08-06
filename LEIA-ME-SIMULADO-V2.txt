@@ -1,0 +1,19 @@
+CENTRAL DE QUESTÕES V2 — MODO SIMULADO
+
+1. Envie estes dois arquivos ao GitHub para substituir os atuais:
+   questions-center.js
+   questions-center.css
+
+2. No index.html, troque:
+   questions-center.css?v=1  por  questions-center.css?v=2
+   questions-center.js?v=1   por  questions-center.js?v=2
+
+3. No sw.js, troque:
+   rota-pmmg-v31             por  rota-pmmg-v32
+   questions-center.css?v=1  por  questions-center.css?v=2
+   questions-center.js?v=1   por  questions-center.js?v=2
+
+4. Abra:
+   https://rotapmmg.github.io/rota-pmmg-2027/?versao=v32
+
+A atualização mantém o histórico e o caderno de erros da V1.
