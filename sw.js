@@ -11,6 +11,7 @@ const ASSETS = [
   "./lessons-administrativo.js",
   "./lessons-penal.js",
   "./lessons-processo-penal.js",
+  "./lessons-direitos-humanos.js",
   "./manifest.webmanifest",
   "./icon-192.png",
   "./icon-512.png",
