@@ -1,4 +1,4 @@
-const CACHE = "rota-pmmg-v23";
+const CACHE = "rota-pmmg-v24";
 
 const ASSETS = [
   "./",
