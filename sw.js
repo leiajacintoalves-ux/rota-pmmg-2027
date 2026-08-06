@@ -13,6 +13,7 @@ const ASSETS = [
   "./lessons-processo-penal.js",
   "./lessons-direitos-humanos.js",
   "./lessons-matematica.js?v=3",
+  "./lessons-ingles.js?v=1",
   "./manifest.webmanifest",
   "./icon-192.png",
   "./icon-512.png",
