@@ -6,7 +6,7 @@ const ASSETS = [
   "./styles.css",
   "./questions-center.css?v=2",
   "./app.js",
-  "./questions-center.js?v=1",
+  "./questions-center.js?v=2",
   "./lessons.js",
   "./lessons-portugueses-extra.js",
   "./lessons-constitucional.js",
