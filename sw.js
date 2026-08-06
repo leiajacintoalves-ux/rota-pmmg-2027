@@ -12,7 +12,7 @@ const ASSETS = [
   "./lessons-penal.js",
   "./lessons-processo-penal.js",
   "./lessons-direitos-humanos.js",
-  "./lessons-matematica.js?v=2",
+  "./lessons-matematica.js?v=3",
   "./manifest.webmanifest",
   "./icon-192.png",
   "./icon-512.png",
