@@ -1,0 +1,30 @@
+ROTA PMMG — PREMIUM UI V1
+
+Esta etapa é somente visual.
+Nenhum conteúdo será bloqueado.
+
+1. Envie ao GitHub:
+   premium-ui.js
+   premium-ui.css
+
+2. No index.html, depois de:
+   <link rel="stylesheet" href="questions-center.css?v=2" />
+
+   adicione:
+   <link rel="stylesheet" href="premium-ui.css?v=1" />
+
+3. Depois de:
+   <script src="questions-center.js?v=2" defer></script>
+
+   adicione:
+   <script src="premium-ui.js?v=1" defer></script>
+
+4. No sw.js:
+   troque rota-pmmg-v32 por rota-pmmg-v33
+
+   adicione em ASSETS:
+   "./premium-ui.css?v=1",
+   "./premium-ui.js?v=1",
+
+5. Abra:
+https://rotapmmg.github.io/rota-pmmg-2027/?versao=v33
